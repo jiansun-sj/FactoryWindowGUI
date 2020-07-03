@@ -1,0 +1,44 @@
+﻿// ==================================================
+// 文件名：JArrayLengthConverter.cs
+// 创建时间：2020/03/13 16:26
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/05/11 16:26
+// 修改人：jians
+// ==================================================
+
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Data;
+using Newtonsoft.Json.Linq;
+
+namespace FactoryWindowGUI.ValueConverters
+{
+    public sealed class JArrayLengthConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is JToken jToken))
+                throw new Exception("Wrong type for this converter");
+
+            switch (jToken.Type)
+            {
+                case JTokenType.Array:
+                    var arrayLen = jToken.Children().Count();
+                    return $"[{arrayLen}]";
+                case JTokenType.Property:
+                    var propertyArrayLen = jToken.Children().FirstOrDefault()?.Children().Count();
+                    return $"[ {propertyArrayLen} ]";
+                default:
+                    throw new Exception("Type should be JProperty or JArray");
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException(GetType().Name + " can only be used for one way conversion.");
+        }
+    }
+}

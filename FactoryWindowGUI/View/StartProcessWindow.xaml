@@ -1,0 +1,71 @@
+﻿<metro:MetroWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:metro="clr-namespace:Arthas.Controls.Metro;assembly=Arthas"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:local="clr-namespace:FactoryWindowGUI.View" x:Class="FactoryWindowGUI.View.StartProcessWindow"
+    mc:Ignorable="d" WindowStyle="None" BorderThickness="1"
+    WindowStartupLocation="CenterScreen"
+    DataContext="{Binding StartProcessWindowVm, RelativeSource={RelativeSource Self}}"
+    Title="启动Process" Height="450" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <dxg:GridControl EnableSmartColumnsGeneration="True" MinHeight="380" Margin="24,10,24,10"
+                         ItemsSource="{Binding Containers}" Opacity="1">
+            <dxg:GridControl.View>
+                <dxg:TableView AllowPerPixelScrolling="True" ShowIndicator="False"
+                               ShowTotalSummary="True" Margin="0,0,0,30" ShowGroupPanel="False" FontFamily="微软雅黑 "
+                               FontSize="18"
+                               TextOptions.TextFormattingMode="Display" FontWeight="Normal"
+                               ShowDataNavigator="True" />
+            </dxg:GridControl.View>
+
+            <dxg:GridColumn AllowMoving="Default" MinWidth="25"
+                            AllowEditing="false" Width="2*"
+                            HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <Image Source="{dx:DXImage SvgImages/Chart/ChartType_Bubble.svg}"
+                                   VerticalAlignment="Center" />
+                            <TextBlock Text="  序号" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </dxg:GridColumn.HeaderTemplate>
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding Data.Id}" />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="  键名" AllowMoving="Default" MinWidth="25"
+                            AllowEditing="false" Width="3*" Binding="{Binding ContainerKey}"
+                            Image="{dx:DXImage SvgImages/Business Objects/BO_KPI_Scorecard.svg}" />
+
+            <dxg:GridColumn Header="  资源名" AllowMoving="Default" MinWidth="25"
+                            AllowEditing="True" Width="2*"
+                            Image="{dx:DXImage SvgImages/Business Objects/BO_Appointment.svg}">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <ComboBox
+                            DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:StartProcessWindow}}}"
+                            ItemsSource="{Binding Resources}" SelectedItem="{Binding Data.ContainerValue}" />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+
+            </dxg:GridColumn>
+        </dxg:GridControl>
+        <dx:SimpleButton Grid.Row="1" Margin=" 240 10" Glyph="{dx:DXImage SvgImages/Chart/ChartType_Bubble.svg}"
+                         Content="启动" FontSize="20" />
+
+    </Grid>
+</metro:MetroWindow>

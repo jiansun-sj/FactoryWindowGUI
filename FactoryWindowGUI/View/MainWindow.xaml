@@ -1,0 +1,68 @@
+﻿<metro:MetroWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:FactoryWindowGUI.View"
+    xmlns:metro="clr-namespace:Arthas.Controls.Metro;assembly=Arthas"
+    x:Class="FactoryWindowGUI.View.MainWindow"
+    mc:Ignorable="d" d:DesignWidth="1980" d:DesignHeight="980"
+    MinWidth="1" MinHeight="1" BorderThickness="1" WindowStyle="None"
+    DataContext="{Binding MainWindowVm,RelativeSource={RelativeSource Self}}" Title="{Binding Title}">
+
+    <metro:MetroWindow.Menu>
+        <metro:MetroTitleMenu>
+            <!--这里存放一级标题下显示格式-->
+            <metro:MetroTitleMenuItem Header="Powered by 上海慧程" />
+        </metro:MetroTitleMenu>
+    </metro:MetroWindow.Menu>
+    <metro:MetroWindow.ContextMenu>
+        <metro:MetroContextMenu>
+            <!--这里存放二级菜单下标签页鼠标右键弹出框的选项；如：退出-->
+        </metro:MetroContextMenu>
+    </metro:MetroWindow.ContextMenu>
+
+    <Viewbox Stretch="Fill">
+        <Grid Height="980" Width="1980">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="61*" />
+                <RowDefinition Height="1095*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <metro:MetroMenuTabControl IconMode="True" Grid.RowSpan="2">
+                <metro:MetroMenuTabItem Header="标签监控" Icon="../Resources/tags_white.png"
+                                        IconMove="../Resources/tags_blue.png" TextOptions.TextFormattingMode="Display">
+                    <view:TagControlView />
+                </metro:MetroMenuTabItem>
+
+                <metro:MetroMenuTabItem Header="过程监控" Icon="../Resources/process_white.png" FontFamily="微软雅黑"
+                                        FontSize="12" FontWeight="Bold" IconMove="../Resources/process_blue.png"
+                                        TextOptions.TextFormattingMode="Display">
+                    <view:ProcessControlView />
+                </metro:MetroMenuTabItem>
+
+                <metro:MetroMenuTabItem Header="资源监控" Icon="../Resources/resource_white.png"
+                                        IconMove="../Resources/resource_blue.png"
+                                        TextOptions.TextFormattingMode="Display">
+                    <view:ResourceControlView />
+                </metro:MetroMenuTabItem>
+
+                <metro:MetroMenuTabItem Header="系统监控" Icon="../Resources/system_white.png"
+                                        IconMove="../Resources/system_blue.png">
+                    <view:SystemControlView />
+                </metro:MetroMenuTabItem>
+            </metro:MetroMenuTabControl>
+
+            <StatusBar HorizontalAlignment="Left" Height="30" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top"
+                       Width="1570">
+                <Label Margin="10,0,10,0" Content="{Binding ConnectionStatus}" />
+                <Separator />
+                <Label Margin="5,0,5,0">当前连接</Label>
+                <!--<ComboBox Width="192" ItemsSource="{Binding ConnectionsInConfig}" SelectedItem="{Binding}" />-->
+                <ComboBox Width="192" ItemsSource="{Binding ConnectionList}" SelectedValuePath="Id"
+                          DisplayMemberPath="ConnectionName" SelectedItem="{Binding SelectedConnectionName}" />
+            </StatusBar>
+        </Grid>
+
+    </Viewbox>
+</metro:MetroWindow>
