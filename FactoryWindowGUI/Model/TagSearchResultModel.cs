@@ -38,6 +38,8 @@ namespace FactoryWindowGUI.Model
             }
         }
 
+        public string TagType { get; set; }
+
         public string ModifyValue { get; set; }
 
         public bool IsChecked { get; set; }

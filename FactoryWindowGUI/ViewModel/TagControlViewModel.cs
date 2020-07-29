@@ -280,7 +280,8 @@ namespace FactoryWindowGUI.ViewModel
                             MachineName = t[0],
                             TagName = t[1],
                             TagValue = t[2],
-                            IsReadOnly = t[3] != "Read"
+                            IsReadOnly = t[3] != "Read",
+                            TagType = t[4]??""
                         });
                 }
                 else
@@ -299,7 +300,8 @@ namespace FactoryWindowGUI.ViewModel
                             MachineName = tagValue[0][0],
                             TagName = tagValue[0][1],
                             TagValue = tagValue[0][2],
-                            IsReadOnly = tagValue[0][3] != "Read"
+                            IsReadOnly = tagValue[0][3] != "Read",
+                            TagType = tagValue[0][4]??""
                         });
                 }
             }

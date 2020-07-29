@@ -93,6 +93,8 @@
                                     Image="../Resources/icon1_machine.png" AllowEditing="false" />
                     <dxg:GridColumn FieldName="TagName" Header="标签" Width="3*" Image="../Resources/icon1_dian.png"
                                     AllowEditing="false" />
+                    <dxg:GridColumn FieldName="TagType" Header="类型" Width="2*" Image="../Resources/icon1_dian.png"
+                                    AllowEditing="false" />
                     <dxg:GridColumn FieldName="TagValue" Header="值" Width="3*" Image="../Resources/icon1_zhi.png"
                                     AllowEditing="false" />
                     <dxg:GridColumn FieldName="ModifyValue" Width="3*" Header="修改列"
@@ -166,6 +168,7 @@
                     <dxg:GridColumn FieldName="DataSourceType" Header="类型" Binding="{Binding DataSourceType}"
                                     AllowEditing="false" Width="3*"
                                     Image="../Resources/Type.png" />
+                    
                     <dxg:GridColumn FieldName="LinkState" Header="连接状态" Binding="{Binding LinkState}"
                                     AllowEditing="false" Width="3*"
                                     Image="../Resources/icon2_zhangtai.png" />
