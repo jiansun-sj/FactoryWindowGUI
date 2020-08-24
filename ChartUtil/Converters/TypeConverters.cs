@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：TypeConverters.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //copyright(c) 2016 Greg Dennis & Alberto Rodríguez
 
@@ -29,59 +37,18 @@ using LiveCharts.Helpers;
 namespace FactoryWindowGUI.ChartUtil.Converters
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="System.ComponentModel.TypeConverter" />
     public class StringCollectionConverter : TypeConverter
     {
         /// <summary>
-        /// Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.
+        ///     Returns whether this converter can convert an object of the given type to the type of this converter, using the
+        ///     specified context.
         /// </summary>
         /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context.</param>
         /// <param name="sourceType">A <see cref="T:System.Type" /> that represents the type you want to convert from.</param>
         /// <returns>
-        /// true if this converter can perform the conversion; otherwise, false.
-        /// </returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-        {
-            return sourceType == typeof (string) || base.CanConvertFrom(context, sourceType);
-        }
-
-        /// <summary>
-        /// Converts the given object to the type of this converter, using the specified context and culture information.
-        /// </summary>
-        /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context.</param>
-        /// <param name="culture">The <see cref="T:System.Globalization.CultureInfo" /> to use as the current culture.</param>
-        /// <param name="value">The <see cref="T:System.Object" /> to convert.</param>
-        /// <returns>
-        /// An <see cref="T:System.Object" /> that represents the converted value.
-        /// </returns>
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            var valueString = value as string;
-            if (valueString != null)
-            {
-                return valueString.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => x.Trim())
-                    .ToArray();
-            }
-            return base.ConvertFrom(context, culture, value);
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <seealso cref="System.ComponentModel.TypeConverter" />
-    public class NumericChartValuesConverter : TypeConverter
-    {
-        /// <summary>
-        /// Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.
-        /// </summary>
-        /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context.</param>
-        /// <param name="sourceType">A <see cref="T:System.Type" /> that represents the type you want to convert from.</param>
-        /// <returns>
-        /// true if this converter can perform the conversion; otherwise, false.
+        ///     true if this converter can perform the conversion; otherwise, false.
         /// </returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
@@ -89,24 +56,61 @@ namespace FactoryWindowGUI.ChartUtil.Converters
         }
 
         /// <summary>
-        /// Converts the given object to the type of this converter, using the specified context and culture information.
+        ///     Converts the given object to the type of this converter, using the specified context and culture information.
         /// </summary>
         /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context.</param>
         /// <param name="culture">The <see cref="T:System.Globalization.CultureInfo" /> to use as the current culture.</param>
         /// <param name="value">The <see cref="T:System.Object" /> to convert.</param>
         /// <returns>
-        /// An <see cref="T:System.Object" /> that represents the converted value.
+        ///     An <see cref="T:System.Object" /> that represents the converted value.
+        /// </returns>
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            var valueString = value as string;
+            if (valueString != null)
+                return valueString.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => x.Trim())
+                    .ToArray();
+            return base.ConvertFrom(context, culture, value);
+        }
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.TypeConverter" />
+    public class NumericChartValuesConverter : TypeConverter
+    {
+        /// <summary>
+        ///     Returns whether this converter can convert an object of the given type to the type of this converter, using the
+        ///     specified context.
+        /// </summary>
+        /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context.</param>
+        /// <param name="sourceType">A <see cref="T:System.Type" /> that represents the type you want to convert from.</param>
+        /// <returns>
+        ///     true if this converter can perform the conversion; otherwise, false.
+        /// </returns>
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        {
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+        }
+
+        /// <summary>
+        ///     Converts the given object to the type of this converter, using the specified context and culture information.
+        /// </summary>
+        /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context.</param>
+        /// <param name="culture">The <see cref="T:System.Globalization.CultureInfo" /> to use as the current culture.</param>
+        /// <param name="value">The <see cref="T:System.Object" /> to convert.</param>
+        /// <returns>
+        ///     An <see cref="T:System.Object" /> that represents the converted value.
         /// </returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var valueString = value as string;
 
             if (valueString != null)
-            {
                 return valueString.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
                     .Select(d => double.Parse(d, CultureInfo.InvariantCulture))
                     .AsChartValues();
-            }
             return base.ConvertFrom(context, culture, value);
         }
     }

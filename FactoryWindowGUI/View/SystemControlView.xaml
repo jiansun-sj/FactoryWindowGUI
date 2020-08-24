@@ -13,25 +13,26 @@
     <Grid Background="#f3f3f3">
         <Grid.Resources>
             <Style x:Key="CleanSeparator" TargetType="Separator">
-                <Setter Property="IsEnabled" Value="False"></Setter>
+                <Setter Property="IsEnabled" Value="False" />
             </Style>
         </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="100" />
-            <RowDefinition Height="800*"/>
+            <RowDefinition Height="800*" />
         </Grid.RowDefinitions>
-        
+
         <!-- 表名-->
         <dxlc:GroupBox Grid.Row="0" Header="系统监控" TitleBackground="#677991" TitleForeground="White" Margin="10,10,10,2">
             <DockPanel VerticalAlignment="Center" Height="30" LastChildFill="False" Margin="5">
                 <metro:MetroSwitch Content="自动刷新" CornerRadius="100" FontSize="13" DockPanel.Dock="Left" Margin="0"
                                    VerticalAlignment="Center" FontWeight="Black"
-                                   IsChecked="{Binding SystemAutoRefresh}"/>
+                                   IsChecked="{Binding SystemAutoRefresh}" />
             </DockPanel>
         </dxlc:GroupBox>
-        <dxlc:GroupBox Grid.Row="1" Header="内存和CPU监控" TitleBackground="#677991" TitleForeground="White" Margin="10,2,10,0">
+        <dxlc:GroupBox Grid.Row="1" Header="内存和CPU监控" TitleBackground="#677991" TitleForeground="White"
+                       Margin="10,2,10,0">
             <DockPanel LastChildFill="False" VerticalAlignment="Center" Margin="0" Height="50">
                 <!--冗余-->
                 <metro:MetroImage Source="../Resources/Redundancy.png" Margin="0,0,0,0" />
@@ -41,33 +42,34 @@
                 <metro:MetroButton Content="刷新" FontSize="13" VerticalAlignment="Center"
                                    Command="{Binding RefreshMemoryAndCpuUsageCommand}"
                                    Width="50" MinHeight="35" Margin="20,0,0,0" Height="30" />
-                <DatePicker Style="{StaticResource MaterialDesignDatePicker}" SelectedDate="{Binding SelectedDate}" FontSize="13" VerticalAlignment="Center"
-                                   Width="100" MinHeight="35" Margin="20,0,0,0" Height="30" />
+                <DatePicker Style="{StaticResource MaterialDesignDatePicker}" SelectedDate="{Binding SelectedDate}"
+                            FontSize="13" VerticalAlignment="Center"
+                            Width="100" MinHeight="35" Margin="20,0,0,0" Height="30" />
             </DockPanel>
         </dxlc:GroupBox>
 
         <!--Here we disable tooltips and hovering to get a better performance-->
         <chartUtil:CartesianChart Grid.Row="2" Margin="30,20">
             <chartUtil:CartesianChart.AxisY>
-                <chartUtil:Axis Foreground="DodgerBlue" Title="内存使用（MB）" FontSize="20" FontWeight="Bold"/>
-                <chartUtil:Axis Foreground="IndianRed" Title="Cpu占用率（%）" Position="RightTop" FontSize="20" FontWeight="Bold" Unit="0.5" MaxValue="100" MinValue="0">
+                <chartUtil:Axis Foreground="DodgerBlue" Title="内存使用（MB）" FontSize="20" FontWeight="Bold" />
+                <chartUtil:Axis Foreground="IndianRed" Title="Cpu占用率（%）" Position="RightTop" FontSize="20"
+                                FontWeight="Bold" Unit="0.5" MaxValue="100" MinValue="0">
                     <!--<chartUtil:Axis.Separator>
                         <chartUtil:Separator Style="{StaticResource }"/>
                     </chartUtil:Axis.Separator>-->
                 </chartUtil:Axis>
             </chartUtil:CartesianChart.AxisY>
-            
+
             <chartUtil:CartesianChart.AxisX>
-                <chartUtil:Axis LabelFormatter="{Binding DateTimeFormatter}" 
-                                 FontSize="20" FontWeight="Bold"
-                                 Unit="{Binding AxisUnit}">
-                </chartUtil:Axis>
+                <chartUtil:Axis LabelFormatter="{Binding DateTimeFormatter}"
+                                FontSize="20" FontWeight="Bold"
+                                Unit="{Binding AxisUnit}" />
             </chartUtil:CartesianChart.AxisX>
 
             <chartUtil:CartesianChart.Series>
-                <chartUtil:LineSeries Values="{Binding RamCounts}" ScalesYAt="0"/>
+                <chartUtil:LineSeries Values="{Binding RamCounts}" ScalesYAt="0" />
                 <!--Scales at blue axis, Axis[0]-->
-                <chartUtil:LineSeries Values="{Binding CpuCounts}"  ScalesYAt="1"/>
+                <chartUtil:LineSeries Values="{Binding CpuCounts}" ScalesYAt="1" />
                 <!--Scales at red axis, Axis[1]-->
             </chartUtil:CartesianChart.Series>
         </chartUtil:CartesianChart>

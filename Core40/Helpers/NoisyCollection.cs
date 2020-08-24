@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：NoisyCollection.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -30,7 +38,6 @@ using System.Linq;
 namespace LiveCharts.Helpers
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="oldItems">The old items.</param>
@@ -39,22 +46,23 @@ namespace LiveCharts.Helpers
         IEnumerable<T> oldItems, IEnumerable<T> newItems);
 
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="System.Collections.IList" />
     public interface INoisyCollection : IList, INotifyPropertyChanged, INotifyCollectionChanged
     {
         /// <summary>
-        /// Occurs when [noisy collection changed].
+        ///     Occurs when [noisy collection changed].
         /// </summary>
         event NoisyCollectionCollectionChanged<object> NoisyCollectionChanged;
+
         /// <summary>
-        /// Adds the range.
+        ///     Adds the range.
         /// </summary>
         /// <param name="items">The items.</param>
         void AddRange(IEnumerable<object> items);
+
         /// <summary>
-        /// Inserts the range.
+        ///     Inserts the range.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="collection">The collection.</param>
@@ -62,22 +70,24 @@ namespace LiveCharts.Helpers
     }
 
     /// <summary>
-    /// A collection that notifies every time a value is added or removed
+    ///     A collection that notifies every time a value is added or removed
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class NoisyCollection<T> : INoisyCollection, IList<T>
     {
         #region Private Fields
+
         private readonly object _sync = new object();
         private readonly List<T> _source;
         private const string CountString = "Count";
         private const string IndexerString = "Item[]";
+
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of NoisyCollection class
+        ///     Initializes a new instance of NoisyCollection class
         /// </summary>
         public NoisyCollection()
         {
@@ -85,7 +95,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Initializes a new instance of NoisyCollection class with a given collection
+        ///     Initializes a new instance of NoisyCollection class with a given collection
         /// </summary>
         /// <param name="collection">given collection</param>
         public NoisyCollection(IEnumerable<T> collection)
@@ -94,7 +104,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Initializes a new instance of NoisiCollection class with a given capacity
+        ///     Initializes a new instance of NoisiCollection class with a given capacity
         /// </summary>
         /// <param name="capacity">given capacity</param>
         public NoisyCollection(int capacity)
@@ -105,50 +115,51 @@ namespace LiveCharts.Helpers
         #endregion
 
         #region Events
+
         /// <summary>
-        /// Occurs when [collection reset].
+        ///     Occurs when [collection reset].
         /// </summary>
         public event Action CollectionReset;
+
         /// <summary>
-        /// Occurs when [noisy collection changed].
+        ///     Occurs when [noisy collection changed].
         /// </summary>
         event NoisyCollectionCollectionChanged<object> INoisyCollection.NoisyCollectionChanged
         {
-            add { NoisyCollectionChanged += value as NoisyCollectionCollectionChanged<T>; }
-            remove { NoisyCollectionChanged -= value as NoisyCollectionCollectionChanged<T>; }
+            add => NoisyCollectionChanged += value as NoisyCollectionCollectionChanged<T>;
+            remove => NoisyCollectionChanged -= value as NoisyCollectionCollectionChanged<T>;
         }
+
         /// <summary>
-        /// Occurs when [noisy collection changed].
+        ///     Occurs when [noisy collection changed].
         /// </summary>
         public event NoisyCollectionCollectionChanged<T> NoisyCollectionChanged;
+
         /// <summary>
-        /// Occurs when the collection changes.
+        ///     Occurs when the collection changes.
         /// </summary>
         public virtual event NotifyCollectionChangedEventHandler CollectionChanged;
+
         /// <summary>
-        /// Occurs when a property value changes.
+        ///     Occurs when a property value changes.
         /// </summary>
         protected virtual event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
-        /// Occurs when a property value changes.
+        ///     Occurs when a property value changes.
         /// </summary>
         event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
         {
-            add
-            {
-                PropertyChanged += value;
-            }
-            remove
-            {
-                PropertyChanged -= value;
-            }
+            add => PropertyChanged += value;
+            remove => PropertyChanged -= value;
         }
+
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Gets or sets an item from/in a specific index
+        ///     Gets or sets an item from/in a specific index
         /// </summary>
         /// <param name="index">index to get/set</param>
         /// <returns></returns>
@@ -168,12 +179,13 @@ namespace LiveCharts.Helpers
                 {
                     _source[index] = value;
                 }
+
                 ReplaceItem(original, value, index);
             }
         }
 
         /// <summary>
-        /// Gets or sets an item from/in a specific index
+        ///     Gets or sets an item from/in a specific index
         /// </summary>
         /// <param name="index">index to get/set</param>
         /// <returns></returns>
@@ -191,14 +203,15 @@ namespace LiveCharts.Helpers
                 var original = this[index];
                 lock (_sync)
                 {
-                    _source[index] = (T)value;
+                    _source[index] = (T) value;
                 }
+
                 ReplaceItem(original, value, index);
             }
         }
 
         /// <summary>
-        /// Enumerates the collection
+        ///     Enumerates the collection
         /// </summary>
         /// <returns>collection enumeration</returns>
         public IEnumerator<T> GetEnumerator()
@@ -210,7 +223,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Enumerates the collection
+        ///     Enumerates the collection
         /// </summary>
         /// <returns>collection enumeration</returns>
         IEnumerator IEnumerable.GetEnumerator()
@@ -219,65 +232,51 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Gets the number of items in the array
+        ///     Gets the number of items in the array
         /// </summary>
         /// <returns>items count</returns>
-        public int Count
-        {
-            get { return _source.Count; }
-        }
+        public int Count => _source.Count;
 
         /// <summary>
-        /// Gets whether the collection is read only
+        ///     Gets whether the collection is read only
         /// </summary>
         /// <returns>result</returns>
-        bool ICollection<T>.IsReadOnly
-        {
-            get { return ((ICollection<T>)_source).IsReadOnly; }
-        }
+        bool ICollection<T>.IsReadOnly => ((ICollection<T>) _source).IsReadOnly;
+
         /// <summary>
-        /// Gets the number of items in the array
+        ///     Gets the number of items in the array
         /// </summary>
         /// <returns>result</returns>
-        bool IList.IsReadOnly
-        {
-            get { return ((IList)_source).IsReadOnly; }
-        }
+        bool IList.IsReadOnly => ((IList) _source).IsReadOnly;
 
         /// <summary>
-        /// Gets whether the collection is synchronized
+        ///     Gets whether the collection is synchronized
         /// </summary>
         /// <returns>result</returns>
-        public bool IsSynchronized
-        {
-            get { return ((ICollection)_source).IsSynchronized; }
-        }
+        public bool IsSynchronized => ((ICollection) _source).IsSynchronized;
 
         /// <summary>
-        /// Gets the collections's sync root
+        ///     Gets the collections's sync root
         /// </summary>
-        public object SyncRoot
-        {
-            get { return ((ICollection)_source).SyncRoot; }
-        }
+        public object SyncRoot => ((ICollection) _source).SyncRoot;
 
         /// <summary>
-        /// Gets whether the collection is fixed
+        ///     Gets whether the collection is fixed
         /// </summary>
-        public bool IsFixedSize { get { return ((IList)_source).IsFixedSize; } }
+        public bool IsFixedSize => ((IList) _source).IsFixedSize;
 
         #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// Adds an object to the collection, and notifies the change
+        ///     Adds an object to the collection, and notifies the change
         /// </summary>
         /// <param name="value">item to add</param>
         /// <returns>number of items in the collection</returns>
         int IList.Add(object value)
         {
-            var v = (T)value;
+            var v = (T) value;
             Add(v);
             lock (_sync)
             {
@@ -286,7 +285,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Add an item to the collection, and notifies the change
+        ///     Add an item to the collection, and notifies the change
         /// </summary>
         /// <returns>number of items in the collection</returns>
         public void Add(T item)
@@ -295,7 +294,8 @@ namespace LiveCharts.Helpers
             {
                 _source.Add(item);
             }
-            OnNoisyCollectionChanged(null, new[] { item });
+
+            OnNoisyCollectionChanged(null, new[] {item});
             OnPropertyChanged(CountString);
             OnPropertyChanged(IndexerString);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(
@@ -303,7 +303,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Adds many items to the collection, and notifies the change
+        ///     Adds many items to the collection, and notifies the change
         /// </summary>
         /// <param name="items">collection to add</param>
         public void AddRange(IEnumerable<object> items)
@@ -312,7 +312,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Adds many items to the collection, and notifies the change
+        ///     Adds many items to the collection, and notifies the change
         /// </summary>
         /// <param name="items">collection to add</param>
         public void AddRange(IEnumerable<T> items)
@@ -322,6 +322,7 @@ namespace LiveCharts.Helpers
             {
                 _source.AddRange(newItems);
             }
+
             OnNoisyCollectionChanged(null, newItems);
             OnPropertyChanged(CountString);
             OnPropertyChanged(IndexerString);
@@ -332,7 +333,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Insert an item in a specific index, then notifies the change
+        ///     Insert an item in a specific index, then notifies the change
         /// </summary>
         /// <param name="index">index to insert at</param>
         /// <param name="item">item to insert</param>
@@ -342,7 +343,8 @@ namespace LiveCharts.Helpers
             {
                 _source.Insert(index, item);
             }
-            OnNoisyCollectionChanged(null, new[] { item });
+
+            OnNoisyCollectionChanged(null, new[] {item});
             OnPropertyChanged(CountString);
             OnPropertyChanged(IndexerString);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(
@@ -350,17 +352,17 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Insert an item in a specific index, then notifies the change
+        ///     Insert an item in a specific index, then notifies the change
         /// </summary>
         /// <param name="index">index to insert at</param>
         /// <param name="value">item to insert</param>
         public void Insert(int index, object value)
         {
-            Insert(index, (T)value);
+            Insert(index, (T) value);
         }
 
         /// <summary>
-        /// Insert a range of values, starting in a specific index, then notifies the change
+        ///     Insert a range of values, starting in a specific index, then notifies the change
         /// </summary>
         /// <param name="index">index to start at</param>
         /// <param name="collection">collection to insert</param>
@@ -370,7 +372,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Insert a range of values, starting in a specific index, then notifies the change
+        ///     Insert a range of values, starting in a specific index, then notifies the change
         /// </summary>
         /// <param name="index">index to start at</param>
         /// <param name="collection">collection to insert</param>
@@ -381,6 +383,7 @@ namespace LiveCharts.Helpers
             {
                 _source.InsertRange(index, newItems);
             }
+
             OnNoisyCollectionChanged(null, newItems);
             OnPropertyChanged(CountString);
             OnPropertyChanged(IndexerString);
@@ -391,16 +394,16 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Removes an item from a collection, then notifies the change
+        ///     Removes an item from a collection, then notifies the change
         /// </summary>
         /// <param name="value">item to remove</param>
         public void Remove(object value)
         {
-            Remove((T)value);
+            Remove((T) value);
         }
 
         /// <summary>
-        /// Remove an item from a collection, then notifies the change
+        ///     Remove an item from a collection, then notifies the change
         /// </summary>
         /// <param name="item">item to remove</param>
         /// <returns>number of items in the collection</returns>
@@ -411,13 +414,14 @@ namespace LiveCharts.Helpers
             {
                 index = _source.IndexOf(item);
             }
+
             if (index < 0) return false;
             RemoveAt(index);
             return true;
         }
 
         /// <summary>
-        /// Removes an item at a specific index, then notifies the change
+        ///     Removes an item at a specific index, then notifies the change
         /// </summary>
         /// <param name="index">index to remove at</param>
         void IList.RemoveAt(int index)
@@ -426,7 +430,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Removes an item at a specific index, then notifies the change
+        ///     Removes an item at a specific index, then notifies the change
         /// </summary>
         /// <param name="index">index to remove at</param>
         void IList<T>.RemoveAt(int index)
@@ -435,7 +439,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Removes an item at a specific index, then notifies the change
+        ///     Removes an item at a specific index, then notifies the change
         /// </summary>
         /// <param name="index">index to remove at</param>
         public void RemoveAt(int index)
@@ -446,7 +450,8 @@ namespace LiveCharts.Helpers
                 item = _source[index];
                 _source.RemoveAt(index);
             }
-            OnNoisyCollectionChanged(new[] { item }, null);
+
+            OnNoisyCollectionChanged(new[] {item}, null);
             OnPropertyChanged(CountString);
             OnPropertyChanged(IndexerString);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(
@@ -454,7 +459,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Removes all the items from the collection, then notifies the change
+        ///     Removes all the items from the collection, then notifies the change
         /// </summary>
         void IList.Clear()
         {
@@ -462,7 +467,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Removes all the items from the collection, then notifies the change
+        ///     Removes all the items from the collection, then notifies the change
         /// </summary>
         void ICollection<T>.Clear()
         {
@@ -470,7 +475,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Removes all the items from the collection, then notifies the change
+        ///     Removes all the items from the collection, then notifies the change
         /// </summary>
         public void Clear()
         {
@@ -480,6 +485,7 @@ namespace LiveCharts.Helpers
                 backup = _source.ToArray();
                 _source.Clear();
             }
+
             OnNoisyCollectionChanged(backup, null);
             OnNoisyCollectionReset();
             OnPropertyChanged(CountString);
@@ -488,17 +494,17 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Evaluates whether an item is in this collection
+        ///     Evaluates whether an item is in this collection
         /// </summary>
         /// <param name="value">object to look for</param>
         /// <returns>evaluation</returns>
         public bool Contains(object value)
         {
-            return Contains((T)value);
+            return Contains((T) value);
         }
 
         /// <summary>
-        /// Evaluates whether an item is in this collection
+        ///     Evaluates whether an item is in this collection
         /// </summary>
         /// <param name="item">item to look for</param>
         /// <returns>evaluation</returns>
@@ -511,7 +517,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Copies the collection to another array
+        ///     Copies the collection to another array
         /// </summary>
         /// <param name="array">backup array</param>
         /// <param name="index">array index</param>
@@ -521,7 +527,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Copies the collection to another array
+        ///     Copies the collection to another array
         /// </summary>
         /// <param name="array">backup array</param>
         /// <param name="index">array index</param>
@@ -534,17 +540,17 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Returns the index of an item in the collection
+        ///     Returns the index of an item in the collection
         /// </summary>
         /// <param name="value">item to look for</param>
         /// <returns></returns>
         public int IndexOf(object value)
         {
-            return IndexOf((T)value);
+            return IndexOf((T) value);
         }
 
         /// <summary>
-        /// Returns the index of an item in the collection
+        ///     Returns the index of an item in the collection
         /// </summary>
         /// <param name="item">item to look for</param>
         /// <returns></returns>
@@ -558,34 +564,30 @@ namespace LiveCharts.Helpers
 
         #endregion
 
-        #region Protected Methods        
+        #region Protected Methods
+
         /// <summary>
-        /// Raises the <see cref="E:PropertyChanged" /> event.
+        ///     Raises the <see cref="E:PropertyChanged" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs" /> instance containing the event data.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, e);
-            }
+            if (PropertyChanged != null) PropertyChanged.Invoke(this, e);
         }
 
         /// <summary>
-        /// Raises the <see cref="E:CollectionChanged" /> event.
+        ///     Raises the <see cref="E:CollectionChanged" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs" /> instance containing the event data.</param>
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (CollectionChanged != null)
-            {
-                CollectionChanged.Invoke(this, e);
-            }
+            if (CollectionChanged != null) CollectionChanged.Invoke(this, e);
         }
 
         #endregion
 
         #region Private Methods
+
         private void OnNoisyCollectionChanged(IEnumerable<T> olditems, IEnumerable<T> newItems)
         {
             if (NoisyCollectionChanged != null)
@@ -606,10 +608,11 @@ namespace LiveCharts.Helpers
         private void ReplaceItem(object original, object item, int index)
         {
             OnPropertyChanged(IndexerString);
-            OnNoisyCollectionChanged(new List<T>{(T) original}, new List<T>{(T) item});
+            OnNoisyCollectionChanged(new List<T> {(T) original}, new List<T> {(T) item});
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(
                 NotifyCollectionChangedAction.Replace, original, item, index));
         }
+
         #endregion
     }
 }

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：CartesianChart.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -32,12 +40,19 @@ using ChartUpdater = FactoryWindowGUI.ChartUtil.Components.ChartUpdater;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The Cartesian chart can plot any series with x and y coordinates
+    ///     The Cartesian chart can plot any series with x and y coordinates
     /// </summary>
     public class CartesianChart : Chart, ICartesianChart
     {
         /// <summary>
-        /// Initializes a new instance of CartesianChart class
+        ///     The visual elements property
+        /// </summary>
+        public static readonly DependencyProperty VisualElementsProperty = DependencyProperty.Register(
+            "VisualElements", typeof(VisualElementsCollection), typeof(CartesianChart),
+            new PropertyMetadata(default(VisualElementsCollection), OnVisualCollectionChanged));
+
+        /// <summary>
+        ///     Initializes a new instance of CartesianChart class
         /// </summary>
         public CartesianChart()
         {
@@ -54,14 +69,8 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The visual elements property
-        /// </summary>
-        public static readonly DependencyProperty VisualElementsProperty = DependencyProperty.Register(
-            "VisualElements", typeof (VisualElementsCollection), typeof (CartesianChart),
-            new PropertyMetadata(default(VisualElementsCollection), OnVisualCollectionChanged));
-
-        /// <summary>
-        /// Gets or sets the collection of visual elements in the chart, a visual element display another UiElement in the chart.
+        ///     Gets or sets the collection of visual elements in the chart, a visual element display another UiElement in the
+        ///     chart.
         /// </summary>
         public VisualElementsCollection VisualElements
         {
@@ -69,9 +78,10 @@ namespace FactoryWindowGUI.ChartUtil
             set { SetValue(VisualElementsProperty, value); }
         }
 
-        private static void OnVisualCollectionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void OnVisualCollectionChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var chart = (CartesianChart)dependencyObject;
+            var chart = (CartesianChart) dependencyObject;
 
             if (chart.VisualElements != null) chart.VisualElements.Chart = chart.Model;
         }

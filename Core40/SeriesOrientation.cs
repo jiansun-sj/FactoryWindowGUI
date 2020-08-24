@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：SeriesOrientation.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,20 +31,22 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// The series orientation
+    ///     The series orientation
     /// </summary>
     public enum SeriesOrientation
     {
         /// <summary>
-        /// Both, horizontal and vertical orientation
+        ///     Both, horizontal and vertical orientation
         /// </summary>
         All,
+
         /// <summary>
-        /// Horizontal orientation
+        ///     Horizontal orientation
         /// </summary>
         Horizontal,
+
         /// <summary>
-        /// Vertical orientation
+        ///     Vertical orientation
         /// </summary>
         Vertical
     }

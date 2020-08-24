@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：MapResolver.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -20,7 +28,6 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -35,9 +42,7 @@ namespace FactoryWindowGUI.ChartUtil.Maps
             //file = Path.Combine(Directory.GetCurrentDirectory(), file);
 
             if (!File.Exists(file))
-            {
-                throw new FileNotFoundException(String.Format("This file {0} was not found.", file));
-            }
+                throw new FileNotFoundException(string.Format("This file {0} was not found.", file));
 
             var svgMap = new LvcMap
             {
@@ -66,10 +71,12 @@ namespace FactoryWindowGUI.ChartUtil.Maps
                             if (reader.Name == "Name") p.Name = reader.ReadInnerXml();
                             if (reader.Name == "Path") p.Data = reader.ReadInnerXml();
                         }
+
                         svgMap.Data.Add(p);
                     }
                 }
             }
+
             return svgMap;
         }
     }

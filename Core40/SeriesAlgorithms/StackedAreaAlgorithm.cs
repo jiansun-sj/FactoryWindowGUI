@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：StackedAreaAlgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -31,7 +39,6 @@ using LiveCharts.Helpers;
 namespace LiveCharts.SeriesAlgorithms
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.SeriesAlgorithm" />
     /// <seealso cref="LiveCharts.Definitions.Series.ICartesianSeries" />
@@ -40,18 +47,38 @@ namespace LiveCharts.SeriesAlgorithms
         private readonly IStackModelableSeriesView _stackModelable;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StackedAreaAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="StackedAreaAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public StackedAreaAlgorithm(ISeriesView view) : base(view)
         {
             SeriesOrientation = SeriesOrientation.Horizontal;
-            _stackModelable = (IStackModelableSeriesView)view;
+            _stackModelable = (IStackModelableSeriesView) view;
             PreferredSelectionMode = TooltipSelectionMode.SharedXValues;
         }
 
+        double ICartesianSeries.GetMinX(AxisCore axis)
+        {
+            return AxisLimits.StretchMin(axis);
+        }
+
+        double ICartesianSeries.GetMaxX(AxisCore axis)
+        {
+            return AxisLimits.StretchMax(axis);
+        }
+
+        double ICartesianSeries.GetMinY(AxisCore axis)
+        {
+            return AxisLimits.StretchMin(axis);
+        }
+
+        double ICartesianSeries.GetMaxY(AxisCore axis)
+        {
+            return AxisLimits.SeparatorMaxRounded(axis);
+        }
+
         /// <summary>
-        /// Updates this instance.
+        ///     Updates this instance.
         /// </summary>
         public override void Update()
         {
@@ -63,7 +90,7 @@ namespace LiveCharts.SeriesAlgorithms
             if (lineView == null) return;
 
             var smoothness = lineView.LineSmoothness;
-            smoothness = smoothness > 1 ? 1 : (smoothness < 0 ? 0 : smoothness);
+            smoothness = smoothness > 1 ? 1 : smoothness < 0 ? 0 : smoothness;
 
             foreach (var segment in points.SplitEachNaN())
             {
@@ -135,7 +162,7 @@ namespace LiveCharts.SeriesAlgorithms
 
                     chartPoint.View = View.GetPointView(chartPoint,
                         View.DataLabels
-                            ? (chartPoint.Participation > 0.05 ? View.GetLabelPointFormatter()(chartPoint) : string.Empty)
+                            ? chartPoint.Participation > 0.05 ? View.GetLabelPointFormatter()(chartPoint) : string.Empty
                             : null);
 
                     var bezierView = chartPoint.View as IBezierPointView;
@@ -166,13 +193,14 @@ namespace LiveCharts.SeriesAlgorithms
 
                     p3 += uw;
                 }
+
                 lineView.EndSegment(segmentPosition, p1);
                 segmentPosition++;
             }
         }
 
         /// <summary>
-        /// Gets the stacked point.
+        ///     Gets the stacked point.
         /// </summary>
         /// <param name="chartPoint">The chart point.</param>
         /// <returns></returns>
@@ -185,26 +213,6 @@ namespace LiveCharts.SeriesAlgorithms
             return new CorePoint(
                 ChartFunctions.ToDrawMargin(chartPoint.X, AxisOrientation.X, Chart, View.ScalesXAt),
                 ChartFunctions.ToDrawMargin(chartPoint.StackedParticipation, AxisOrientation.Y, Chart, View.ScalesYAt));
-        }
-
-        double ICartesianSeries.GetMinX(AxisCore axis)
-        {
-            return AxisLimits.StretchMin(axis);
-        }
-
-        double ICartesianSeries.GetMaxX(AxisCore axis)
-        {
-            return AxisLimits.StretchMax(axis);
-        }
-
-        double ICartesianSeries.GetMinY(AxisCore axis)
-        {
-            return AxisLimits.StretchMin(axis);
-        }
-
-        double ICartesianSeries.GetMaxY(AxisCore axis)
-        {
-            return AxisLimits.SeparatorMaxRounded(axis);
         }
     }
 }

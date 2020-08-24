@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：HeatPoint.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,20 +31,19 @@
 namespace LiveCharts.Defaults
 {
     /// <summary>
-    /// An already configured weighted chart point, this class notifies the chart to update every time a property changes
+    ///     An already configured weighted chart point, this class notifies the chart to update every time a property changes
     /// </summary>
     public class HeatPoint : ScatterPoint
     {
         /// <summary>
-        /// Initializes a new instance of HeatPoint class
+        ///     Initializes a new instance of HeatPoint class
         /// </summary>
         public HeatPoint()
         {
-
         }
-        
+
         /// <summary>
-        /// _initializes a new instance of HeatPoint class, giving x, y and weight
+        ///     _initializes a new instance of HeatPoint class, giving x, y and weight
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>

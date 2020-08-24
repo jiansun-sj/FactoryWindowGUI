@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：PiePointView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -28,25 +36,24 @@ using System.Windows.Media.Animation;
 using LiveCharts;
 using LiveCharts.Charts;
 using LiveCharts.Definitions.Points;
-using LiveCharts.Wpf;
 
 namespace FactoryWindowGUI.ChartUtil.Points
 {
     internal class PiePointView : PointView, IPieSlicePointView
     {
+        public PieSlice Slice { get; set; }
+        public double OriginalPushOut { get; set; }
         public double Rotation { get; set; }
         public double InnerRadius { get; set; }
         public double Radius { get; set; }
         public double Wedge { get; set; }
-        public PieSlice Slice { get; set; }
-        public double OriginalPushOut { get; set; }
 
         public override void DrawOrMove(ChartPoint previousDrawn, ChartPoint current, int index, ChartCore chart)
         {
             if (IsNew)
             {
-                Canvas.SetTop(Slice, chart.DrawMargin.Height/2);
-                Canvas.SetLeft(Slice, chart.DrawMargin.Width/2);
+                Canvas.SetTop(Slice, chart.DrawMargin.Height / 2);
+                Canvas.SetLeft(Slice, chart.DrawMargin.Width / 2);
 
                 Slice.WedgeAngle = 0;
                 Slice.RotationAngle = 0;
@@ -54,16 +61,16 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
             if (DataLabel != null && double.IsNaN(Canvas.GetLeft(DataLabel)))
             {
-                Canvas.SetTop(DataLabel, chart.DrawMargin.Height/2);
-                Canvas.SetLeft(DataLabel, chart.DrawMargin.Width/2);
+                Canvas.SetTop(DataLabel, chart.DrawMargin.Height / 2);
+                Canvas.SetLeft(DataLabel, chart.DrawMargin.Width / 2);
             }
 
             if (HoverShape != null)
             {
                 var hs = (PieSlice) HoverShape;
 
-                Canvas.SetTop(hs, chart.DrawMargin.Height/2);
-                Canvas.SetLeft(hs, chart.DrawMargin.Width/2);
+                Canvas.SetTop(hs, chart.DrawMargin.Height / 2);
+                Canvas.SetLeft(hs, chart.DrawMargin.Width / 2);
                 hs.WedgeAngle = Wedge;
                 hs.RotationAngle = Rotation;
                 hs.InnerRadius = InnerRadius;
@@ -78,9 +85,9 @@ namespace FactoryWindowGUI.ChartUtil.Points
             }
 
             var hypo = ((PieSeries) current.SeriesView).LabelPosition == PieLabelPosition.InsideSlice
-                ? (Radius + InnerRadius)*(Math.Abs(InnerRadius) < 0.01 ? .65 : .5)
-                : Radius+lh;
-            var gamma = current.Participation*360/2 + Rotation;
+                ? (Radius + InnerRadius) * (Math.Abs(InnerRadius) < 0.01 ? .65 : .5)
+                : Radius + lh;
+            var gamma = current.Participation * 360 / 2 + Rotation;
             var cp = new Point(hypo * Math.Sin(gamma * (Math.PI / 180)), hypo * Math.Cos(gamma * (Math.PI / 180)));
 
             if (chart.View.DisableAnimations)
@@ -94,8 +101,8 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
                 if (DataLabel != null)
                 {
-                    var lx = cp.X + chart.DrawMargin.Width/2 - DataLabel.ActualWidth * .5;
-                    var ly = chart.DrawMargin.Height/2 - cp.Y - DataLabel.ActualHeight*.5;
+                    var lx = cp.X + chart.DrawMargin.Width / 2 - DataLabel.ActualWidth * .5;
+                    var ly = chart.DrawMargin.Height / 2 - cp.Y - DataLabel.ActualHeight * .5;
 
                     Canvas.SetLeft(DataLabel, lx);
                     Canvas.SetTop(DataLabel, ly);
@@ -110,17 +117,17 @@ namespace FactoryWindowGUI.ChartUtil.Points
             {
                 DataLabel.UpdateLayout();
 
-                var lx = cp.X + chart.DrawMargin.Width/2 - DataLabel.ActualWidth * .5;
-                var ly = chart.DrawMargin.Height/2 - cp.Y - DataLabel.ActualHeight * .5;
+                var lx = cp.X + chart.DrawMargin.Width / 2 - DataLabel.ActualWidth * .5;
+                var ly = chart.DrawMargin.Height / 2 - cp.Y - DataLabel.ActualHeight * .5;
 
                 DataLabel.BeginAnimation(Canvas.LeftProperty, new DoubleAnimation(lx, animSpeed));
                 DataLabel.BeginAnimation(Canvas.TopProperty, new DoubleAnimation(ly, animSpeed));
             }
 
-            Slice.BeginAnimation(Canvas.LeftProperty, 
+            Slice.BeginAnimation(Canvas.LeftProperty,
                 new DoubleAnimation(chart.DrawMargin.Width / 2, animSpeed));
             Slice.BeginAnimation(Canvas.TopProperty,
-                new DoubleAnimation(chart.DrawMargin.Height/2, animSpeed));
+                new DoubleAnimation(chart.DrawMargin.Height / 2, animSpeed));
             Slice.BeginAnimation(PieSlice.InnerRadiusProperty, new DoubleAnimation(InnerRadius, animSpeed));
             Slice.BeginAnimation(PieSlice.RadiusProperty, new DoubleAnimation(Radius, animSpeed));
             Slice.BeginAnimation(PieSlice.WedgeAngleProperty, new DoubleAnimation(Wedge, animSpeed));
@@ -150,13 +157,9 @@ namespace FactoryWindowGUI.ChartUtil.Points
         public override void OnHoverLeave(ChartPoint point)
         {
             if (point.Fill != null)
-            {
-                Slice.Fill = (Brush)point.Fill;
-            }
+                Slice.Fill = (Brush) point.Fill;
             else
-            {
                 Slice.Fill = ((Series) point.SeriesView).Fill;
-            }
             Slice.BeginAnimation(PieSlice.PushOutProperty,
                 new DoubleAnimation(OriginalPushOut, point.SeriesView.Model.Chart.View.AnimationsSpeed));
         }

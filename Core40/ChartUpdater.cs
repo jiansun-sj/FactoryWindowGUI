@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ChartUpdater.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -28,29 +36,30 @@ using LiveCharts.Helpers;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     public class ChartUpdater
     {
         /// <summary>
-        /// Gets or sets the chart.
+        ///     Gets or sets the chart.
         /// </summary>
         /// <value>
-        /// The chart.
+        ///     The chart.
         /// </value>
         public ChartCore Chart { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is updating.
+        ///     Gets or sets a value indicating whether this instance is updating.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is updating; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is updating; otherwise, <c>false</c>.
         /// </value>
         public bool IsUpdating { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether [restart view requested].
+        ///     Gets or sets a value indicating whether [restart view requested].
         /// </summary>
         /// <value>
-        /// <c>true</c> if [restart view requested]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [restart view requested]; otherwise, <c>false</c>.
         /// </value>
         public bool RestartViewRequested { get; set; }
 
@@ -60,18 +69,18 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Runs the specified restart view.
+        ///     Runs the specified restart view.
         /// </summary>
         /// <param name="restartView">if set to <c>true</c> [restart view].</param>
         /// <param name="updateNow">if set to <c>true</c> [update now].</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public virtual void Run(bool restartView = false, bool updateNow = false)   
+        public virtual void Run(bool restartView = false, bool updateNow = false)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Updates the frequency.
+        ///     Updates the frequency.
         /// </summary>
         /// <param name="freq">The freq.</param>
         /// <exception cref="System.NotImplementedException"></exception>
@@ -81,14 +90,14 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Updates the specified restarts animations.
+        ///     Updates the specified restarts animations.
         /// </summary>
         /// <param name="restartsAnimations">if set to <c>true</c> [restarts animations].</param>
         /// <param name="force"></param>
-        protected void Update(bool restartsAnimations = false, bool force = false)   
+        protected void Update(bool restartsAnimations = false, bool force = false)
         {
             if (!force && Chart.View.UpdaterState == UpdaterState.Paused) return;
-             
+
             if (!force && !Chart.View.IsControlLoaded) return;
 
             if (restartsAnimations)

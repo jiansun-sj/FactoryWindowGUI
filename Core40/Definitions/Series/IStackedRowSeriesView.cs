@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：IStackedRowSeriesView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,24 +31,24 @@
 namespace LiveCharts.Definitions.Series
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Series.IGroupedStackedSeriesView" />
     /// <seealso cref="LiveCharts.Definitions.Series.IStackModelableSeriesView" />
     public interface IStackedRowSeriesView : IGroupedStackedSeriesView, IStackModelableSeriesView
     {
         /// <summary>
-        /// Gets or sets the maximum height of the row.
+        ///     Gets or sets the maximum height of the row.
         /// </summary>
         /// <value>
-        /// The maximum height of the row.
+        ///     The maximum height of the row.
         /// </value>
         double MaxRowHeight { get; set; }
+
         /// <summary>
-        /// Gets or sets the row padding.
+        ///     Gets or sets the row padding.
         /// </summary>
         /// <value>
-        /// The row padding.
+        ///     The row padding.
         /// </value>
         double RowPadding { get; set; }
     }

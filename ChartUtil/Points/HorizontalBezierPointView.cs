@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：HorizontalBezierPointView.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -29,7 +37,6 @@ using LiveCharts;
 using LiveCharts.Charts;
 using LiveCharts.Definitions.Points;
 using LiveCharts.Dtos;
-using LiveCharts.Wpf;
 
 namespace FactoryWindowGUI.ChartUtil.Points
 {
@@ -84,7 +91,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
                         if (Shape != null)
                         {
                             Canvas.SetTop(Shape, y);
-                            Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width*.5);
+                            Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width * .5);
                         }
 
                         if (DataLabel != null)
@@ -95,7 +102,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
                     }
                     else
                     {
-                        var startPoint = ((LineSeries)current.SeriesView).Splitters[0].Left.Point;
+                        var startPoint = ((LineSeries) current.SeriesView).Splitters[0].Left.Point;
                         Segment.Point1 = startPoint;
                         Segment.Point2 = startPoint;
                         Segment.Point3 = startPoint;
@@ -117,12 +124,12 @@ namespace FactoryWindowGUI.ChartUtil.Points
             else if (DataLabel != null && double.IsNaN(Canvas.GetLeft(DataLabel)))
             {
                 Canvas.SetTop(DataLabel, y);
-                Canvas.SetLeft(DataLabel, current.ChartLocation.X - DataLabel.ActualWidth*.5);
+                Canvas.SetLeft(DataLabel, current.ChartLocation.X - DataLabel.ActualWidth * .5);
             }
 
             #region No Animated
 
-                if (chart.View.DisableAnimations)
+            if (chart.View.DisableAnimations)
             {
                 Segment.Point1 = Data.Point1.AsPoint();
                 Segment.Point2 = Data.Point2.AsPoint();
@@ -130,14 +137,14 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
                 if (HoverShape != null)
                 {
-                    Canvas.SetLeft(HoverShape, current.ChartLocation.X - HoverShape.Width*.5);
-                    Canvas.SetTop(HoverShape, current.ChartLocation.Y - HoverShape.Height*.5);
+                    Canvas.SetLeft(HoverShape, current.ChartLocation.X - HoverShape.Width * .5);
+                    Canvas.SetTop(HoverShape, current.ChartLocation.Y - HoverShape.Height * .5);
                 }
 
                 if (Shape != null)
                 {
-                    Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width*.5);
-                    Canvas.SetTop(Shape, current.ChartLocation.Y - Shape.Height*.5);
+                    Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width * .5);
+                    Canvas.SetTop(Shape, current.ChartLocation.Y - Shape.Height * .5);
                 }
 
                 if (DataLabel != null)
@@ -148,6 +155,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
                     Canvas.SetLeft(DataLabel, xl);
                     Canvas.SetTop(DataLabel, yl);
                 }
+
                 return;
             }
 
@@ -170,7 +178,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
                 else
                 {
                     Shape.BeginAnimation(Canvas.LeftProperty,
-                        new DoubleAnimation(current.ChartLocation.X - Shape.Width*.5, chart.View.AnimationsSpeed));
+                        new DoubleAnimation(current.ChartLocation.X - Shape.Width * .5, chart.View.AnimationsSpeed));
                     Shape.BeginAnimation(Canvas.TopProperty,
                         new DoubleAnimation(current.ChartLocation.Y - Shape.Height * .5, chart.View.AnimationsSpeed));
                 }
@@ -180,8 +188,8 @@ namespace FactoryWindowGUI.ChartUtil.Points
             {
                 DataLabel.UpdateLayout();
 
-                var xl = CorrectXLabel(current.ChartLocation.X - DataLabel.ActualWidth*.5, chart);
-                var yl = CorrectYLabel(current.ChartLocation.Y - DataLabel.ActualHeight*.5, chart);
+                var xl = CorrectXLabel(current.ChartLocation.X - DataLabel.ActualWidth * .5, chart);
+                var yl = CorrectYLabel(current.ChartLocation.Y - DataLabel.ActualHeight * .5, chart);
 
                 DataLabel.BeginAnimation(Canvas.LeftProperty,
                     new DoubleAnimation(xl, chart.View.AnimationsSpeed));
@@ -191,8 +199,8 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
             if (HoverShape != null)
             {
-                Canvas.SetLeft(HoverShape, current.ChartLocation.X - HoverShape.Width*.5);
-                Canvas.SetTop(HoverShape, current.ChartLocation.Y - HoverShape.Height*.5);
+                Canvas.SetLeft(HoverShape, current.ChartLocation.X - HoverShape.Width * .5);
+                Canvas.SetTop(HoverShape, current.ChartLocation.Y - HoverShape.Height * .5);
             }
         }
 
@@ -204,33 +212,9 @@ namespace FactoryWindowGUI.ChartUtil.Points
             Container.Segments.Remove(Segment);
         }
 
-        protected double CorrectXLabel(double desiredPosition, ChartCore chart)
-        {
-            if (desiredPosition + DataLabel.ActualWidth*.5 < -0.1) return -DataLabel.ActualWidth;
-
-            if (desiredPosition + DataLabel.ActualWidth > chart.DrawMargin.Width)
-                desiredPosition -= desiredPosition + DataLabel.ActualWidth - chart.DrawMargin.Width + 2;
-
-            if (desiredPosition < 0) desiredPosition = 0;
-
-            return desiredPosition;
-        }
-
-        protected double CorrectYLabel(double desiredPosition, ChartCore chart)
-        {
-            desiredPosition -= (Shape == null ? 0 : Shape.ActualHeight*.5) + DataLabel.ActualHeight*.5 + 2;
-
-            if (desiredPosition + DataLabel.ActualHeight > chart.DrawMargin.Height)
-                desiredPosition -= desiredPosition + DataLabel.ActualHeight - chart.DrawMargin.Height + 2;
-
-            if (desiredPosition < 0) desiredPosition = 0;
-
-            return desiredPosition;
-        }
-
         public override void OnHover(ChartPoint point)
         {
-            var lineSeries = (LineSeries)point.SeriesView;
+            var lineSeries = (LineSeries) point.SeriesView;
             if (Shape != null) Shape.Fill = Shape.Stroke;
             lineSeries.Path.StrokeThickness = lineSeries.StrokeThickness + 1;
         }
@@ -243,6 +227,30 @@ namespace FactoryWindowGUI.ChartUtil.Points
                     ? lineSeries.PointForeground
                     : (Brush) point.Fill;
             lineSeries.Path.StrokeThickness = lineSeries.StrokeThickness;
+        }
+
+        protected double CorrectXLabel(double desiredPosition, ChartCore chart)
+        {
+            if (desiredPosition + DataLabel.ActualWidth * .5 < -0.1) return -DataLabel.ActualWidth;
+
+            if (desiredPosition + DataLabel.ActualWidth > chart.DrawMargin.Width)
+                desiredPosition -= desiredPosition + DataLabel.ActualWidth - chart.DrawMargin.Width + 2;
+
+            if (desiredPosition < 0) desiredPosition = 0;
+
+            return desiredPosition;
+        }
+
+        protected double CorrectYLabel(double desiredPosition, ChartCore chart)
+        {
+            desiredPosition -= (Shape == null ? 0 : Shape.ActualHeight * .5) + DataLabel.ActualHeight * .5 + 2;
+
+            if (desiredPosition + DataLabel.ActualHeight > chart.DrawMargin.Height)
+                desiredPosition -= desiredPosition + DataLabel.ActualHeight - chart.DrawMargin.Height + 2;
+
+            if (desiredPosition < 0) desiredPosition = 0;
+
+            return desiredPosition;
         }
     }
 }

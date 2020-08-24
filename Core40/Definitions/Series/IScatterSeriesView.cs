@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：IScatterSeriesView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,23 +31,23 @@
 namespace LiveCharts.Definitions.Series
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Series.ISeriesView" />
     public interface IScatterSeriesView : ISeriesView
     {
         /// <summary>
-        /// Gets or sets the maximum point shape diameter.
+        ///     Gets or sets the maximum point shape diameter.
         /// </summary>
         /// <value>
-        /// The maximum point shape diameter.
+        ///     The maximum point shape diameter.
         /// </value>
         double MaxPointShapeDiameter { get; set; }
+
         /// <summary>
-        /// Gets or sets the minimum point shape diameter.
+        ///     Gets or sets the minimum point shape diameter.
         /// </summary>
         /// <value>
-        /// The minimum point shape diameter.
+        ///     The minimum point shape diameter.
         /// </value>
         double MinPointShapeDiameter { get; set; }
     }

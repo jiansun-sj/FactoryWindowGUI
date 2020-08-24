@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：TooltipDataViewModel.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,36 +34,38 @@ using System.Collections.Generic;
 namespace LiveCharts.Dtos
 {
     /// <summary>
-    /// 
     /// </summary>
     public struct TooltipDataViewModel
     {
         /// <summary>
-        /// Gets or sets the points.
+        ///     Gets or sets the points.
         /// </summary>
         /// <value>
-        /// The points.
+        ///     The points.
         /// </value>
         public IEnumerable<ChartPoint> Points { get; set; }
+
         /// <summary>
-        /// Gets or sets the shares.
+        ///     Gets or sets the shares.
         /// </summary>
         /// <value>
-        /// The shares.
+        ///     The shares.
         /// </value>
         public double? Shares { get; set; }
+
         /// <summary>
-        /// Gets or sets the x formatter.
+        ///     Gets or sets the x formatter.
         /// </summary>
         /// <value>
-        /// The x formatter.
+        ///     The x formatter.
         /// </value>
         public Func<double, string> XFormatter { get; set; }
+
         /// <summary>
-        /// Gets or sets the y formatter.
+        ///     Gets or sets the y formatter.
         /// </summary>
         /// <value>
-        /// The y formatter.
+        ///     The y formatter.
         /// </value>
         public Func<double, string> YFormatter { get; set; }
     }

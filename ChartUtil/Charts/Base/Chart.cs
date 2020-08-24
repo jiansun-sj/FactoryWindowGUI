@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：Chart.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -45,24 +53,23 @@ using LiveCharts.Events;
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
 using ChartUpdater = FactoryWindowGUI.ChartUtil.Components.ChartUpdater;
-using Separator = FactoryWindowGUI.ChartUtil.Separator;
 
 namespace FactoryWindowGUI.ChartUtil.Charts.Base
 {
     /// <summary>
-    /// Base chart class
+    ///     Base chart class
     /// </summary>
     public abstract class Chart : UserControl, IChartView
     {
         /// <summary>
-        /// Chart core model, the model calculates the chart.
+        ///     Chart core model, the model calculates the chart.
         /// </summary>
         protected ChartCore ChartCoreModel;
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of Chart class
+        ///     Initializes a new instance of Chart class
         /// </summary>
         protected Chart()
         {
@@ -107,7 +114,8 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
             Loaded += OnLoaded;
             TooltipTimeoutTimer.Tick += TooltipTimeoutTimerOnTick;
 
-            DrawMargin.Background = Brushes.Transparent; // if this line is not set, then it does not detect mouse down event...
+            DrawMargin.Background =
+                Brushes.Transparent; // if this line is not set, then it does not detect mouse down event...
             DrawMargin.MouseDown += OnDraggingStart;
             DrawMargin.MouseUp += OnDraggingEnd;
             DrawMargin.MouseMove += DragSection;
@@ -133,6 +141,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         #endregion
 
         #region Private and internal methods
+
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
             IsControlLoaded = true;
@@ -144,11 +153,12 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         {
             Model.ControlSize = new CoreSize(ActualWidth, ActualHeight);
             if (!(this is IPieChart))
-                Canvas.Clip = new RectangleGeometry(new Rect(new Point(0,0), new Size(ActualWidth, ActualHeight)));
+                Canvas.Clip = new RectangleGeometry(new Rect(new Point(0, 0), new Size(ActualWidth, ActualHeight)));
             Model.Updater.Run();
         }
 
-        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private void OnIsVisibleChanged(object sender,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             Model.ControlSize = new CoreSize(ActualWidth, ActualHeight);
 
@@ -167,12 +177,8 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
             }
 
             if (chart.LastKnownSeriesCollection != chart.Series && chart.LastKnownSeriesCollection != null)
-            {
                 foreach (var series in chart.LastKnownSeriesCollection)
-                {
                     series.Erase(true);
-                }
-            }
 
             CallChartUpdater()(o, e);
             chart.LastKnownSeriesCollection = chart.Series;
@@ -183,36 +189,41 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
             if (UpdaterTick != null) UpdaterTick.Invoke(this);
             if (UpdaterTickCommand != null && UpdaterTickCommand.CanExecute(this)) UpdaterTickCommand.Execute(this);
         }
+
         #endregion
 
         #region Events
+
         /// <summary>
-        /// The DataClick event is fired when a user click any data point
+        ///     The DataClick event is fired when a user click any data point
         /// </summary>
         public event DataClickHandler DataClick;
 
         /// <summary>
-        /// The DataHover event is fired when a user hovers over any data point
+        ///     The DataHover event is fired when a user hovers over any data point
         /// </summary>
         public event DataHoverHandler DataHover;
 
         /// <summary>
-        /// This event is fired every time the chart updates.
+        ///     This event is fired every time the chart updates.
         /// </summary>
         public event UpdaterTickHandler UpdaterTick;
+
         #endregion
 
-        #region Commands        
+        #region Commands
+
         /// <summary>
-        /// The data click command property
+        ///     The data click command property
         /// </summary>
         public static readonly DependencyProperty DataClickCommandProperty = DependencyProperty.Register(
             "DataClickCommand", typeof(ICommand), typeof(Chart), new PropertyMetadata(default(ICommand)));
+
         /// <summary>
-        /// Gets or sets the data click command.
+        ///     Gets or sets the data click command.
         /// </summary>
         /// <value>
-        /// The data click command.
+        ///     The data click command.
         /// </value>
         public ICommand DataClickCommand
         {
@@ -221,15 +232,16 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The data hover command property
+        ///     The data hover command property
         /// </summary>
         public static readonly DependencyProperty DataHoverCommandProperty = DependencyProperty.Register(
             "DataHoverCommand", typeof(ICommand), typeof(Chart), new PropertyMetadata(default(ICommand)));
+
         /// <summary>
-        /// Gets or sets the data hover command.
+        ///     Gets or sets the data hover command.
         /// </summary>
         /// <value>
-        /// The data hover command.
+        ///     The data hover command.
         /// </value>
         public ICommand DataHoverCommand
         {
@@ -238,21 +250,23 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The updater tick command property
+        ///     The updater tick command property
         /// </summary>
         public static readonly DependencyProperty UpdaterTickCommandProperty = DependencyProperty.Register(
             "UpdaterTickCommand", typeof(ICommand), typeof(Chart), new PropertyMetadata(default(ICommand)));
+
         /// <summary>
-        /// Gets or sets the updater tick command.
+        ///     Gets or sets the updater tick command.
         /// </summary>
         /// <value>
-        /// The updater tick command.
+        ///     The updater tick command.
         /// </value>
         public ICommand UpdaterTickCommand
         {
             get { return (ICommand) GetValue(UpdaterTickCommandProperty); }
             set { SetValue(UpdaterTickCommandProperty, value); }
         }
+
         #endregion
 
         #region Properties
@@ -263,34 +277,36 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         private SeriesCollection LastKnownSeriesCollection { get; set; }
 
         /// <summary>
-        /// Gets or sets the chart current canvas
+        ///     Gets or sets the chart current canvas
         /// </summary>
         protected Canvas Canvas { get; set; }
+
         internal Canvas DrawMargin { get; set; }
         internal Popup TooltipContainer { get; set; }
 
         /// <summary>
-        /// Gets or sets whether charts must randomize the starting default series color.
+        ///     Gets or sets whether charts must randomize the starting default series color.
         /// </summary>
         public static bool RandomizeStartingColor { get; set; }
 
         /// <summary>
-        /// This property need to be true when unit testing
+        ///     This property need to be true when unit testing
         /// </summary>
         public bool IsMocked { get; set; }
 
         /// <summary>
-        /// Gets or sets the application level default series color list
+        ///     Gets or sets the application level default series color list
         /// </summary>
         public static List<Color> Colors { get; set; }
 
         /// <summary>
-        /// The series colors property
+        ///     The series colors property
         /// </summary>
         public static readonly DependencyProperty SeriesColorsProperty = DependencyProperty.Register(
             "SeriesColors", typeof(ColorsCollection), typeof(Chart), new PropertyMetadata(default(ColorsCollection)));
+
         /// <summary>
-        /// Gets or sets 
+        ///     Gets or sets
         /// </summary>
         public ColorsCollection SeriesColors
         {
@@ -299,76 +315,80 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The axis y property
+        ///     The axis y property
         /// </summary>
         public static readonly DependencyProperty AxisYProperty = DependencyProperty.Register(
             "AxisY", typeof(AxesCollection), typeof(Chart),
             new PropertyMetadata(null, AxisInstancechanged(AxisOrientation.Y)));
+
         /// <summary>
-        /// Gets or sets vertical axis
+        ///     Gets or sets vertical axis
         /// </summary>
         public AxesCollection AxisY
         {
-            get { return (AxesCollection)GetValue(AxisYProperty); }
+            get { return (AxesCollection) GetValue(AxisYProperty); }
             set { SetValue(AxisYProperty, value); }
         }
 
         /// <summary>
-        /// The axis x property
+        ///     The axis x property
         /// </summary>
         public static readonly DependencyProperty AxisXProperty = DependencyProperty.Register(
             "AxisX", typeof(AxesCollection), typeof(Chart),
             new PropertyMetadata(null, AxisInstancechanged(AxisOrientation.X)));
 
         /// <summary>
-        /// Gets or sets horizontal axis
+        ///     Gets or sets horizontal axis
         /// </summary>
         public AxesCollection AxisX
         {
-            get { return (AxesCollection)GetValue(AxisXProperty); }
+            get { return (AxesCollection) GetValue(AxisXProperty); }
             set { SetValue(AxisXProperty, value); }
         }
 
         /// <summary>
-        /// The chart legend property
+        ///     The chart legend property
         /// </summary>
         public static readonly DependencyProperty ChartLegendProperty = DependencyProperty.Register(
             "ChartLegend", typeof(UserControl), typeof(Chart),
             new PropertyMetadata(null, CallChartUpdater()));
+
         /// <summary>
-        /// Gets or sets the control to use as chart legend for this chart.
+        ///     Gets or sets the control to use as chart legend for this chart.
         /// </summary>
         public UserControl ChartLegend
         {
-            get { return (UserControl)GetValue(ChartLegendProperty); }
+            get { return (UserControl) GetValue(ChartLegendProperty); }
             set { SetValue(ChartLegendProperty, value); }
         }
 
         /// <summary>
-        /// The zoom property
+        ///     The zoom property
         /// </summary>
         public static readonly DependencyProperty ZoomProperty = DependencyProperty.Register(
             "Zoom", typeof(ZoomingOptions), typeof(Chart),
             new PropertyMetadata(default(ZoomingOptions)));
+
         /// <summary>
-        /// Gets or sets chart zoom behavior
+        ///     Gets or sets chart zoom behavior
         /// </summary>
         public ZoomingOptions Zoom
         {
-            get { return (ZoomingOptions)GetValue(ZoomProperty); }
+            get { return (ZoomingOptions) GetValue(ZoomProperty); }
             set { SetValue(ZoomProperty, value); }
         }
 
         /// <summary>
-        /// The pan property
+        ///     The pan property
         /// </summary>
         public static readonly DependencyProperty PanProperty = DependencyProperty.Register(
             "Pan", typeof(PanningOptions), typeof(Chart), new PropertyMetadata(PanningOptions.Unset));
+
         /// <summary>
-        /// Gets or sets the chart pan, default is Unset, which bases the behavior according to Zoom property
+        ///     Gets or sets the chart pan, default is Unset, which bases the behavior according to Zoom property
         /// </summary>
         /// <value>
-        /// The pan.
+        ///     The pan.
         /// </value>
         public PanningOptions Pan
         {
@@ -377,29 +397,30 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The legend location property
+        ///     The legend location property
         /// </summary>
         public static readonly DependencyProperty LegendLocationProperty = DependencyProperty.Register(
             "LegendLocation", typeof(LegendLocation), typeof(Chart),
             new PropertyMetadata(LegendLocation.None, CallChartUpdater()));
+
         /// <summary>
-        /// Gets or sets where legend is located
+        ///     Gets or sets where legend is located
         /// </summary>
         public LegendLocation LegendLocation
         {
-            get { return (LegendLocation)GetValue(LegendLocationProperty); }
+            get { return (LegendLocation) GetValue(LegendLocationProperty); }
             set { SetValue(LegendLocationProperty, value); }
         }
 
         /// <summary>
-        /// The series property
+        ///     The series property
         /// </summary>
         public static readonly DependencyProperty SeriesProperty = DependencyProperty.Register(
             "Series", typeof(SeriesCollection), typeof(Chart),
             new PropertyMetadata(default(SeriesCollection), OnSeriesChanged));
 
         /// <summary>
-        /// Gets or sets chart series collection to plot.
+        ///     Gets or sets chart series collection to plot.
         /// </summary>
         public SeriesCollection Series
         {
@@ -408,58 +429,61 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The animations speed property
+        ///     The animations speed property
         /// </summary>
         public static readonly DependencyProperty AnimationsSpeedProperty = DependencyProperty.Register(
             "AnimationsSpeed", typeof(TimeSpan), typeof(Chart),
             new PropertyMetadata(default(TimeSpan), UpdateChartFrequency));
 
         /// <summary>
-        /// Gets or sets the default animation speed for this chart, you can override this speed for each element (series and axes)
+        ///     Gets or sets the default animation speed for this chart, you can override this speed for each element (series and
+        ///     axes)
         /// </summary>
         public TimeSpan AnimationsSpeed
         {
-            get { return (TimeSpan)GetValue(AnimationsSpeedProperty); }
+            get { return (TimeSpan) GetValue(AnimationsSpeedProperty); }
             set { SetValue(AnimationsSpeedProperty, value); }
         }
 
         /// <summary>
-        /// The disable animations property
+        ///     The disable animations property
         /// </summary>
         public static readonly DependencyProperty DisableAnimationsProperty = DependencyProperty.Register(
             "DisableAnimations", typeof(bool), typeof(Chart),
             new PropertyMetadata(default(bool), UpdateChartFrequency));
+
         /// <summary>
-        /// Gets or sets if the chart is animated or not.
+        ///     Gets or sets if the chart is animated or not.
         /// </summary>
         public bool DisableAnimations
         {
-            get { return (bool)GetValue(DisableAnimationsProperty); }
+            get { return (bool) GetValue(DisableAnimationsProperty); }
             set { SetValue(DisableAnimationsProperty, value); }
         }
 
         /// <summary>
-        /// The data tooltip property
+        ///     The data tooltip property
         /// </summary>
         public static readonly DependencyProperty DataTooltipProperty = DependencyProperty.Register(
             "DataTooltip", typeof(UserControl), typeof(Chart), new PropertyMetadata(null));
+
         /// <summary>
-        /// Gets or sets the chart data tooltip.
+        ///     Gets or sets the chart data tooltip.
         /// </summary>
         public UserControl DataTooltip
         {
-            get { return (UserControl)GetValue(DataTooltipProperty); }
+            get { return (UserControl) GetValue(DataTooltipProperty); }
             set { SetValue(DataTooltipProperty, value); }
         }
 
         /// <summary>
-        /// The hoverable property
+        ///     The hoverable property
         /// </summary>
         public static readonly DependencyProperty HoverableProperty = DependencyProperty.Register(
             "Hoverable", typeof(bool), typeof(Chart), new PropertyMetadata(true));
 
         /// <summary>
-        /// gets or sets whether chart should react when a user moves the mouse over a data point.
+        ///     gets or sets whether chart should react when a user moves the mouse over a data point.
         /// </summary>
         public bool Hoverable
         {
@@ -468,13 +492,14 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The scroll mode property
+        ///     The scroll mode property
         /// </summary>
         public static readonly DependencyProperty ScrollModeProperty = DependencyProperty.Register(
-            "ScrollMode", typeof(ScrollMode), typeof(Chart), 
+            "ScrollMode", typeof(ScrollMode), typeof(Chart),
             new PropertyMetadata(ScrollMode.None, ScrollModeOnChanged));
+
         /// <summary>
-        /// Gets or sets chart scroll mode
+        ///     Gets or sets chart scroll mode
         /// </summary>
         public ScrollMode ScrollMode
         {
@@ -483,13 +508,14 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The scroll horizontal from property
+        ///     The scroll horizontal from property
         /// </summary>
         public static readonly DependencyProperty ScrollHorizontalFromProperty = DependencyProperty.Register(
-            "ScrollHorizontalFrom", typeof(double), typeof(Chart), 
+            "ScrollHorizontalFrom", typeof(double), typeof(Chart),
             new PropertyMetadata(default(double), ScrollLimitOnChanged));
+
         /// <summary>
-        /// Gets or sets the scrolling horizontal start value
+        ///     Gets or sets the scrolling horizontal start value
         /// </summary>
         public double ScrollHorizontalFrom
         {
@@ -498,13 +524,14 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The scroll horizontal to property
+        ///     The scroll horizontal to property
         /// </summary>
         public static readonly DependencyProperty ScrollHorizontalToProperty = DependencyProperty.Register(
-            "ScrollHorizontalTo", typeof(double), typeof(Chart), 
-            new PropertyMetadata(default(double),  ScrollLimitOnChanged));
+            "ScrollHorizontalTo", typeof(double), typeof(Chart),
+            new PropertyMetadata(default(double), ScrollLimitOnChanged));
+
         /// <summary>
-        /// Gets or sets the scrolling horizontal end value
+        ///     Gets or sets the scrolling horizontal end value
         /// </summary>
         public double ScrollHorizontalTo
         {
@@ -513,12 +540,13 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The scroll vertical from property
+        ///     The scroll vertical from property
         /// </summary>
         public static readonly DependencyProperty ScrollVerticalFromProperty = DependencyProperty.Register(
             "ScrollVerticalFrom", typeof(double), typeof(Chart), new PropertyMetadata(default(double)));
+
         /// <summary>
-        /// Gets or sets the scrolling vertical start value
+        ///     Gets or sets the scrolling vertical start value
         /// </summary>
         public double ScrollVerticalFrom
         {
@@ -527,12 +555,13 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The scroll vertical to property
+        ///     The scroll vertical to property
         /// </summary>
         public static readonly DependencyProperty ScrollVerticalToProperty = DependencyProperty.Register(
             "ScrollVerticalTo", typeof(double), typeof(Chart), new PropertyMetadata(default(double)));
+
         /// <summary>
-        /// Gets or sets the scrolling vertical end value
+        ///     Gets or sets the scrolling vertical end value
         /// </summary>
         public double ScrollVerticalTo
         {
@@ -541,12 +570,14 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The scroll bar fill property
+        ///     The scroll bar fill property
         /// </summary>
         public static readonly DependencyProperty ScrollBarFillProperty = DependencyProperty.Register(
-            "ScrollBarFill", typeof(Brush), typeof(Chart), new PropertyMetadata(new SolidColorBrush(Color.FromArgb(30, 30, 30, 30))));
+            "ScrollBarFill", typeof(Brush), typeof(Chart),
+            new PropertyMetadata(new SolidColorBrush(Color.FromArgb(30, 30, 30, 30))));
+
         /// <summary>
-        /// Gets or sets the scroll bar fill brush
+        ///     Gets or sets the scroll bar fill brush
         /// </summary>
         public Brush ScrollBarFill
         {
@@ -555,12 +586,14 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The zooming speed property
+        ///     The zooming speed property
         /// </summary>
         public static readonly DependencyProperty ZoomingSpeedProperty = DependencyProperty.Register(
             "ZoomingSpeed", typeof(double), typeof(Chart), new PropertyMetadata(0.8d));
+
         /// <summary>
-        /// Gets or sets zooming speed, goes from 0.95 (slow) to 0.1 (fast), default is 0.8, it means the current axis range percentage that will be draw in the next zooming step
+        ///     Gets or sets zooming speed, goes from 0.95 (slow) to 0.1 (fast), default is 0.8, it means the current axis range
+        ///     percentage that will be draw in the next zooming step
         /// </summary>
         public double ZoomingSpeed
         {
@@ -569,13 +602,14 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// The updater state property
+        ///     The updater state property
         /// </summary>
         public static readonly DependencyProperty UpdaterStateProperty = DependencyProperty.Register(
-            "UpdaterState", typeof(UpdaterState), typeof(Chart), 
+            "UpdaterState", typeof(UpdaterState), typeof(Chart),
             new PropertyMetadata(default(UpdaterState), CallChartUpdater()));
+
         /// <summary>
-        /// Gets or sets chart's updater state
+        ///     Gets or sets chart's updater state
         /// </summary>
         public UpdaterState UpdaterState
         {
@@ -584,7 +618,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Gets the chart model, the model is who calculates everything, is the engine of the chart
+        ///     Gets the chart model, the model is who calculates everything, is the engine of the chart
         /// </summary>
         public ChartCore Model
         {
@@ -592,7 +626,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Gets whether the chart has an active tooltip.
+        ///     Gets whether the chart has an active tooltip.
         /// </summary>
         public bool HasTooltip
         {
@@ -600,7 +634,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Gets whether the chart has a DataClick event attacked.
+        ///     Gets whether the chart has a DataClick event attacked.
         /// </summary>
         public bool HasDataClickEventAttached
         {
@@ -608,7 +642,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Gets whether the chart has a DataHover event attached
+        ///     Gets whether the chart has a DataHover event attached
         /// </summary>
         public bool HasDataHoverEventAttached
         {
@@ -616,17 +650,20 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Gets whether the chart is already loaded in the view.
+        ///     Gets whether the chart is already loaded in the view.
         /// </summary>
         public bool IsControlLoaded { get; private set; }
 
         /// <summary>
-        /// Gets whether the control is in design mode
+        ///     Gets whether the control is in design mode
         /// </summary>
-        public bool IsInDesignMode { get { return DesignerProperties.GetIsInDesignMode(this); } }
+        public bool IsInDesignMode
+        {
+            get { return DesignerProperties.GetIsInDesignMode(this); }
+        }
 
         /// <summary>
-        /// Gets the visible series in the chart
+        ///     Gets the visible series in the chart
         /// </summary>
         public IEnumerable<ISeriesView> ActualSeries
         {
@@ -645,7 +682,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         #region Public Methods
 
         /// <summary>
-        /// Sets the draw margin top.
+        ///     Sets the draw margin top.
         /// </summary>
         /// <param name="value">The value.</param>
         public void SetDrawMarginTop(double value)
@@ -654,7 +691,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Sets the draw margin left.
+        ///     Sets the draw margin left.
         /// </summary>
         /// <param name="value">The value.</param>
         public void SetDrawMarginLeft(double value)
@@ -663,7 +700,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Sets the height of the draw margin.
+        ///     Sets the height of the draw margin.
         /// </summary>
         /// <param name="value">The value.</param>
         public void SetDrawMarginHeight(double value)
@@ -673,7 +710,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Sets the width of the draw margin.
+        ///     Sets the width of the draw margin.
         /// </summary>
         /// <param name="value">The value.</param>
         public void SetDrawMarginWidth(double value)
@@ -692,7 +729,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Adds to view.
+        ///     Adds to view.
         /// </summary>
         /// <param name="element">The element.</param>
         public void AddToView(object element)
@@ -703,65 +740,65 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Adds to draw margin.
+        ///     Adds to draw margin.
         /// </summary>
         /// <param name="element">The element.</param>
         public void AddToDrawMargin(object element)
         {
-            var wpfElement = (FrameworkElement)element;
+            var wpfElement = (FrameworkElement) element;
             if (wpfElement == null) return;
             DrawMargin.Children.Add(wpfElement);
         }
 
         /// <summary>
-        /// Removes from view.
+        ///     Removes from view.
         /// </summary>
         /// <param name="element">The element.</param>
         public void RemoveFromView(object element)
         {
-            var wpfElement = (FrameworkElement)element;
+            var wpfElement = (FrameworkElement) element;
             if (wpfElement == null) return;
             Canvas.Children.Remove(wpfElement);
         }
 
         /// <summary>
-        /// Removes from draw margin.
+        ///     Removes from draw margin.
         /// </summary>
         /// <param name="element">The element.</param>
         public void RemoveFromDrawMargin(object element)
         {
-            var wpfElement = (FrameworkElement)element;
+            var wpfElement = (FrameworkElement) element;
             if (wpfElement == null) return;
             DrawMargin.Children.Remove(wpfElement);
         }
 
         /// <summary>
-        /// Ensures the element belongs to current view.
+        ///     Ensures the element belongs to current view.
         /// </summary>
         /// <param name="element">The element.</param>
         public void EnsureElementBelongsToCurrentView(object element)
         {
-            var wpfElement = (FrameworkElement)element;
+            var wpfElement = (FrameworkElement) element;
             if (wpfElement == null) return;
-            var p = (Canvas)wpfElement.Parent;
+            var p = (Canvas) wpfElement.Parent;
             if (p == null) AddToView(wpfElement);
         }
 
         /// <summary>
-        /// Ensures the element belongs to current draw margin.
+        ///     Ensures the element belongs to current draw margin.
         /// </summary>
         /// <param name="element">The element.</param>
         public void EnsureElementBelongsToCurrentDrawMargin(object element)
         {
-            var wpfElement = (FrameworkElement)element;
+            var wpfElement = (FrameworkElement) element;
             if (wpfElement == null) return;
-            var p = (Canvas)wpfElement.Parent;
+            var p = (Canvas) wpfElement.Parent;
             if (p != null) p.Children.Remove(wpfElement);
             AddToDrawMargin(wpfElement);
         }
 
         /// <summary>
-        /// Shows the legend.
+        ///     Shows the legend.
         /// </summary>
         /// <param name="at">At.</param>
         public void ShowLegend(CorePoint at)
@@ -782,7 +819,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Hides the legend.
+        ///     Hides the legend.
         /// </summary>
         public void HideLegend()
         {
@@ -791,7 +828,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Forces the chart to update
+        ///     Forces the chart to update
         /// </summary>
         /// <param name="restartView">Indicates whether the update should restart the view, animations will run again if true.</param>
         /// <param name="force">Force the updater to run when called, without waiting for the next updater step.</param>
@@ -801,7 +838,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Maps the x axes.
+        ///     Maps the x axes.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <returns></returns>
@@ -823,12 +860,13 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
                     if (x.Separator != null) chart.View.AddToView(x.Separator);
                     chart.View.AddToView(x);
                 }
+
                 return x.AsCoreElement(Model, AxisOrientation.X);
             }).ToList();
         }
 
         /// <summary>
-        /// Maps the y axes.
+        ///     Maps the y axes.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <returns></returns>
@@ -850,12 +888,13 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
                     if (y.Separator != null) chart.View.AddToView(y.Separator);
                     chart.View.AddToView(y);
                 }
+
                 return y.AsCoreElement(Model, AxisOrientation.Y);
             }).ToList();
         }
 
         /// <summary>
-        /// Gets the default color of the next.
+        ///     Gets the default color of the next.
         /// </summary>
         /// <returns></returns>
         public Color GetNextDefaultColor()
@@ -867,31 +906,34 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
             if (SeriesColors != null)
             {
                 var rsc = RandomizeStartingColor
-                ? Randomizer.Next(0, SeriesColors.Count)
-                : 0;
+                    ? Randomizer.Next(0, SeriesColors.Count)
+                    : 0;
                 return SeriesColors[(i + rsc) % SeriesColors.Count];
             }
 
             var r = RandomizeStartingColor ? Randomizer.Next(0, Colors.Count) : 0;
-            return Colors[(i + r)%Colors.Count];
+            return Colors[(i + r) % Colors.Count];
         }
+
         #endregion
 
         #region Tooltip and legend
+
         internal DispatcherTimer TooltipTimeoutTimer { get; set; }
 
         /// <summary>
-        /// The tooltip timeout property
+        ///     The tooltip timeout property
         /// </summary>
         public static readonly DependencyProperty TooltipTimeoutProperty = DependencyProperty.Register(
             "TooltipTimeout", typeof(TimeSpan), typeof(Chart),
             new PropertyMetadata(default(TimeSpan), TooltipTimeoutCallback));
+
         /// <summary>
-        /// Gets or sets the time a tooltip takes to hide when the user leaves the data point.
+        ///     Gets or sets the time a tooltip takes to hide when the user leaves the data point.
         /// </summary>
         public TimeSpan TooltipTimeout
         {
-            get { return (TimeSpan)GetValue(TooltipTimeoutProperty); }
+            get { return (TimeSpan) GetValue(TooltipTimeoutProperty); }
             set { SetValue(TooltipTimeoutProperty, value); }
         }
 
@@ -970,7 +1012,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
                         {
                             PointGeometry = ((Series) x.SeriesView).PointGeometry ??
                                             Geometry.Parse("M0,0 L1,0"),
-                            Fill = ((Series) x.SeriesView) is IFondeable &&
+                            Fill = (Series) x.SeriesView is IFondeable &&
                                    !(x.SeriesView is IVerticalStackedAreaSeriesView ||
                                      x.SeriesView is IStackedAreaSeriesView)
                                 ? ((IFondeable) x.SeriesView).PointForeground
@@ -1034,10 +1076,13 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Loads the legend.
+        ///     Loads the legend.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="LiveCharts.Helpers.LiveChartsException">The current legend is not valid, ensure it implements IChartLegend</exception>
+        /// <exception cref="LiveCharts.Helpers.LiveChartsException">
+        ///     The current legend is not valid, ensure it implements
+        ///     IChartLegend
+        /// </exception>
         public CoreSize LoadLegend()
         {
             if (ChartLegend == null || LegendLocation == LegendLocation.None)
@@ -1052,12 +1097,12 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
             {
                 var item = new SeriesViewModel();
 
-                var series = (Series)t;
+                var series = (Series) t;
 
                 item.Title = series.Title;
                 item.StrokeThickness = series.StrokeThickness;
                 item.Stroke = series.Stroke;
-                item.Fill = ((Series) t) is IFondeable &&
+                item.Fill = (Series) t is IFondeable &&
                             !(t is IVerticalStackedAreaSeriesView ||
                               t is IStackedAreaSeriesView)
                     ? ((IFondeable) t).PointForeground
@@ -1097,9 +1142,10 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
                 ChartLegend.DesiredSize.Height);
         }
 
-        private static void TooltipTimeoutCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void TooltipTimeoutCallback(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var chart = (Chart)dependencyObject;
+            var chart = (Chart) dependencyObject;
 
             if (chart == null) return;
 
@@ -1107,7 +1153,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Hides the tooltip.
+        ///     Hides the tooltip.
         /// </summary>
         public void HideTooltip()
         {
@@ -1117,7 +1163,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         }
 
         /// <summary>
-        /// Gets the tooltip position.
+        ///     Gets the tooltip position.
         /// </summary>
         /// <param name="senderPoint">The sender point.</param>
         /// <returns></returns>
@@ -1143,7 +1189,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
                 if (gvt != null) gvt = gvt.MakeGenericType(typeof(ObservableValue));
 
                 var obj = gvt != null
-                    ? (IChartValues)Activator.CreateInstance(gvt)
+                    ? (IChartValues) Activator.CreateInstance(gvt)
                     : new ChartValues<ObservableValue>();
 
                 obj.Add(new ObservableValue(r.Next(0, 100)));
@@ -1184,7 +1230,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
                         ? (IChartValues) Activator.CreateInstance(gvt)
                         : new ChartValues<ObservableValue>();
 
-                    obj.Add(new ObservableValue(r.Next(0,100)));
+                    obj.Add(new ObservableValue(r.Next(0, 100)));
                     obj.Add(new ObservableValue(r.Next(0, 100)));
                     obj.Add(new ObservableValue(r.Next(0, 100)));
                     obj.Add(new ObservableValue(r.Next(0, 100)));
@@ -1208,21 +1254,19 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
             goWild.Tick += (sender, args) =>
             {
                 foreach (var series in mockedCollection)
-                {
-                    foreach (ObservableValue chartValue in series.Values)
-                    {
-                        chartValue.Value = r.Next(10, 100);
-                    }
-                }
+                foreach (ObservableValue chartValue in series.Values)
+                    chartValue.Value = r.Next(10, 100);
             };
             //not today... maybe later
             //goWild.Start();
 
             return mockedCollection;
         }
+
         #endregion
 
         #region Zooming and Panning
+
         private Point DragOrigin { get; set; }
         private bool IsPanning { get; set; }
 
@@ -1268,9 +1312,11 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
             if (!IsPanning) return;
             IsPanning = false;
         }
+
         #endregion
 
         #region ScrollBar functionality
+
         private bool _isDragging;
         private Point _previous;
         private Rectangle ScrollBar { get; set; }
@@ -1371,7 +1417,7 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
 
         private static void ScrollLimitOnChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var wpfChart = (Chart)o;
+            var wpfChart = (Chart) o;
             if (o == null) return;
             wpfChart.PrepareScrolBar();
         }
@@ -1417,11 +1463,13 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
         {
             AxisSection.Dragging = null;
         }
+
         #endregion
 
         #region Property Changed
+
         /// <summary>
-        /// Calls the chart updater
+        ///     Calls the chart updater
         /// </summary>
         /// <param name="animate">if true, the series view will be removed and added again, this restarts animations also.</param>
         /// <param name="updateNow">forces the updater to run as this function is called.</param>
@@ -1459,17 +1507,11 @@ namespace FactoryWindowGUI.ChartUtil.Charts.Base
 
                 if (ax != null)
                     foreach (var axis in ax)
-                    {
                         axis.Clean();
-                    }
                 if (orientation == AxisOrientation.X)
-                {
                     chart.PreviousXAxis = chart.AxisX;
-                }
                 else
-                {
                     chart.PreviousYAxis = chart.AxisY;
-                }
                 CallChartUpdater()(o, a);
             };
         }

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：CandleAlgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -28,14 +36,13 @@ using LiveCharts.Dtos;
 namespace LiveCharts.SeriesAlgorithms
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.SeriesAlgorithm" />
     /// <seealso cref="LiveCharts.Definitions.Series.ICartesianSeries" />
     public class CandleAlgorithm : SeriesAlgorithm, ICartesianSeries
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CandleAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="CandleAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public CandleAlgorithm(ISeriesView view) : base(view)
@@ -44,13 +51,33 @@ namespace LiveCharts.SeriesAlgorithms
             PreferredSelectionMode = TooltipSelectionMode.SharedXValues;
         }
 
+        double ICartesianSeries.GetMinX(AxisCore axis)
+        {
+            return AxisLimits.StretchMin(axis);
+        }
+
+        double ICartesianSeries.GetMaxX(AxisCore axis)
+        {
+            return AxisLimits.UnitRight(axis);
+        }
+
+        double ICartesianSeries.GetMinY(AxisCore axis)
+        {
+            return AxisLimits.SeparatorMin(axis);
+        }
+
+        double ICartesianSeries.GetMaxY(AxisCore axis)
+        {
+            return AxisLimits.SeparatorMaxRounded(axis);
+        }
+
         /// <summary>
-        /// Updates this instance.
+        ///     Updates this instance.
         /// </summary>
         public override void Update()
         {
             var castedSeries = (IFinancialSeriesView) View;
-            
+
             const double padding = 1.2;
 
             var totalSpace = ChartFunctions.GetUnitWidth(AxisOrientation.X, Chart, View.ScalesXAt) - padding;
@@ -82,40 +109,21 @@ namespace LiveCharts.SeriesAlgorithms
                 var candeView = (IOhlcPointView) chartPoint.View;
 
                 candeView.Open = ChartFunctions.ToDrawMargin(chartPoint.Open, AxisOrientation.Y, Chart, View.ScalesYAt);
-                candeView.Close = ChartFunctions.ToDrawMargin(chartPoint.Close, AxisOrientation.Y, Chart, View.ScalesYAt);
+                candeView.Close =
+                    ChartFunctions.ToDrawMargin(chartPoint.Close, AxisOrientation.Y, Chart, View.ScalesYAt);
                 candeView.High = ChartFunctions.ToDrawMargin(chartPoint.High, AxisOrientation.Y, Chart, View.ScalesYAt);
                 candeView.Low = ChartFunctions.ToDrawMargin(chartPoint.Low, AxisOrientation.Y, Chart, View.ScalesYAt);
 
                 candeView.Width = candleWidth - padding > 0 ? candleWidth - padding : 0;
-                candeView.Left = x + exceed/2 + padding;
-                candeView.StartReference = (candeView.High + candeView.Low)/2;
+                candeView.Left = x + exceed / 2 + padding;
+                candeView.StartReference = (candeView.High + candeView.Low) / 2;
 
-                chartPoint.ChartLocation = new CorePoint(x + exceed/2, (candeView.High + candeView.Low)/2);
+                chartPoint.ChartLocation = new CorePoint(x + exceed / 2, (candeView.High + candeView.Low) / 2);
 
                 chartPoint.View.DrawOrMove(previousDrawn, chartPoint, 0, Chart);
 
                 previousDrawn = chartPoint;
             }
-        }
-
-        double ICartesianSeries.GetMinX(AxisCore axis)
-        {
-            return AxisLimits.StretchMin(axis);
-        }
-
-        double ICartesianSeries.GetMaxX(AxisCore axis)
-        {
-            return AxisLimits.UnitRight(axis);
-        }
-
-        double ICartesianSeries.GetMinY(AxisCore axis)
-        {
-            return AxisLimits.SeparatorMin(axis);
-        }
-
-        double ICartesianSeries.GetMaxY(AxisCore axis)
-        {
-            return AxisLimits.SeparatorMaxRounded(axis);
         }
     }
 }

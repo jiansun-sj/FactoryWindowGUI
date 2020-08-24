@@ -1,10 +1,10 @@
 ﻿// ==================================================
 // 文件名：ProcessControlView.xaml.cs
-// 创建时间：2020/04/12 16:25
+// 创建时间：2020/04/12 13:39
 // 上海芸浦信息技术有限公司
 // copyright@yumpoo
 // ==================================================
-// 最后修改于：2020/05/11 16:25
+// 最后修改于：2020/07/29 13:39
 // 修改人：jians
 // ==================================================
 
@@ -57,7 +57,7 @@ namespace FactoryWindowGUI.View
                 Log.Error($"更改界面内容失败，异常为:{exception.Message}");
             }
         }
-        
+
         private void InstanceListOnSelectedItemChanged(object sender, SelectedItemChangedEventArgs e)
         {
             ProcessControlVm.QueryProcessInstance();
@@ -68,8 +68,6 @@ namespace FactoryWindowGUI.View
             ProcessRecordGrid.Visibility = Visibility.Collapsed;
 
             ProcessQueryGrid.Visibility = Visibility.Visible;
-
-            ProcessControlVm.RecordCounts = 10;
 
             ProcessControlVm.SearchDate = DateTime.Today.ToString("yyyy-M-d");
 

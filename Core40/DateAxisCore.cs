@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：DateAxisCore.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -29,7 +37,6 @@ using LiveCharts.Helpers;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     public class DateAxisCore : WindowAxisCore
     {
@@ -37,7 +44,7 @@ namespace LiveCharts
         private PeriodUnits _period = PeriodUnits.Milliseconds;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DateAxisCore"/> class.
+        ///     Initializes a new instance of the <see cref="DateAxisCore" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public DateAxisCore(IWindowAxisView view) : base(view)
@@ -55,7 +62,7 @@ namespace LiveCharts
         {
             // Get the current configued values from the view
             _initialDateTime = ((IDateAxisView) View).InitialDateTime;
-            _period = ((IDateAxisView)View).Period;
+            _period = ((IDateAxisView) View).Period;
 
             return base.PrepareChart(source, chart);
         }
@@ -65,7 +72,7 @@ namespace LiveCharts
             // For the points, we use the actual value based upon the period
             var dateTime = GetdateTime(x);
 
-            switch (((IDateAxisView)View).Period)
+            switch (((IDateAxisView) View).Period)
             {
                 case PeriodUnits.Seconds:
                     return dateTime.ToString("G");
@@ -91,7 +98,7 @@ namespace LiveCharts
         {
             // All our X values are based upon this starting point (configured by the user)
             // Using this starting point, we can calculate the DateTime represented by this X value           
-            
+
             // We use the series period (configured by the user) to determine which period unit to use to increase the reference date.
             DateTime dateTime;
 

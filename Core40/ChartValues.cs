@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：ChartValues.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -20,7 +28,6 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -29,6 +36,7 @@ using LiveCharts.Configurations;
 using LiveCharts.Definitions.Series;
 using LiveCharts.Dtos;
 using LiveCharts.Helpers;
+
 #if NET45
 using System.Reflection;
 #endif
@@ -36,7 +44,7 @@ using System.Reflection;
 namespace LiveCharts
 {
     /// <summary>
-    /// Creates a collection of chart values
+    ///     Creates a collection of chart values
     /// </summary>
     /// <typeparam name="T">Type to plot, notice you could need to configure the type.</typeparam>
     public class ChartValues<T> : NoisyCollection<T>, IChartValues
@@ -44,7 +52,7 @@ namespace LiveCharts
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of chart values
+        ///     Initializes a new instance of chart values
         /// </summary>
         public ChartValues()
         {
@@ -53,7 +61,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Initializes a new instance of chart values, with a given collection
+        ///     Initializes a new instance of chart values, with a given collection
         /// </summary>
         public ChartValues(IEnumerable<T> collection) : base(collection)
         {
@@ -64,14 +72,16 @@ namespace LiveCharts
         #endregion
 
         #region Properties
+
         private IPointEvaluator<T> DefaultConfiguration { get; set; }
-        private Dictionary<ISeriesView, PointTracker> Trackers { get; set; }
+        private Dictionary<ISeriesView, PointTracker> Trackers { get; }
+
         #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// Evaluates the limits in the chart values
+        ///     Evaluates the limits in the chart values
         /// </summary>
         public void Initialize(ISeriesView seriesView)
         {
@@ -99,7 +109,7 @@ namespace LiveCharts
             var isHorizontal = seriesView.Model.SeriesOrientation == SeriesOrientation.Horizontal;
 
             var index = 0;
-            foreach(var item in this)
+            foreach (var item in this)
             {
                 config.Evaluate(index, item, cp);
                 index++;
@@ -123,7 +133,6 @@ namespace LiveCharts
 
                     if (cp.Weight < wMin) wMin = cp.Weight;
                     if (cp.Weight > wMax) wMax = cp.Weight;
-
                 }
                 else if (seriesView is IScatterSeriesView || seriesView is IHeatSeriesView)
                 {
@@ -155,11 +164,11 @@ namespace LiveCharts
             tracker.WLimit = new CoreLimit(double.IsInfinity(wMin)
                 ? 0
                 : wMin, double.IsInfinity(wMax) ? 1 : wMax);
-
         }
 
         /// <summary>
-        /// Gets the current chart points in the view, the view is required as an argument, because an instance of IChartValues could hold many ISeriesView instances.
+        ///     Gets the current chart points in the view, the view is required as an argument, because an instance of IChartValues
+        ///     could hold many ISeriesView instances.
         /// </summary>
         /// <param name="seriesView">The series view</param>
         /// <returns></returns>
@@ -224,7 +233,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Initializes the garbage collector
+        ///     Initializes the garbage collector
         /// </summary>
         public void InitializeStep(ISeriesView series)
         {
@@ -233,7 +242,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Collects the unnecessary values 
+        ///     Collects the unnecessary values
         /// </summary>
         public void CollectGarbage(ISeriesView seriesView)
         {
@@ -252,18 +261,14 @@ namespace LiveCharts
                     garbage.View.RemoveFromView(seriesView.Model.Chart);
 
                 if (!isclass)
-                {
                     tracker.Indexed.Remove(garbage.Key);
-                }
                 else
-                {
                     tracker.Referenced.Remove(garbage.Instance);
-                }
             }
         }
 
         /// <summary>
-        /// Gets series that owns the values
+        ///     Gets series that owns the values
         /// </summary>
         /// <param name="view"></param>
         /// <returns></returns>
@@ -325,6 +330,7 @@ namespace LiveCharts
                 };
                 tracker.Referenced[value] = cp;
             }
+
             return cp;
         }
 

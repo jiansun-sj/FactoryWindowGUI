@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：Seriesalgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,12 +34,11 @@ using LiveCharts.Definitions.Series;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     public abstract class SeriesAlgorithm
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SeriesAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="SeriesAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         protected SeriesAlgorithm(ISeriesView view)
@@ -40,71 +47,71 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Gets or sets the view.
+        ///     Gets or sets the view.
         /// </summary>
         /// <value>
-        /// The view.
+        ///     The view.
         /// </value>
         public ISeriesView View { get; set; }
+
         /// <summary>
-        /// Gets or sets the chart.
+        ///     Gets or sets the chart.
         /// </summary>
         /// <value>
-        /// The chart.
+        ///     The chart.
         /// </value>
         public ChartCore Chart { get; set; }
+
         /// <summary>
-        /// Gets or sets the series collection.
+        ///     Gets or sets the series collection.
         /// </summary>
         /// <value>
-        /// The series collection.
+        ///     The series collection.
         /// </value>
         public SeriesCollection SeriesCollection { get; set; }
+
         /// <summary>
-        /// Gets or sets the series orientation.
+        ///     Gets or sets the series orientation.
         /// </summary>
         /// <value>
-        /// The series orientation.
+        ///     The series orientation.
         /// </value>
         public SeriesOrientation SeriesOrientation { get; set; }
+
         /// <summary>
-        /// Gets or sets the title.
+        ///     Gets or sets the title.
         /// </summary>
         /// <value>
-        /// The title.
+        ///     The title.
         /// </value>
         public string Title { get; set; }
+
         /// <summary>
-        /// Gets the preferred selection mode.
+        ///     Gets the preferred selection mode.
         /// </summary>
         /// <value>
-        /// The preferred selection mode.
+        ///     The preferred selection mode.
         /// </value>
         public TooltipSelectionMode PreferredSelectionMode { get; internal set; }
 
         /// <summary>
-        /// Gets the current x axis.
+        ///     Gets the current x axis.
         /// </summary>
         /// <value>
-        /// The current x axis.
+        ///     The current x axis.
         /// </value>
-        public AxisCore CurrentXAxis
-        {
-            get { return Chart.AxisX[View.ScalesXAt]; }
-        }
-        /// <summary>
-        /// Gets the current y axis.
-        /// </summary>
-        /// <value>
-        /// The current y axis.
-        /// </value>
-        public AxisCore CurrentYAxis
-        {
-            get { return Chart.AxisY[View.ScalesYAt]; }
-        }
+        public AxisCore CurrentXAxis => Chart.AxisX[View.ScalesXAt];
 
         /// <summary>
-        /// Updates this instance.
+        ///     Gets the current y axis.
+        /// </summary>
+        /// <value>
+        ///     The current y axis.
+        /// </value>
+        public AxisCore CurrentYAxis => Chart.AxisY[View.ScalesYAt];
+
+        /// <summary>
+        ///     Updates this instance.
         /// </summary>
         public abstract void Update();
     }

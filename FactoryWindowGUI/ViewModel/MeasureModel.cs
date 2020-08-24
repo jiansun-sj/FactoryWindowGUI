@@ -1,11 +1,21 @@
-﻿using System;
+﻿// ==================================================
+// 文件名：MeasureModel.cs
+// 创建时间：2020/05/25 13:39
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:39
+// 修改人：jians
+// ==================================================
+
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using FactoryWindowGUI.Annotations;
 
 namespace FactoryWindowGUI.ViewModel
 {
-    public sealed class MeasureModel:INotifyPropertyChanged
+    public sealed class MeasureModel : INotifyPropertyChanged
     {
         private DateTime _dateTime;
         private double _value;

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：AxisWindow.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,7 +34,6 @@ using System.Linq;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     public abstract class AxisWindow : IAxisWindow
     {
@@ -38,7 +45,8 @@ namespace LiveCharts
 
         public abstract string FormatAxisLabel(double x);
 
-        public virtual bool TryGetSeparatorIndices(IEnumerable<double> indices, int maximumSeparatorCount, out IEnumerable<double> separators)
+        public virtual bool TryGetSeparatorIndices(IEnumerable<double> indices, int maximumSeparatorCount,
+            out IEnumerable<double> separators)
         {
             var separatorList = new List<double>();
 

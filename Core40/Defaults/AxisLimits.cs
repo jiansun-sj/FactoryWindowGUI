@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：AxisLimits.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -38,27 +46,27 @@ namespace LiveCharts.Defaults
 
         internal static double UnitRight(AxisCore axis)
         {
-            return Math.Ceiling(axis.TopLimit/axis.Magnitude)*axis.Magnitude + 1;
+            return Math.Ceiling(axis.TopLimit / axis.Magnitude) * axis.Magnitude + 1;
         }
 
         internal static double UnitLeft(AxisCore axis)
         {
-            return Math.Floor(axis.BotLimit/axis.Magnitude)*axis.Magnitude - 1;
+            return Math.Floor(axis.BotLimit / axis.Magnitude) * axis.Magnitude - 1;
         }
 
         internal static double SeparatorMax(AxisCore axis)
         {
-            return (Math.Floor(axis.TopLimit/axis.S) + 1.0)*axis.S;
+            return (Math.Floor(axis.TopLimit / axis.S) + 1.0) * axis.S;
         }
 
         internal static double SeparatorMaxRounded(AxisCore axis)
         {
-            return Math.Round((axis.TopLimit/axis.S) + 1.0, 0)*axis.S;
+            return Math.Round(axis.TopLimit / axis.S + 1.0, 0) * axis.S;
         }
 
         internal static double SeparatorMin(AxisCore axis)
         {
-            return ((Math.Floor(axis.BotLimit/axis.S)) - 1.0)*axis.S;
+            return (Math.Floor(axis.BotLimit / axis.S) - 1.0) * axis.S;
         }
     }
 }

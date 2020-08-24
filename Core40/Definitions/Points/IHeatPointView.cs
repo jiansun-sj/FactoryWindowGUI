@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：IHeatPointView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,30 +33,31 @@ using LiveCharts.Dtos;
 namespace LiveCharts.Definitions.Points
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Points.IChartPointView" />
     public interface IHeatPointView : IChartPointView
     {
         /// <summary>
-        /// Gets or sets the color components.
+        ///     Gets or sets the color components.
         /// </summary>
         /// <value>
-        /// The color components.
+        ///     The color components.
         /// </value>
         CoreColor ColorComponents { get; set; }
+
         /// <summary>
-        /// Gets or sets the width.
+        ///     Gets or sets the width.
         /// </summary>
         /// <value>
-        /// The width.
+        ///     The width.
         /// </value>
         double Width { get; set; }
+
         /// <summary>
-        /// Gets or sets the height.
+        ///     Gets or sets the height.
         /// </summary>
         /// <value>
-        /// The height.
+        ///     The height.
         /// </value>
         double Height { get; set; }
     }

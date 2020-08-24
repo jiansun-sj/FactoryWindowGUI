@@ -1,10 +1,9 @@
 ﻿// ==================================================
+// FactoryWindowGUI
 // 文件名：ProcessUtil.cs
-// 创建时间：2020/04/30 16:25
-// 上海芸浦信息技术有限公司
-// copyright@yumpoo
+// 创建时间：2020/04/30 17:17
 // ==================================================
-// 最后修改于：2020/05/11 16:25
+// 最后修改于：2020/08/06 17:17
 // 修改人：jians
 // ==================================================
 
@@ -22,6 +21,8 @@ namespace FactoryWindowGUI.Util
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProcessUtil));
 
+        private readonly object _processLocker = new object();
+
         private IHostConnection _processHost;
 
         public ProcessUtil()
@@ -30,8 +31,6 @@ namespace FactoryWindowGUI.Util
         }
 
         public bool Connected => _processHost != null && _processHost.Connected;
-
-        private object _processLocker = new object();
 
         private void ConnectToServer()
         {
@@ -84,22 +83,32 @@ namespace FactoryWindowGUI.Util
             }
         }
 
-        public List<ProcessInstanceRecord> ReadProcessRecords(string processName, int readCount,
-            DateTime searchDateTime)
+
+        /// <summary>
+        ///     get process instance records according to page and page size
+        /// </summary>
+        /// <param name="processName"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="searchPage"></param>
+        /// <returns></returns>
+        public List<ProcessInstanceRecord> ReadProcessRecords(string processName, int pageSize,
+            DateTime startDate, DateTime endDate, int searchPage)
         {
             try
             {
                 lock (_processLocker)
                 {
-                    if (string.IsNullOrEmpty(processName)|| readCount<0 || readCount>10000)
+                    if (string.IsNullOrEmpty(processName) || endDate < startDate)
                     {
-                        MessageBox.Show($"Process历史记录查询条件不合法！");
+                        MessageBox.Show("Process历史记录查询条件不合法！");
                         return new List<ProcessInstanceRecord>();
                     }
-                
+
                     var proxy = (ProcessProxy) _processHost.GetProxy();
 
-                    return proxy?.ReadProcessInstanceRecords(processName, readCount, searchDateTime) ??
+                    return proxy?.ReadProcessInstanceRecords(processName, pageSize, startDate, endDate, searchPage) ??
                            new List<ProcessInstanceRecord>();
                 }
             }
@@ -109,7 +118,6 @@ namespace FactoryWindowGUI.Util
                 return new List<ProcessInstanceRecord>();
             }
         }
-
 
         public short GetCurrentStep(string processName)
         {

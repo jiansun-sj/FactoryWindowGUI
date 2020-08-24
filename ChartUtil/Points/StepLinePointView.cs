@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：StepLinePointView.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -32,11 +40,11 @@ namespace FactoryWindowGUI.ChartUtil.Points
 {
     internal class StepLinePointView : PointView, IStepPointView
     {
-        public double DeltaX { get; set; }
-        public double DeltaY { get; set; }
         public Line Line1 { get; set; }
         public Line Line2 { get; set; }
         public Path Shape { get; set; }
+        public double DeltaX { get; set; }
+        public double DeltaY { get; set; }
 
         public override void DrawOrMove(ChartPoint previousDrawn, ChartPoint current, int index, ChartCore chart)
         {
@@ -71,7 +79,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
                 if (Shape != null)
                 {
-                    Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width/2);
+                    Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width / 2);
                     Canvas.SetTop(Shape, chart.DrawMargin.Height);
                 }
             }
@@ -84,8 +92,8 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
             if (HoverShape != null)
             {
-                HoverShape.Width = Shape != null ? (Shape.Width > 5 ? Shape.Width : 5) : 5;
-                HoverShape.Height = Shape != null ? (Shape.Height > 5 ? Shape.Height : 5) : 5;
+                HoverShape.Width = Shape != null ? Shape.Width > 5 ? Shape.Width : 5 : 5;
+                HoverShape.Height = Shape != null ? Shape.Height > 5 ? Shape.Height : 5 : 5;
                 Canvas.SetLeft(HoverShape, current.ChartLocation.X - HoverShape.Width / 2);
                 Canvas.SetTop(HoverShape, current.ChartLocation.Y - HoverShape.Height / 2);
             }
@@ -119,8 +127,8 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
                 if (Shape != null)
                 {
-                    Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width/2);
-                    Canvas.SetTop(Shape, current.ChartLocation.Y - Shape.Height/2);
+                    Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width / 2);
+                    Canvas.SetTop(Shape, current.ChartLocation.Y - Shape.Height / 2);
                 }
 
                 if (DataLabel != null)
@@ -181,9 +189,9 @@ namespace FactoryWindowGUI.ChartUtil.Points
             if (Shape != null)
             {
                 Shape.BeginAnimation(Canvas.LeftProperty,
-                    new DoubleAnimation(current.ChartLocation.X - Shape.Width/2, animSpeed));
+                    new DoubleAnimation(current.ChartLocation.X - Shape.Width / 2, animSpeed));
                 Shape.BeginAnimation(Canvas.TopProperty,
-                    new DoubleAnimation(current.ChartLocation.Y - Shape.Height/2, animSpeed));
+                    new DoubleAnimation(current.ChartLocation.Y - Shape.Height / 2, animSpeed));
             }
 
             if (DataLabel != null)
@@ -194,7 +202,6 @@ namespace FactoryWindowGUI.ChartUtil.Points
                 Canvas.SetLeft(DataLabel, xl);
                 Canvas.SetTop(DataLabel, yl);
             }
-
         }
 
         public override void RemoveFromView(ChartCore chart)

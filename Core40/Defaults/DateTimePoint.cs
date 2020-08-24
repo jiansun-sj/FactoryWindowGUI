@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：DateTimePoint.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -22,12 +30,12 @@
 
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace LiveCharts.Defaults
 {
     /// <summary>
-    /// An already configured chart point with a date time and a double properties, this class notifies the chart to update every time a property changes
+    ///     An already configured chart point with a date time and a double properties, this class notifies the chart to update
+    ///     every time a property changes
     /// </summary>
     public class DateTimePoint : INotifyPropertyChanged
     {
@@ -35,15 +43,14 @@ namespace LiveCharts.Defaults
         private double _value;
 
         /// <summary>
-        /// Initializes a new instance of DateTimePoint class
+        ///     Initializes a new instance of DateTimePoint class
         /// </summary>
         public DateTimePoint()
         {
-            
         }
 
         /// <summary>
-        /// Initializes a new instance of DateTimePoint class, giving date time and value
+        ///     Initializes a new instance of DateTimePoint class, giving date time and value
         /// </summary>
         /// <param name="dateTime"></param>
         /// <param name="value"></param>
@@ -54,11 +61,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// DateTime Property
+        ///     DateTime Property
         /// </summary>
         public DateTime DateTime
         {
-            get { return _dateTime; }
+            get => _dateTime;
             set
             {
                 _dateTime = value;
@@ -67,11 +74,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// The Value property
+        ///     The Value property
         /// </summary>
         public double Value
         {
-            get { return _value; }
+            get => _value;
             set
             {
                 _value = value;
@@ -82,12 +89,12 @@ namespace LiveCharts.Defaults
         #region INotifyPropertyChangedImplementation
 
         /// <summary>
-        /// Occurs when a property value changes.
+        ///     Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Called when [property changed].
+        ///     Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         protected virtual void OnPropertyChanged(string propertyName = null)

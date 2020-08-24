@@ -1,20 +1,30 @@
+// ==================================================
+// 文件名：PieMapper.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
+
 using System;
 
 namespace LiveCharts.Configurations
 {
     /// <summary>
-    /// Mapper to configure X and Y points
+    ///     Mapper to configure X and Y points
     /// </summary>
     /// <typeparam name="T">Type to configure</typeparam>
     public class PieMapper<T> : IPointEvaluator<T>
     {
         private readonly Func<T, int, double> _x = (v, i) => i;
-        private Func<T, int, double> _y = (v, i) => i;
-        private Func<T, int, object> _stroke;
         private Func<T, int, object> _fill;
+        private Func<T, int, object> _stroke;
+        private Func<T, int, double> _y = (v, i) => i;
 
         /// <summary>
-        /// Sets values for a specific point
+        ///     Sets values for a specific point
         /// </summary>
         /// <param name="point">Point to set</param>
         /// <param name="value"></param>
@@ -29,7 +39,7 @@ namespace LiveCharts.Configurations
 
 
         /// <summary>
-        /// Sets the Y mapper
+        ///     Sets the Y mapper
         /// </summary>
         /// <param name="predicate">function that pulls Y coordinate</param>
         /// <returns>current mapper instance</returns>
@@ -39,7 +49,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Y mapper
+        ///     Sets the Y mapper
         /// </summary>
         /// <param name="predicate">function that pulls Y coordinate, with value and index as parameters</param>
         /// <returns>current mapper instance</returns>
@@ -50,7 +60,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Stroke of the point
+        ///     Sets the Stroke of the point
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
@@ -60,7 +70,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Stroke of the point
+        ///     Sets the Stroke of the point
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
@@ -71,7 +81,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Fill of the point
+        ///     Sets the Fill of the point
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
@@ -81,7 +91,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Fill of the point
+        ///     Sets the Fill of the point
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>

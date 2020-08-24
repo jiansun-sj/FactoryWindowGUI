@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：IChartValues.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -27,33 +35,35 @@ using LiveCharts.Helpers;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Helpers.INoisyCollection" />
     public interface IChartValues : INoisyCollection
     {
         /// <summary>
-        /// Forces values to calculate max, min and index data.
+        ///     Forces values to calculate max, min and index data.
         /// </summary>
         void Initialize(ISeriesView seriesView);
 
         /// <summary>
-        /// Gets the current chart points in the view, the view is required as an argument, because an instance of IChartValues could hold many ISeriesView instances.
+        ///     Gets the current chart points in the view, the view is required as an argument, because an instance of IChartValues
+        ///     could hold many ISeriesView instances.
         /// </summary>
         /// <param name="seriesView">The series view</param>
         /// <returns></returns>
         IEnumerable<ChartPoint> GetPoints(ISeriesView seriesView);
+
         /// <summary>
-        /// Initializes the garbage collector
+        ///     Initializes the garbage collector
         /// </summary>
         void InitializeStep(ISeriesView seriesView);
+
         /// <summary>
-        /// Removes all unnecessary points from the view
+        ///     Removes all unnecessary points from the view
         /// </summary>
         void CollectGarbage(ISeriesView seriesView);
 
         /// <summary>
-        /// Gets series that owns the values
+        ///     Gets series that owns the values
         /// </summary>
         PointTracker GetTracker(ISeriesView view);
     }

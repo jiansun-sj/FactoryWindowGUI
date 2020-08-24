@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：IRowSeriesView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,30 +31,31 @@
 namespace LiveCharts.Definitions.Series
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Series.ISeriesView" />
     public interface IRowSeriesView : ISeriesView
     {
         /// <summary>
-        /// Gets or sets the maximum row heigth.
+        ///     Gets or sets the maximum row heigth.
         /// </summary>
         /// <value>
-        /// The maximum row heigth.
+        ///     The maximum row heigth.
         /// </value>
         double MaxRowHeigth { get; set; }
+
         /// <summary>
-        /// Gets or sets the row padding.
+        ///     Gets or sets the row padding.
         /// </summary>
         /// <value>
-        /// The row padding.
+        ///     The row padding.
         /// </value>
         double RowPadding { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether [shares position].
+        ///     Gets or sets a value indicating whether [shares position].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [shares position]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [shares position]; otherwise, <c>false</c>.
         /// </value>
         bool SharesPosition { get; set; }
     }

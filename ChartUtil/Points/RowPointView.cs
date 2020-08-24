@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：RowPointView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -36,10 +44,10 @@ namespace FactoryWindowGUI.ChartUtil.Points
     internal class RowPointView : PointView, IRectanglePointView
     {
         public Rectangle Rectangle { get; set; }
-        public CoreRectangle Data { get; set; }
-        public double ZeroReference  { get; set; }
         public BarLabelPosition LabelPosition { get; set; }
         private RotateTransform Transform { get; set; }
+        public CoreRectangle Data { get; set; }
+        public double ZeroReference { get; set; }
 
         public override void DrawOrMove(ChartPoint previousDrawn, ChartPoint current, int index, ChartCore chart)
         {
@@ -66,7 +74,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
                         Transform = new RotateTransform(270);
 
                     DataLabel.RenderTransform = Transform;
-                    return Data.Top + Data.Height/2 + DataLabel.ActualWidth*.5;
+                    return Data.Top + Data.Height / 2 + DataLabel.ActualWidth * .5;
                 }
 
                 var r = Data.Top + Data.Height / 2 - DataLabel.ActualHeight / 2;
@@ -86,11 +94,11 @@ namespace FactoryWindowGUI.ChartUtil.Points
                 if (LabelPosition == BarLabelPosition.Parallel || LabelPosition == BarLabelPosition.Merged)
 #pragma warning restore 618
                 {
-                    r = Data.Left + Data.Width/2 - DataLabel.ActualWidth/2;
+                    r = Data.Left + Data.Width / 2 - DataLabel.ActualWidth / 2;
                 }
                 else if (LabelPosition == BarLabelPosition.Perpendicular)
                 {
-                    r = Data.Left + Data.Width/2 - DataLabel.ActualHeight/2;
+                    r = Data.Left + Data.Width / 2 - DataLabel.ActualHeight / 2;
                 }
                 else
                 {
@@ -147,12 +155,12 @@ namespace FactoryWindowGUI.ChartUtil.Points
                 DataLabel.BeginAnimation(Canvas.TopProperty, new DoubleAnimation(getY(), animSpeed));
             }
 
-            Rectangle.BeginAnimation(Canvas.TopProperty, 
+            Rectangle.BeginAnimation(Canvas.TopProperty,
                 new DoubleAnimation(Data.Top, animSpeed));
             Rectangle.BeginAnimation(Canvas.LeftProperty,
                 new DoubleAnimation(Data.Left, animSpeed));
 
-            Rectangle.BeginAnimation(FrameworkElement.HeightProperty, 
+            Rectangle.BeginAnimation(FrameworkElement.HeightProperty,
                 new DoubleAnimation(Data.Height, animSpeed));
             Rectangle.BeginAnimation(FrameworkElement.WidthProperty,
                 new DoubleAnimation(Data.Width, animSpeed));
@@ -185,13 +193,9 @@ namespace FactoryWindowGUI.ChartUtil.Points
             if (Rectangle == null) return;
 
             if (point.Fill != null)
-            {
-                Rectangle.Fill = (Brush)point.Fill;
-            }
+                Rectangle.Fill = (Brush) point.Fill;
             else
-            {
                 Rectangle.Fill = ((Series) point.SeriesView).Fill;
-            }
         }
     }
 }

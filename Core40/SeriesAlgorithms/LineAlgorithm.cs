@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：LineAlgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -31,14 +39,13 @@ using LiveCharts.Helpers;
 namespace LiveCharts.SeriesAlgorithms
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.SeriesAlgorithm" />
     /// <seealso cref="LiveCharts.Definitions.Series.ICartesianSeries" />
     public class LineAlgorithm : SeriesAlgorithm, ICartesianSeries
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LineAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="LineAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public LineAlgorithm(ISeriesView view) : base(view)
@@ -47,8 +54,28 @@ namespace LiveCharts.SeriesAlgorithms
             PreferredSelectionMode = TooltipSelectionMode.SharedXValues;
         }
 
+        double ICartesianSeries.GetMinX(AxisCore axis)
+        {
+            return AxisLimits.StretchMin(axis);
+        }
+
+        double ICartesianSeries.GetMaxX(AxisCore axis)
+        {
+            return AxisLimits.StretchMax(axis);
+        }
+
+        double ICartesianSeries.GetMinY(AxisCore axis)
+        {
+            return AxisLimits.SeparatorMin(axis);
+        }
+
+        double ICartesianSeries.GetMaxY(AxisCore axis)
+        {
+            return AxisLimits.SeparatorMaxRounded(axis);
+        }
+
         /// <summary>
-        /// Updates this instance.
+        ///     Updates this instance.
         /// </summary>
         public override void Update()
         {
@@ -59,7 +86,7 @@ namespace LiveCharts.SeriesAlgorithms
             var lineView = (ILineSeriesView) View;
 
             var smoothness = lineView.LineSmoothness;
-            smoothness = smoothness > 1 ? 1 : (smoothness < 0 ? 0 : smoothness);
+            smoothness = smoothness > 1 ? 1 : smoothness < 0 ? 0 : smoothness;
 
             foreach (var segment in points.SplitEachNaN())
             {
@@ -78,10 +105,10 @@ namespace LiveCharts.SeriesAlgorithms
 
                 var uw = new CorePoint(
                     CurrentXAxis.EvaluatesUnitWidth
-                        ? ChartFunctions.GetUnitWidth(AxisOrientation.X, Chart, View.ScalesXAt)/2
+                        ? ChartFunctions.GetUnitWidth(AxisOrientation.X, Chart, View.ScalesXAt) / 2
                         : 0,
                     CurrentYAxis.EvaluatesUnitWidth
-                        ? ChartFunctions.GetUnitWidth(AxisOrientation.Y, Chart, View.ScalesYAt)/2
+                        ? ChartFunctions.GetUnitWidth(AxisOrientation.Y, Chart, View.ScalesYAt) / 2
                         : 0);
 
                 if (SeriesOrientation == SeriesOrientation.Horizontal)
@@ -116,32 +143,32 @@ namespace LiveCharts.SeriesAlgorithms
 
                     chartPoint.SeriesView = View;
 
-                    var xc1 = (p0.X + p1.X)/2.0;
-                    var yc1 = (p0.Y + p1.Y)/2.0;
-                    var xc2 = (p1.X + p2.X)/2.0;
-                    var yc2 = (p1.Y + p2.Y)/2.0;
-                    var xc3 = (p2.X + p3.X)/2.0;
-                    var yc3 = (p2.Y + p3.Y)/2.0;
+                    var xc1 = (p0.X + p1.X) / 2.0;
+                    var yc1 = (p0.Y + p1.Y) / 2.0;
+                    var xc2 = (p1.X + p2.X) / 2.0;
+                    var yc2 = (p1.Y + p2.Y) / 2.0;
+                    var xc3 = (p2.X + p3.X) / 2.0;
+                    var yc3 = (p2.Y + p3.Y) / 2.0;
 
-                    var len1 = Math.Sqrt((p1.X - p0.X)*(p1.X - p0.X) + (p1.Y - p0.Y)*(p1.Y - p0.Y));
-                    var len2 = Math.Sqrt((p2.X - p1.X)*(p2.X - p1.X) + (p2.Y - p1.Y)*(p2.Y - p1.Y));
-                    var len3 = Math.Sqrt((p3.X - p2.X)*(p3.X - p2.X) + (p3.Y - p2.Y)*(p3.Y - p2.Y));
+                    var len1 = Math.Sqrt((p1.X - p0.X) * (p1.X - p0.X) + (p1.Y - p0.Y) * (p1.Y - p0.Y));
+                    var len2 = Math.Sqrt((p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y));
+                    var len3 = Math.Sqrt((p3.X - p2.X) * (p3.X - p2.X) + (p3.Y - p2.Y) * (p3.Y - p2.Y));
 
-                    var k1 = len1/(len1 + len2);
-                    var k2 = len2/(len2 + len3);
+                    var k1 = len1 / (len1 + len2);
+                    var k2 = len2 / (len2 + len3);
 
                     if (double.IsNaN(k1)) k1 = 0d;
                     if (double.IsNaN(k2)) k2 = 0d;
 
-                    var xm1 = xc1 + (xc2 - xc1)*k1;
-                    var ym1 = yc1 + (yc2 - yc1)*k1;
-                    var xm2 = xc2 + (xc3 - xc2)*k2;
-                    var ym2 = yc2 + (yc3 - yc2)*k2;
+                    var xm1 = xc1 + (xc2 - xc1) * k1;
+                    var ym1 = yc1 + (yc2 - yc1) * k1;
+                    var xm2 = xc2 + (xc3 - xc2) * k2;
+                    var ym2 = yc2 + (yc3 - yc2) * k2;
 
-                    var c1X = xm1 + (xc2 - xm1)*smoothness + p1.X - xm1;
-                    var c1Y = ym1 + (yc2 - ym1)*smoothness + p1.Y - ym1;
-                    var c2X = xm2 + (xc2 - xm2)*smoothness + p2.X - xm2;
-                    var c2Y = ym2 + (yc2 - ym2)*smoothness + p2.Y - ym2;
+                    var c1X = xm1 + (xc2 - xm1) * smoothness + p1.X - xm1;
+                    var c1Y = ym1 + (yc2 - ym1) * smoothness + p1.Y - ym1;
+                    var c2X = xm2 + (xc2 - xm2) * smoothness + p2.X - xm2;
+                    var c2Y = ym2 + (yc2 - ym2) * smoothness + p2.Y - ym2;
 
                     chartPoint.View = View.GetPointView(chartPoint,
                         View.DataLabels ? View.GetLabelPointFormatter()(chartPoint) : null);
@@ -173,40 +200,17 @@ namespace LiveCharts.SeriesAlgorithms
                         : p2;
 
                     if (SeriesOrientation == SeriesOrientation.Horizontal)
-                    {
                         p3 += uw;
-                    }
                     else
-                    {
                         p3 = new CorePoint(p3.X + uw.X, p3.Y - uw.Y);
-                    }
 
                     isOpen = true;
                 }
+
                 if (!isOpen) continue;
                 lineView.EndSegment(segmentPosition, p1);
                 segmentPosition++;
             }
-        }
-
-        double ICartesianSeries.GetMinX(AxisCore axis)
-        {
-            return AxisLimits.StretchMin(axis);
-        }
-
-        double ICartesianSeries.GetMaxX(AxisCore axis)
-        {
-            return AxisLimits.StretchMax(axis);
-        }
-
-        double ICartesianSeries.GetMinY(AxisCore axis)
-        {
-            return AxisLimits.SeparatorMin(axis);
-        }
-
-        double ICartesianSeries.GetMaxY(AxisCore axis)
-        {
-            return  AxisLimits.SeparatorMaxRounded(axis);
         }
     }
 }

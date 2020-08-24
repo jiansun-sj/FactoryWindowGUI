@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：AxesCollection.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -27,12 +35,12 @@ using LiveCharts.Helpers;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// Stores a collection of axis.
+    ///     Stores a collection of axis.
     /// </summary>
     public class AxesCollection : NoisyCollection<Axis>
     {
         /// <summary>
-        /// Initializes a new instance of AxisCollection class
+        ///     Initializes a new instance of AxisCollection class
         /// </summary>
         public AxesCollection()
         {
@@ -40,16 +48,16 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets the chart that owns the series.
+        ///     Gets the chart that owns the series.
         /// </summary>
         /// <value>
-        /// The chart.
+        ///     The chart.
         /// </value>
         public Chart Chart { get; internal set; }
 
         private void OnNoisyCollectionChanged(IEnumerable<Axis> oldItems, IEnumerable<Axis> newItems)
         {
-            if(Chart != null && Chart.Model != null)
+            if (Chart != null && Chart.Model != null)
                 Chart.Model.Updater.Run();
 
             if (oldItems == null) return;

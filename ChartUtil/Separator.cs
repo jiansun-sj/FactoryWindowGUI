@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：Separator.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -29,12 +37,12 @@ using LiveCharts.Definitions.Charts;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// Defines an Axis.Separator, this class customizes the separator of an axis.
+    ///     Defines an Axis.Separator, this class customizes the separator of an axis.
     /// </summary>
     public class Separator : FrameworkElement, ISeparatorView
     {
         /// <summary>
-        /// Initializes a new instance of Separator class
+        ///     Initializes a new instance of Separator class
         /// </summary>
         public Separator()
         {
@@ -44,111 +52,14 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets the chart the own the separator
+        ///     Gets the chart the own the separator
         /// </summary>
         public ChartCore Chart { get; set; }
+
         private AxisCore Axis { get; set; }
 
-        #region Dependency Properties
-
         /// <summary>
-        /// The stroke property
-        /// </summary>
-        public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register(
-            "Stroke", typeof (Brush), typeof (Separator),
-            new PropertyMetadata(default(Brush), CallChartUpdater()));
-
-        /// <summary>
-        /// Gets or sets separators color 
-        /// </summary>
-        public Brush Stroke
-        {
-            get { return (Brush) GetValue(StrokeProperty); }
-            set { SetValue(StrokeProperty, value); }
-        }
-
-        /// <summary>
-        /// The stroke thickness property
-        /// </summary>
-        public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register(
-            "StrokeThickness", typeof (double), typeof (Separator),
-            new PropertyMetadata(default(double), CallChartUpdater()));
-
-        /// <summary>
-        /// Gets or sets separators thickness
-        /// </summary>
-        public double StrokeThickness
-        {
-            get { return (double) GetValue(StrokeThicknessProperty); }
-            set { SetValue(StrokeThicknessProperty, value); }
-        }
-
-        /// <summary>
-        /// The stroke dash array property
-        /// </summary>
-        public static readonly DependencyProperty StrokeDashArrayProperty = DependencyProperty.Register(
-            "StrokeDashArray", typeof (DoubleCollection), typeof (Separator),
-            new PropertyMetadata(default(DoubleCollection), CallChartUpdater()));
-
-        /// <summary>
-        /// Gets or sets the stroke dash array for the current separator.
-        /// </summary>
-        public DoubleCollection StrokeDashArray
-        {
-            get { return (DoubleCollection) GetValue(StrokeDashArrayProperty); }
-            set { SetValue(StrokeDashArrayProperty, value); }
-        }
-
-        /// <summary>
-        /// The step property
-        /// </summary>
-        public static readonly DependencyProperty StepProperty = DependencyProperty.Register(
-            "Step", typeof (double), typeof (Separator),
-            new PropertyMetadata(double.NaN, CallChartUpdater()));
-
-        /// <summary>
-        /// Gets or sets separators step, this means the value between each line, default is null, when null this value is calculated automatically.
-        /// </summary>
-        public double Step
-        {
-            get { return (double) GetValue(StepProperty); }
-            set { SetValue(StepProperty, value); }
-        }
-
-        /// <summary>
-        /// The actual step property
-        /// </summary>
-        public static readonly DependencyProperty ActualStepProperty = DependencyProperty.Register(
-            "ActualStep", typeof(double), typeof(Separator), new PropertyMetadata(default(double)));
-        /// <summary>
-        /// Gets the actual step.
-        /// </summary>
-        /// <value>
-        /// The actual step.
-        /// </value>
-        public double ActualStep
-        {
-            get { return Axis.S; }
-        }
-
-        /// <summary>
-        /// The axis orientation property
-        /// </summary>
-        public static readonly DependencyProperty AxisOrientationProperty = DependencyProperty.Register(
-            "AxisOrientation", typeof(AxisOrientation), typeof(Separator), new PropertyMetadata(default(AxisOrientation)));
-        /// <summary>
-        /// Gets or sets the element orientation ind the axis
-        /// </summary>
-        public AxisOrientation AxisOrientation
-        {
-            get { return (AxisOrientation)GetValue(AxisOrientationProperty); }
-            internal set { SetValue(AxisOrientationProperty, value); }
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Ases the core element.
+        ///     Ases the core element.
         /// </summary>
         /// <param name="axis">The axis.</param>
         /// <param name="source">The source.</param>
@@ -176,5 +87,107 @@ namespace FactoryWindowGUI.ChartUtil
                 if (wpfSeparator.Chart != null) wpfSeparator.Chart.Updater.Run(animate);
             };
         }
+
+        #region Dependency Properties
+
+        /// <summary>
+        ///     The stroke property
+        /// </summary>
+        public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register(
+            "Stroke", typeof(Brush), typeof(Separator),
+            new PropertyMetadata(default(Brush), CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets separators color
+        /// </summary>
+        public Brush Stroke
+        {
+            get { return (Brush) GetValue(StrokeProperty); }
+            set { SetValue(StrokeProperty, value); }
+        }
+
+        /// <summary>
+        ///     The stroke thickness property
+        /// </summary>
+        public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register(
+            "StrokeThickness", typeof(double), typeof(Separator),
+            new PropertyMetadata(default(double), CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets separators thickness
+        /// </summary>
+        public double StrokeThickness
+        {
+            get { return (double) GetValue(StrokeThicknessProperty); }
+            set { SetValue(StrokeThicknessProperty, value); }
+        }
+
+        /// <summary>
+        ///     The stroke dash array property
+        /// </summary>
+        public static readonly DependencyProperty StrokeDashArrayProperty = DependencyProperty.Register(
+            "StrokeDashArray", typeof(DoubleCollection), typeof(Separator),
+            new PropertyMetadata(default(DoubleCollection), CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets the stroke dash array for the current separator.
+        /// </summary>
+        public DoubleCollection StrokeDashArray
+        {
+            get { return (DoubleCollection) GetValue(StrokeDashArrayProperty); }
+            set { SetValue(StrokeDashArrayProperty, value); }
+        }
+
+        /// <summary>
+        ///     The step property
+        /// </summary>
+        public static readonly DependencyProperty StepProperty = DependencyProperty.Register(
+            "Step", typeof(double), typeof(Separator),
+            new PropertyMetadata(double.NaN, CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets separators step, this means the value between each line, default is null, when null this value is
+        ///     calculated automatically.
+        /// </summary>
+        public double Step
+        {
+            get { return (double) GetValue(StepProperty); }
+            set { SetValue(StepProperty, value); }
+        }
+
+        /// <summary>
+        ///     The actual step property
+        /// </summary>
+        public static readonly DependencyProperty ActualStepProperty = DependencyProperty.Register(
+            "ActualStep", typeof(double), typeof(Separator), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        ///     Gets the actual step.
+        /// </summary>
+        /// <value>
+        ///     The actual step.
+        /// </value>
+        public double ActualStep
+        {
+            get { return Axis.S; }
+        }
+
+        /// <summary>
+        ///     The axis orientation property
+        /// </summary>
+        public static readonly DependencyProperty AxisOrientationProperty = DependencyProperty.Register(
+            "AxisOrientation", typeof(AxisOrientation), typeof(Separator),
+            new PropertyMetadata(default(AxisOrientation)));
+
+        /// <summary>
+        ///     Gets or sets the element orientation ind the axis
+        /// </summary>
+        public AxisOrientation AxisOrientation
+        {
+            get { return (AxisOrientation) GetValue(AxisOrientationProperty); }
+            internal set { SetValue(AxisOrientationProperty, value); }
+        }
+
+        #endregion
     }
 }

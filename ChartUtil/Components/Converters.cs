@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：Converters.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //copyright(c) 2016 Greg Dennis & Alberto Rodriguez
 
@@ -32,22 +40,22 @@ namespace FactoryWindowGUI.ChartUtil.Components
 {
     internal class SerieConverter : IValueConverter
     {
-        public static SerieConverter Instance { get; set; }
-
         static SerieConverter()
         {
             Instance = new SerieConverter();
         }
-        private SerieConverter() { }
+
+        private SerieConverter()
+        {
+        }
+
+        public static SerieConverter Instance { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var series = value as IEnumerable<Series>;
             if (series != null)
-                return series.Select(x => new SeriesViewModel
-                {
-
-                });
+                return series.Select(x => new SeriesViewModel());
 
             var serie = value as Series;
             if (serie != null)
@@ -61,6 +69,7 @@ namespace FactoryWindowGUI.ChartUtil.Components
 
             return value;
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：CartesianChartCore.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -31,14 +39,14 @@ using LiveCharts.Helpers;
 namespace LiveCharts.Charts
 {
     /// <summary>
-    /// Chart Model
+    ///     Chart Model
     /// </summary>
     public class CartesianChartCore : ChartCore
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes Chart model
+        ///     Initializes Chart model
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="updater">The updater.</param>
@@ -52,7 +60,7 @@ namespace LiveCharts.Charts
         #region Publics
 
         /// <summary>
-        /// Prepares Chart Axes
+        ///     Prepares Chart Axes
         /// </summary>
         public override void PrepareAxes()
         {
@@ -95,6 +103,7 @@ namespace LiveCharts.Charts
                         xi.TopLimit = xi.PreviousTop;
                     }
                 }
+
                 xi.PreviousBot = xi.BotLimit;
                 xi.PreviousTop = xi.TopLimit;
             }
@@ -129,6 +138,7 @@ namespace LiveCharts.Charts
                         yi.TopLimit = yi.PreviousTop;
                     }
                 }
+
                 yi.PreviousBot = yi.BotLimit;
                 yi.PreviousTop = yi.TopLimit;
             }
@@ -141,18 +151,15 @@ namespace LiveCharts.Charts
         }
 
         /// <summary>
-        /// Runs the specialized chart components.
+        ///     Runs the specialized chart components.
         /// </summary>
         public override void RunSpecializedChartComponents()
         {
-            foreach (var visualElement in ((ICartesianChart) View).VisualElements)
-            {
-                visualElement.AddOrMove(this);
-            }
+            foreach (var visualElement in ((ICartesianChart) View).VisualElements) visualElement.AddOrMove(this);
         }
 
         /// <summary>
-        /// Draws the or update sections.
+        ///     Draws the or update sections.
         /// </summary>
         public void DrawOrUpdateSections()
         {
@@ -177,7 +184,6 @@ namespace LiveCharts.Charts
                     section.View.DrawOrMove(AxisOrientation.Y, index);
                 }
             }
-            
         }
 
         #endregion
@@ -199,7 +205,7 @@ namespace LiveCharts.Charts
             }
 
             //                     [ max, min, pointRadius ]
-            var boundries = new[] { first.Max, first.Min, firstR };
+            var boundries = new[] {first.Max, first.Min, firstR};
 
             for (var index = 1; index < series.Count; index++)
             {
@@ -249,15 +255,11 @@ namespace LiveCharts.Charts
         {
             foreach (var series in View.ActualSeries)
             {
-                if (series is IStackedColumnSeriesView || series is IColumnSeriesView || 
+                if (series is IStackedColumnSeriesView || series is IColumnSeriesView ||
                     series is IFinancialSeriesView || series is IHeatSeriesView)
-                {
                     AxisX[series.ScalesXAt].EvaluatesUnitWidth = true;
-                }
                 if (series is IStackedRowSeriesView || series is IRowSeriesView || series is IHeatSeriesView)
-                {
                     AxisY[series.ScalesYAt].EvaluatesUnitWidth = true;
-                }
             }
         }
 
@@ -270,10 +272,9 @@ namespace LiveCharts.Charts
                                            ((IStackModelableSeriesView) x).StackMode == StackMode.Percentage);
 
             foreach (var group in View.ActualSeries.OfType<IStackedColumnSeriesView>().GroupBy(x => x.ScalesYAt))
-            {
-                StackPoints(group, AxisOrientation.Y, group.Key, isPercentage
-                    ? StackMode.Percentage : StackMode.Values);
-            }
+                StackPoints(@group, AxisOrientation.Y, @group.Key, isPercentage
+                    ? StackMode.Percentage
+                    : StackMode.Values);
         }
 
         private void PrepareStackedRows()
@@ -282,12 +283,11 @@ namespace LiveCharts.Charts
 
             var isPercentage =
                 View.ActualSeries.Any(x => x is IStackModelableSeriesView && x is IStackedRowSeriesView &&
-                                     ((IStackModelableSeriesView) x).StackMode == StackMode.Percentage);
+                                           ((IStackModelableSeriesView) x).StackMode == StackMode.Percentage);
 
             foreach (var group in View.ActualSeries.OfType<IStackedRowSeriesView>().GroupBy(x => x.ScalesXAt))
-            {
-                StackPoints(group, AxisOrientation.X, group.Key, isPercentage ? StackMode.Percentage : StackMode.Values);
-            }
+                StackPoints(@group, AxisOrientation.X, @group.Key,
+                    isPercentage ? StackMode.Percentage : StackMode.Values);
         }
 
         private void PrepareStackedAreas()
@@ -296,12 +296,11 @@ namespace LiveCharts.Charts
 
             var isPercentage =
                 View.ActualSeries.Any(x => x is IStackModelableSeriesView && x is IStackedAreaSeriesView &&
-                                     ((IStackModelableSeriesView) x).StackMode == StackMode.Percentage);
+                                           ((IStackModelableSeriesView) x).StackMode == StackMode.Percentage);
 
             foreach (var group in View.ActualSeries.OfType<IStackedAreaSeriesView>().GroupBy(x => x.ScalesYAt))
-            {
-                StackPoints(group, AxisOrientation.Y, group.Key, isPercentage ? StackMode.Percentage : StackMode.Values);
-            }
+                StackPoints(@group, AxisOrientation.Y, @group.Key,
+                    isPercentage ? StackMode.Percentage : StackMode.Values);
         }
 
         private void PrepareVerticalStackedAreas()
@@ -310,12 +309,11 @@ namespace LiveCharts.Charts
 
             var isPercentage =
                 View.ActualSeries.Any(x => x is IStackModelableSeriesView && x is IVerticalStackedAreaSeriesView &&
-                                     ((IStackModelableSeriesView) x).StackMode == StackMode.Percentage);
+                                           ((IStackModelableSeriesView) x).StackMode == StackMode.Percentage);
 
             foreach (var group in View.ActualSeries.OfType<IVerticalStackedAreaSeriesView>().GroupBy(x => x.ScalesXAt))
-            {
-                StackPoints(group, AxisOrientation.X, group.Key, isPercentage ? StackMode.Percentage : StackMode.Values);
-            }
+                StackPoints(@group, AxisOrientation.X, @group.Key,
+                    isPercentage ? StackMode.Percentage : StackMode.Values);
         }
 
         #endregion

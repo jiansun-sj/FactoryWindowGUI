@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：LegendLocation.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,28 +31,32 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// Charts legend locations
+    ///     Charts legend locations
     /// </summary>
     public enum LegendLocation
     {
         /// <summary>
-        /// Disables legend
+        ///     Disables legend
         /// </summary>
         None,
+
         /// <summary>
-        /// PLaces legend at top
+        ///     PLaces legend at top
         /// </summary>
         Top,
+
         /// <summary>
-        /// Places legend at bottom
+        ///     Places legend at bottom
         /// </summary>
         Bottom,
+
         /// <summary>
-        /// Places legend at left
+        ///     Places legend at left
         /// </summary>
         Left,
+
         /// <summary>
-        /// Places legend at right
+        ///     Places legend at right
         /// </summary>
         Right
     }

@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：WeightedMapper.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,19 +33,19 @@ using System;
 namespace LiveCharts.Configurations
 {
     /// <summary>
-    /// Mapper to configure Bubble points
+    ///     Mapper to configure Bubble points
     /// </summary>
     /// <typeparam name="T">type to configure</typeparam>
     public class WeightedMapper<T> : IPointEvaluator<T>
     {
+        private Func<T, int, object> _fill;
+        private Func<T, int, object> _stroke;
+        private Func<T, int, double> _weight = (v, i) => 0;
         private Func<T, int, double> _x = (v, i) => i;
         private Func<T, int, double> _y = (v, i) => i;
-        private Func<T, int, double> _weight = (v, i) => 0;
-        private Func<T, int, object> _stroke;
-        private Func<T, int, object> _fill;
 
         /// <summary>
-        /// Sets values for a specific point
+        ///     Sets values for a specific point
         /// </summary>
         /// <param name="point">Point to set</param>
         /// <param name="value"></param>
@@ -52,7 +60,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the X mapper
+        ///     Sets the X mapper
         /// </summary>
         /// <param name="predicate">function that pulls the X coordinate</param>
         /// <returns>current mapper instance</returns>
@@ -62,7 +70,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the X mapper
+        ///     Sets the X mapper
         /// </summary>
         /// <param name="predicate">function that pulls the X coordinate, value and index as parameters</param>
         /// <returns>current mapper instance</returns>
@@ -73,7 +81,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Y mapper
+        ///     Sets the Y mapper
         /// </summary>
         /// <param name="predicate">function that pulls the Y coordinate</param>
         /// <returns>current mapper instance</returns>
@@ -83,7 +91,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Y mapper
+        ///     Sets the Y mapper
         /// </summary>
         /// <param name="predicate">function that pulls the Y coordinate, value and index as parameters</param>
         /// <returns>current mapper instance</returns>
@@ -94,7 +102,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets Weight mapper
+        ///     Sets Weight mapper
         /// </summary>
         /// <param name="predicate">function that pulls the point's weight</param>
         /// <returns>current mapper instance</returns>
@@ -104,7 +112,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets Weight mapper
+        ///     Sets Weight mapper
         /// </summary>
         /// <param name="predicate">function that pulls the point's weight, value and index as parameters</param>
         /// <returns>current mapper instance</returns>
@@ -115,7 +123,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Stroke of the point
+        ///     Sets the Stroke of the point
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
@@ -125,7 +133,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Stroke of the point
+        ///     Sets the Stroke of the point
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
@@ -136,7 +144,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Fill of the point
+        ///     Sets the Fill of the point
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
@@ -146,7 +154,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Sets the Fill of the point
+        ///     Sets the Fill of the point
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>

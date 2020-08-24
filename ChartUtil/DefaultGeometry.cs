@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：DefaultGeometry.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,12 +33,12 @@ using System.Windows.Media;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// Contains an already defined collection of geometries, useful to set the Series.PointGeomety property
+    ///     Contains an already defined collection of geometries, useful to set the Series.PointGeomety property
     /// </summary>
     public static class DefaultGeometries
     {
         /// <summary>
-        /// Returns a null geometry
+        ///     Returns a null geometry
         /// </summary>
         public static Geometry None
         {
@@ -38,7 +46,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Returns a circle geometry
+        ///     Returns a circle geometry
         /// </summary>
         public static Geometry Circle
         {
@@ -51,7 +59,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Returns a square geometry
+        ///     Returns a square geometry
         /// </summary>
         public static Geometry Square
         {
@@ -64,7 +72,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Returns a diamond geometry
+        ///     Returns a diamond geometry
         /// </summary>
         public static Geometry Diamond
         {
@@ -77,7 +85,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Returns a triangle geometry
+        ///     Returns a triangle geometry
         /// </summary>
         public static Geometry Triangle
         {
@@ -90,7 +98,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Returns a cross geometry
+        ///     Returns a cross geometry
         /// </summary>
         public static Geometry Cross
         {

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：IFondeable.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,15 +33,14 @@ using System.Windows.Media;
 namespace FactoryWindowGUI.ChartUtil.Components
 {
     /// <summary>
-    /// 
     /// </summary>
     public interface IFondeable
     {
         /// <summary>
-        /// Gets the point foreground.
+        ///     Gets the point foreground.
         /// </summary>
         /// <value>
-        /// The point foreground.
+        ///     The point foreground.
         /// </value>
         Brush PointForeground { get; }
     }

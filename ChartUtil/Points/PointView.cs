@@ -1,4 +1,12 @@
-//copyright(c) 2016 Alberto Rodriguez
+// ==================================================
+// 文件名：PointView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -47,12 +55,10 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
         public virtual void OnHover(ChartPoint point)
         {
-            
         }
 
         public virtual void OnHoverLeave(ChartPoint point)
         {
-            
         }
     }
 }

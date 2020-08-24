@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：AngularSection.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,24 +34,35 @@ using System.Windows.Media;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="System.Windows.FrameworkElement" />
     public class AngularSection : FrameworkElement
     {
-        internal AngularGauge Owner { get; set; }
-
         /// <summary>
-        /// From value property
+        ///     From value property
         /// </summary>
         public static readonly DependencyProperty FromValueProperty = DependencyProperty.Register(
             "FromValue", typeof(double), typeof(AngularSection), new PropertyMetadata(default(double), Redraw));
 
         /// <summary>
-        /// Gets or sets from value.
+        ///     To value property
+        /// </summary>
+        public static readonly DependencyProperty ToValueProperty = DependencyProperty.Register(
+            "ToValue", typeof(double), typeof(AngularSection), new PropertyMetadata(default(double), Redraw));
+
+        /// <summary>
+        ///     The fill property
+        /// </summary>
+        public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
+            "Fill", typeof(Brush), typeof(AngularSection), new PropertyMetadata(default(Brush)));
+
+        internal AngularGauge Owner { get; set; }
+
+        /// <summary>
+        ///     Gets or sets from value.
         /// </summary>
         /// <value>
-        /// From value.
+        ///     From value.
         /// </value>
         public double FromValue
         {
@@ -52,16 +71,10 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// To value property
-        /// </summary>
-        public static readonly DependencyProperty ToValueProperty = DependencyProperty.Register(
-            "ToValue", typeof(double), typeof(AngularSection), new PropertyMetadata(default(double), Redraw));
-
-        /// <summary>
-        /// Gets or sets to value.
+        ///     Gets or sets to value.
         /// </summary>
         /// <value>
-        /// To value.
+        ///     To value.
         /// </value>
         public double ToValue
         {
@@ -70,16 +83,10 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The fill property
-        /// </summary>
-        public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
-            "Fill", typeof(Brush), typeof(AngularSection), new PropertyMetadata(default(Brush)));
-
-        /// <summary>
-        /// Gets or sets the fill.
+        ///     Gets or sets the fill.
         /// </summary>
         /// <value>
-        /// The fill.
+        ///     The fill.
         /// </value>
         public Brush Fill
         {
@@ -87,7 +94,8 @@ namespace FactoryWindowGUI.ChartUtil
             set { SetValue(FillProperty, value); }
         }
 
-        private static void Redraw(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void Redraw(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var angularSection = (AngularSection) dependencyObject;
 
@@ -95,6 +103,5 @@ namespace FactoryWindowGUI.ChartUtil
 
             angularSection.Owner.UpdateSections();
         }
-
     }
 }

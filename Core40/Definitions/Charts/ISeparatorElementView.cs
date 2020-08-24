@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：ISeparatorElementView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,27 +34,27 @@ using LiveCharts.Dtos;
 namespace LiveCharts.Definitions.Charts
 {
     /// <summary>
-    /// 
     /// </summary>
     public interface ISeparatorElementView
     {
         /// <summary>
-        /// Gets the model.
+        ///     Gets the model.
         /// </summary>
         /// <value>
-        /// The model.
+        ///     The model.
         /// </value>
         SeparatorElementCore Model { get; }
+
         /// <summary>
-        /// Gets the label model.
+        ///     Gets the label model.
         /// </summary>
         /// <value>
-        /// The label model.
+        ///     The label model.
         /// </value>
         LabelEvaluation LabelModel { get; }
 
         /// <summary>
-        /// Updates the label.
+        ///     Updates the label.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="axis">The axis.</param>
@@ -55,14 +63,14 @@ namespace LiveCharts.Definitions.Charts
         LabelEvaluation UpdateLabel(string text, AxisCore axis, AxisOrientation source);
 
         /// <summary>
-        /// Clears the specified chart.
+        ///     Clears the specified chart.
         /// </summary>
         /// <param name="chart">The chart.</param>
         void Clear(IChartView chart);
 
         //No animated methods
         /// <summary>
-        /// Places the specified chart.
+        ///     Places the specified chart.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <param name="axis">The axis.</param>
@@ -71,16 +79,18 @@ namespace LiveCharts.Definitions.Charts
         /// <param name="toLabel">To label.</param>
         /// <param name="toLine">To line.</param>
         /// <param name="tab">The tab.</param>
-        void Place(ChartCore chart, AxisCore axis, AxisOrientation direction, int axisIndex, double toLabel, double toLine, double tab);
+        void Place(ChartCore chart, AxisCore axis, AxisOrientation direction, int axisIndex, double toLabel,
+            double toLine, double tab);
+
         /// <summary>
-        /// Removes the specified chart.
+        ///     Removes the specified chart.
         /// </summary>
         /// <param name="chart">The chart.</param>
         void Remove(ChartCore chart);
 
         //Animated methods
         /// <summary>
-        /// Moves the specified chart.
+        ///     Moves the specified chart.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <param name="axis">The axis.</param>
@@ -89,15 +99,18 @@ namespace LiveCharts.Definitions.Charts
         /// <param name="toLabel">To label.</param>
         /// <param name="toLine">To line.</param>
         /// <param name="tab">The tab.</param>
-        void Move(ChartCore chart, AxisCore axis, AxisOrientation direction, int axisIndex, double toLabel, double toLine, double tab);
+        void Move(ChartCore chart, AxisCore axis, AxisOrientation direction, int axisIndex, double toLabel,
+            double toLine, double tab);
+
         /// <summary>
-        /// Fades the in.
+        ///     Fades the in.
         /// </summary>
         /// <param name="axis">The axis.</param>
         /// <param name="chart">The chart.</param>
         void FadeIn(AxisCore axis, ChartCore chart);
+
         /// <summary>
-        /// Fades the out and remove.
+        ///     Fades the out and remove.
         /// </summary>
         /// <param name="chart">The chart.</param>
         void FadeOutAndRemove(ChartCore chart);

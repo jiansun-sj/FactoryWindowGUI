@@ -1,3 +1,13 @@
+// ==================================================
+// 文件名：Extentions.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
+
 using System.Linq;
 using System.Windows;
 using FactoryWindowGUI.ChartUtil.Charts.Base;
@@ -7,12 +17,11 @@ using LiveCharts.Dtos;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// 
     /// </summary>
     public static class Extentions
     {
         /// <summary>
-        /// Converts a point at screen to chart values scale
+        ///     Converts a point at screen to chart values scale
         /// </summary>
         /// <param name="chart">Target chart</param>
         /// <param name="screenPoint">point in screen</param>
@@ -37,7 +46,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Converts a chart values pair to pixels
+        ///     Converts a chart values pair to pixels
         /// </summary>
         /// <param name="chart">Target chart</param>
         /// <param name="chartPoint">point in screen</param>
@@ -62,7 +71,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Converts a ChartPoint to Point
+        ///     Converts a ChartPoint to Point
         /// </summary>
         /// <param name="chartPoint">point to convert</param>
         /// <returns></returns>
@@ -72,7 +81,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Converts a CorePoint to Point
+        ///     Converts a CorePoint to Point
         /// </summary>
         /// <param name="point">point to convert</param>
         /// <returns></returns>

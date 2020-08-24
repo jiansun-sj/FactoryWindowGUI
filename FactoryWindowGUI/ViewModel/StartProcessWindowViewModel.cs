@@ -1,10 +1,10 @@
 ﻿// ==================================================
 // 文件名：StartProcessWindowViewModel.cs
-// 创建时间：2020/04/30 16:26
+// 创建时间：2020/04/30 13:39
 // 上海芸浦信息技术有限公司
 // copyright@yumpoo
 // ==================================================
-// 最后修改于：2020/05/11 16:26
+// 最后修改于：2020/07/29 13:39
 // 修改人：jians
 // ==================================================
 
@@ -16,9 +16,9 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using FactoryWindowGUI.Annotations;
-using FactoryWindowGUI.ICommandImpl;
 using FactoryWindowGUI.Model;
 using FactoryWindowGUI.Util;
+using RosemaryThemes.Wpf.BaseClass;
 
 namespace FactoryWindowGUI.ViewModel
 {
@@ -106,7 +106,7 @@ namespace FactoryWindowGUI.ViewModel
             }
         }
 
-        public ICommand StartProcessCommand => new RelayCommandImplementation(StartProcess);
+        public ICommand StartProcessCommand => new RelayCommand(StartProcess);
 
         public event PropertyChangedEventHandler PropertyChanged;
 

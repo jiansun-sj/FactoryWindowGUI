@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：Delegates.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,34 +31,29 @@
 namespace LiveCharts.Events
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="chartPoint">The chart point.</param>
     public delegate void DataClickHandler(object sender, ChartPoint chartPoint);
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="chartPoint"></param>
     public delegate void DataHoverHandler(object sender, ChartPoint chartPoint);
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="sender">The sender.</param>
     public delegate void UpdaterTickHandler(object sender);
 
     /// <summary>
-    /// 
     /// </summary>
-    /// <param name="eventArgs">The <see cref="RangeChangedEventArgs"/> instance containing the event data.</param>
+    /// <param name="eventArgs">The <see cref="RangeChangedEventArgs" /> instance containing the event data.</param>
     public delegate void RangeChangedHandler(RangeChangedEventArgs eventArgs);
 
     /// <summary>
-    /// 
     /// </summary>
-    /// <param name="eventArgs">The <see cref="PreviewRangeChangedEventArgs"/> instance containing the event data.</param>
+    /// <param name="eventArgs">The <see cref="PreviewRangeChangedEventArgs" /> instance containing the event data.</param>
     public delegate void PreviewRangeChangedHandler(PreviewRangeChangedEventArgs eventArgs);
 }

@@ -1,10 +1,10 @@
 ﻿// ==================================================
 // 文件名：JPropertyTypeToColorConverter.cs
-// 创建时间：2020/03/13 16:26
+// 创建时间：2020/03/13 13:39
 // 上海芸浦信息技术有限公司
 // copyright@yumpoo
 // ==================================================
-// 最后修改于：2020/05/11 16:26
+// 最后修改于：2020/07/29 13:39
 // 修改人：jians
 // ==================================================
 
@@ -32,6 +32,34 @@ namespace FactoryWindowGUI.ValueConverters
                         return new BrushConverter().ConvertFrom("#c4a000");
                     case JTokenType.Null:
                         return new SolidColorBrush(Colors.OrangeRed);
+                    case JTokenType.None:
+                        break;
+                    case JTokenType.Object:
+                        break;
+                    case JTokenType.Array:
+                        break;
+                    case JTokenType.Constructor:
+                        break;
+                    case JTokenType.Property:
+                        break;
+                    case JTokenType.Comment:
+                        break;
+                    case JTokenType.Undefined:
+                        break;
+                    case JTokenType.Date:
+                        break;
+                    case JTokenType.Raw:
+                        break;
+                    case JTokenType.Bytes:
+                        break;
+                    case JTokenType.Guid:
+                        break;
+                    case JTokenType.Uri:
+                        break;
+                    case JTokenType.TimeSpan:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
             return value;

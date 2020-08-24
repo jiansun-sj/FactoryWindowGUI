@@ -1,10 +1,10 @@
 ﻿// ==================================================
 // 文件名：SystemControlView.xaml.cs
-// 创建时间：2020/03/04 16:25
+// 创建时间：2020/03/04 13:39
 // 上海芸浦信息技术有限公司
 // copyright@yumpoo
 // ==================================================
-// 最后修改于：2020/05/11 16:25
+// 最后修改于：2020/07/29 13:39
 // 修改人：jians
 // ==================================================
 
@@ -28,9 +28,7 @@ namespace FactoryWindowGUI.View
         private void RefreshMemoryAndCpu(object sender, RoutedEventArgs e)
         {
             if (DataContext is SystemControlViewModel systemControlViewModel)
-            {
                 systemControlViewModel.GetProcessRamAndCpuUsage();
-            }
         }
     }
 }

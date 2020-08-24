@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：IStepPointView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,23 +31,23 @@
 namespace LiveCharts.Definitions.Points
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Points.IChartPointView" />
     public interface IStepPointView : IChartPointView
     {
         /// <summary>
-        /// Gets or sets the delta x.
+        ///     Gets or sets the delta x.
         /// </summary>
         /// <value>
-        /// The delta x.
+        ///     The delta x.
         /// </value>
         double DeltaX { get; set; }
+
         /// <summary>
-        /// Gets or sets the delta y.
+        ///     Gets or sets the delta y.
         /// </summary>
         /// <value>
-        /// The delta y.
+        ///     The delta y.
         /// </value>
         double DeltaY { get; set; }
     }

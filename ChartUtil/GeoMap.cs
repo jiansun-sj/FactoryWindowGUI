@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：GeoMap.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -36,19 +44,18 @@ using System.Windows.Shapes;
 using FactoryWindowGUI.ChartUtil.Maps;
 using LiveCharts.Maps;
 using LiveCharts.Wpf;
-using Path = System.Windows.Shapes.Path;
 
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="System.Windows.Controls.UserControl" />
     public class GeoMap : UserControl
     {
         #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="GeoMap"/> class.
+        ///     Initializes a new instance of the <see cref="GeoMap" /> class.
         /// </summary>
         public GeoMap()
         {
@@ -58,30 +65,27 @@ namespace FactoryWindowGUI.ChartUtil
             Content = Canvas;
 
             Canvas.SetBinding(WidthProperty,
-                new Binding { Path = new PropertyPath(ActualWidthProperty), Source = this });
+                new Binding {Path = new PropertyPath(ActualWidthProperty), Source = this});
             Canvas.SetBinding(HeightProperty,
-                new Binding { Path = new PropertyPath(ActualHeightProperty), Source = this });
+                new Binding {Path = new PropertyPath(ActualHeightProperty), Source = this});
 
             Lands = new Dictionary<string, MapData>();
 
-            SetCurrentValue(DefaultLandFillProperty, new SolidColorBrush(Color.FromArgb(200,255,255,255)));
-            SetCurrentValue(LandStrokeProperty, new SolidColorBrush(Color.FromArgb(30, 55,55, 55)));
+            SetCurrentValue(DefaultLandFillProperty, new SolidColorBrush(Color.FromArgb(200, 255, 255, 255)));
+            SetCurrentValue(LandStrokeProperty, new SolidColorBrush(Color.FromArgb(30, 55, 55, 55)));
             SetCurrentValue(LandStrokeThicknessProperty, 1.3d);
             SetCurrentValue(AnimationsSpeedProperty, TimeSpan.FromMilliseconds(500));
             SetCurrentValue(BackgroundProperty, new SolidColorBrush(Color.FromArgb(150, 96, 125, 138)));
             SetCurrentValue(GradientStopCollectionProperty, new GradientStopCollection
             {
-                new GradientStop(Color.FromArgb(100,2,119,188), 0d),
-                new GradientStop(Color.FromRgb(2,119,188), 1d),
+                new GradientStop(Color.FromArgb(100, 2, 119, 188), 0d),
+                new GradientStop(Color.FromRgb(2, 119, 188), 1d),
             });
             SetCurrentValue(HeatMapProperty, new Dictionary<string, double>());
             SetCurrentValue(GeoMapTooltipProperty, new DefaultGeoMapTooltip {Visibility = Visibility.Hidden});
             Canvas.Children.Add(GeoMapTooltip);
 
-            SizeChanged += (sender, e) =>
-            {
-                Draw();
-            };
+            SizeChanged += (sender, e) => { Draw(); };
 
             MouseWheel += (sender, e) =>
             {
@@ -93,7 +97,7 @@ namespace FactoryWindowGUI.ChartUtil
                 p += e.Delta > 0 ? .05 : -.05;
                 p = p < 1 ? 1 : p;
                 var o = e.GetPosition(this);
-                if (e.Delta > 0) Map.RenderTransformOrigin = new Point(o.X/ActualWidth,o.Y/ActualHeight);
+                if (e.Delta > 0) Map.RenderTransformOrigin = new Point(o.X / ActualWidth, o.Y / ActualHeight);
                 Map.RenderTransform = new ScaleTransform(p, p);
             };
 
@@ -132,7 +136,7 @@ namespace FactoryWindowGUI.ChartUtil
         #region Events
 
         /// <summary>
-        /// Occurs when [land click].
+        ///     Occurs when [land click].
         /// </summary>
         public event Action<object, MapData> LandClick;
 
@@ -149,7 +153,9 @@ namespace FactoryWindowGUI.ChartUtil
         private Dictionary<string, MapData> Lands { get; set; }
 
         private static readonly DependencyProperty GeoMapTooltipProperty = DependencyProperty.Register(
-            "GeoMapTooltip", typeof (DefaultGeoMapTooltip), typeof (GeoMap), new PropertyMetadata(default(DefaultGeoMapTooltip)));
+            "GeoMapTooltip", typeof(DefaultGeoMapTooltip), typeof(GeoMap),
+            new PropertyMetadata(default(DefaultGeoMapTooltip)));
+
         private DefaultGeoMapTooltip GeoMapTooltip
         {
             get { return (DefaultGeoMapTooltip) GetValue(GeoMapTooltipProperty); }
@@ -157,12 +163,14 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The language pack property
+        ///     The language pack property
         /// </summary>
         public static readonly DependencyProperty LanguagePackProperty = DependencyProperty.Register(
-            "LanguagePack", typeof (Dictionary<string, string>), typeof (GeoMap), new PropertyMetadata(default(Dictionary<string, string>)));
+            "LanguagePack", typeof(Dictionary<string, string>), typeof(GeoMap),
+            new PropertyMetadata(default(Dictionary<string, string>)));
+
         /// <summary>
-        /// Gets or sets the language dictionary
+        ///     Gets or sets the language dictionary
         /// </summary>
         public Dictionary<string, string> LanguagePack
         {
@@ -171,12 +179,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The default land fill property
+        ///     The default land fill property
         /// </summary>
         public static readonly DependencyProperty DefaultLandFillProperty = DependencyProperty.Register(
-            "DefaultLandFill", typeof (Brush), typeof (GeoMap), new PropertyMetadata(default(Brush)));
+            "DefaultLandFill", typeof(Brush), typeof(GeoMap), new PropertyMetadata(default(Brush)));
+
         /// <summary>
-        /// Gets or sets default land fill
+        ///     Gets or sets default land fill
         /// </summary>
         public Brush DefaultLandFill
         {
@@ -185,12 +194,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The land stroke thickness property
+        ///     The land stroke thickness property
         /// </summary>
         public static readonly DependencyProperty LandStrokeThicknessProperty = DependencyProperty.Register(
-            "LandStrokeThickness", typeof (double), typeof (GeoMap), new PropertyMetadata(default(double)));
+            "LandStrokeThickness", typeof(double), typeof(GeoMap), new PropertyMetadata(default(double)));
+
         /// <summary>
-        /// Gets or sets every land stroke thickness property
+        ///     Gets or sets every land stroke thickness property
         /// </summary>
         public double LandStrokeThickness
         {
@@ -199,12 +209,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The land stroke property
+        ///     The land stroke property
         /// </summary>
         public static readonly DependencyProperty LandStrokeProperty = DependencyProperty.Register(
-            "LandStroke", typeof (Brush), typeof (GeoMap), new PropertyMetadata(default(Brush)));
+            "LandStroke", typeof(Brush), typeof(GeoMap), new PropertyMetadata(default(Brush)));
+
         /// <summary>
-        /// Gets or sets every land stroke
+        ///     Gets or sets every land stroke
         /// </summary>
         public Brush LandStroke
         {
@@ -213,12 +224,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The disable animations property
+        ///     The disable animations property
         /// </summary>
         public static readonly DependencyProperty DisableAnimationsProperty = DependencyProperty.Register(
-            "DisableAnimations", typeof (bool), typeof (GeoMap), new PropertyMetadata(default(bool)));
+            "DisableAnimations", typeof(bool), typeof(GeoMap), new PropertyMetadata(default(bool)));
+
         /// <summary>
-        /// Gets or sets whether the chart is animated
+        ///     Gets or sets whether the chart is animated
         /// </summary>
         public bool DisableAnimations
         {
@@ -227,12 +239,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The animations speed property
+        ///     The animations speed property
         /// </summary>
         public static readonly DependencyProperty AnimationsSpeedProperty = DependencyProperty.Register(
-            "AnimationsSpeed", typeof (TimeSpan), typeof (GeoMap), new PropertyMetadata(default(TimeSpan)));
+            "AnimationsSpeed", typeof(TimeSpan), typeof(GeoMap), new PropertyMetadata(default(TimeSpan)));
+
         /// <summary>
-        /// Gets or sets animations speed
+        ///     Gets or sets animations speed
         /// </summary>
         public TimeSpan AnimationsSpeed
         {
@@ -241,12 +254,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The hoverable property
+        ///     The hoverable property
         /// </summary>
         public static readonly DependencyProperty HoverableProperty = DependencyProperty.Register(
-            "Hoverable", typeof (bool), typeof (GeoMap), new PropertyMetadata(default(bool)));
+            "Hoverable", typeof(bool), typeof(GeoMap), new PropertyMetadata(default(bool)));
+
         /// <summary>
-        /// Gets or sets whether the chart reacts when a user moves the mouse over a land
+        ///     Gets or sets whether the chart reacts when a user moves the mouse over a land
         /// </summary>
         public bool Hoverable
         {
@@ -255,13 +269,14 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The heat map property
+        ///     The heat map property
         /// </summary>
         public static readonly DependencyProperty HeatMapProperty = DependencyProperty.Register(
-            "HeatMap", typeof (Dictionary<string, double>), typeof (GeoMap), 
+            "HeatMap", typeof(Dictionary<string, double>), typeof(GeoMap),
             new PropertyMetadata(default(Dictionary<string, double>), OnHeapMapChanged));
+
         /// <summary>
-        /// Gets or sets the current heat map
+        ///     Gets or sets the current heat map
         /// </summary>
         public Dictionary<string, double> HeatMap
         {
@@ -270,26 +285,29 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The gradient stop collection property
+        ///     The gradient stop collection property
         /// </summary>
         public static readonly DependencyProperty GradientStopCollectionProperty = DependencyProperty.Register(
-            "GradientStopCollection", typeof(GradientStopCollection), typeof(GeoMap), new PropertyMetadata(default(GradientStopCollection)));
+            "GradientStopCollection", typeof(GradientStopCollection), typeof(GeoMap),
+            new PropertyMetadata(default(GradientStopCollection)));
+
         /// <summary>
-        /// Gets or sets the gradient stop collection, use every gradient offset and color properties to define your gradient.
+        ///     Gets or sets the gradient stop collection, use every gradient offset and color properties to define your gradient.
         /// </summary>
         public GradientStopCollection GradientStopCollection
         {
-            get { return (GradientStopCollection)GetValue(GradientStopCollectionProperty); }
+            get { return (GradientStopCollection) GetValue(GradientStopCollectionProperty); }
             set { SetValue(GradientStopCollectionProperty, value); }
         }
 
         /// <summary>
-        /// The source property
+        ///     The source property
         /// </summary>
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
-            "Source", typeof (string), typeof (GeoMap), new PropertyMetadata(default(string)));
+            "Source", typeof(string), typeof(GeoMap), new PropertyMetadata(default(string)));
+
         /// <summary>
-        /// Gets or sets the map source
+        ///     Gets or sets the map source
         /// </summary>
         public string Source
         {
@@ -298,12 +316,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The enable zooming and panning property
+        ///     The enable zooming and panning property
         /// </summary>
         public static readonly DependencyProperty EnableZoomingAndPanningProperty = DependencyProperty.Register(
-            "EnableZoomingAndPanning", typeof (bool), typeof (GeoMap), new PropertyMetadata(default(bool)));
+            "EnableZoomingAndPanning", typeof(bool), typeof(GeoMap), new PropertyMetadata(default(bool)));
+
         /// <summary>
-        /// Gets or sets whether the map allows zooming and panning
+        ///     Gets or sets whether the map allows zooming and panning
         /// </summary>
         public bool EnableZoomingAndPanning
         {
@@ -324,12 +343,11 @@ namespace FactoryWindowGUI.ChartUtil
         //    var s = (Path) data.Shape;
         //    var area = s.Data.Bounds;
         //    var t = (ScaleTransform) s.RenderTransform;
-            
 
 
         //    //if (DisableAnimations)
         //    //{
-            
+
         //    double scale;
         //    double cx = 0;
         //    double cy = 0;
@@ -358,7 +376,7 @@ namespace FactoryWindowGUI.ChartUtil
         //}
 
         /// <summary>
-        /// Restarts the current map view
+        ///     Restarts the current map view
         /// </summary>
         public void Restart()
         {
@@ -370,13 +388,15 @@ namespace FactoryWindowGUI.ChartUtil
             }
             else
             {
-                Map.BeginAnimation(Canvas.LeftProperty, new DoubleAnimation(OriginalPosition.X, TimeSpan.FromMilliseconds(1)));
-                Map.BeginAnimation(Canvas.TopProperty, new DoubleAnimation(OriginalPosition.Y, TimeSpan.FromMilliseconds(1)));
+                Map.BeginAnimation(Canvas.LeftProperty,
+                    new DoubleAnimation(OriginalPosition.X, TimeSpan.FromMilliseconds(1)));
+                Map.BeginAnimation(Canvas.TopProperty,
+                    new DoubleAnimation(OriginalPosition.Y, TimeSpan.FromMilliseconds(1)));
             }
         }
 
         /// <summary>
-        /// Sets a heat map value with a given key, then updates every land heat color
+        ///     Sets a heat map value with a given key, then updates every land heat color
         /// </summary>
         /// <param name="key">key</param>
         /// <param name="value">new value</param>
@@ -417,19 +437,19 @@ namespace FactoryWindowGUI.ChartUtil
             if (map == null) return;
 
             var desiredSize = new Size(map.DesiredWidth, map.DesiredHeight);
-            var r = desiredSize.Width/desiredSize.Height;
+            var r = desiredSize.Width / desiredSize.Height;
 
-            var wr = ActualWidth/desiredSize.Width;
-            var hr = ActualHeight/desiredSize.Height;
+            var wr = ActualWidth / desiredSize.Width;
+            var hr = ActualHeight / desiredSize.Height;
             double s;
 
             if (wr < hr)
             {
                 IsWidthDominant = true;
                 Map.Width = ActualWidth;
-                Map.Height = Map.Width/r;
+                Map.Height = Map.Width / r;
                 s = wr;
-                OriginalPosition = new Point(0, (ActualHeight - Map.Height)*.5);
+                OriginalPosition = new Point(0, (ActualHeight - Map.Height) * .5);
                 Canvas.SetLeft(Map, OriginalPosition.X);
                 Canvas.SetTop(Map, OriginalPosition.Y);
             }
@@ -437,9 +457,9 @@ namespace FactoryWindowGUI.ChartUtil
             {
                 IsWidthDominant = false;
                 Map.Height = ActualHeight;
-                Map.Width = r*ActualHeight;
+                Map.Width = r * ActualHeight;
                 s = hr;
-                OriginalPosition = new Point((ActualWidth - Map.Width)*.5, 0d);
+                OriginalPosition = new Point((ActualWidth - Map.Width) * .5, 0d);
                 Canvas.SetLeft(Map, OriginalPosition.X);
                 Canvas.SetTop(Map, OriginalPosition.Y);
             }
@@ -464,7 +484,7 @@ namespace FactoryWindowGUI.ChartUtil
                 p.MouseDown += POnMouseDown;
 
                 p.SetBinding(Shape.StrokeProperty,
-                    new Binding { Path = new PropertyPath(LandStrokeProperty), Source = this });
+                    new Binding {Path = new PropertyPath(LandStrokeProperty), Source = this});
                 p.SetBinding(Shape.StrokeThicknessProperty,
                     new MultiBinding
                     {
@@ -475,8 +495,7 @@ namespace FactoryWindowGUI.ChartUtil
                             new Binding("ScaleX") {Source = t}
                         }
                     });
-
-            }      
+            }
 
             ShowMeSomeHeat();
         }
@@ -495,7 +514,7 @@ namespace FactoryWindowGUI.ChartUtil
             foreach (var land in Lands)
             {
                 double temperature;
-                var shape = ((Shape) land.Value.Shape);
+                var shape = (Shape) land.Value.Shape;
 
                 shape.SetBinding(Shape.FillProperty,
                     new Binding {Path = new PropertyPath(DefaultLandFillProperty), Source = this});
@@ -528,7 +547,7 @@ namespace FactoryWindowGUI.ChartUtil
 
         private void POnMouseLeave(object sender, MouseEventArgs mouseEventArgs)
         {
-            var path = (Path)sender;
+            var path = (Path) sender;
             path.Opacity = 1;
 
             GeoMapTooltip.Visibility = Visibility.Hidden;
@@ -572,12 +591,11 @@ namespace FactoryWindowGUI.ChartUtil
             Color from = Color.FromRgb(0, 0, 0), to = Color.FromRgb(0, 0, 0);
             double fromOffset = 0, toOffset = 0;
 
-            for (var i = 0; i < GradientStopCollection.Count-1; i++)
-            {
+            for (var i = 0; i < GradientStopCollection.Count - 1; i++)
                 // ReSharper disable once InvertIf
                 if (GradientStopCollection[i].Offset <= weight && GradientStopCollection[i + 1].Offset >= weight)
                 {
-                    from = GradientStopCollection[i].Color;
+                    @from = GradientStopCollection[i].Color;
                     to = GradientStopCollection[i + 1].Color;
 
                     fromOffset = GradientStopCollection[i].Offset;
@@ -585,7 +603,6 @@ namespace FactoryWindowGUI.ChartUtil
 
                     break;
                 }
-            }
 
             return Color.FromArgb(
                 (byte) LinealInterpolation(from.A, to.A, fromOffset, toOffset, weight),
@@ -609,45 +626,60 @@ namespace FactoryWindowGUI.ChartUtil
 
         private static void OnHeapMapChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var geoMap = (GeoMap)o;
+            var geoMap = (GeoMap) o;
 
             if (!geoMap.IsDrawn) return;
 
             geoMap.ShowMeSomeHeat();
         }
+
         #endregion
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="System.Windows.Data.IMultiValueConverter" />
     public class ScaleStrokeConverter : IMultiValueConverter
     {
         /// <summary>
-        /// Converts source values to a value for the binding target. The data binding engine calls this method when it propagates the values from source bindings to the binding target.
+        ///     Converts source values to a value for the binding target. The data binding engine calls this method when it
+        ///     propagates the values from source bindings to the binding target.
         /// </summary>
-        /// <param name="values">The array of values that the source bindings in the <see cref="T:System.Windows.Data.MultiBinding" /> produces. The value <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value to provide for conversion.</param>
+        /// <param name="values">
+        ///     The array of values that the source bindings in the
+        ///     <see cref="T:System.Windows.Data.MultiBinding" /> produces. The value
+        ///     <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value to
+        ///     provide for conversion.
+        /// </param>
         /// <param name="targetType">The type of the binding target property.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
         /// <returns>
-        /// A converted value.If the method returns null, the valid null value is used.A return value of <see cref="T:System.Windows.DependencyProperty" />.<see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the converter did not produce a value, and that the binding will use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> if it is available, or else will use the default value.A return value of <see cref="T:System.Windows.Data.Binding" />.<see cref="F:System.Windows.Data.Binding.DoNothing" /> indicates that the binding does not transfer the value or use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> or the default value.
+        ///     A converted value.If the method returns null, the valid null value is used.A return value of
+        ///     <see cref="T:System.Windows.DependencyProperty" />.<see cref="F:System.Windows.DependencyProperty.UnsetValue" />
+        ///     indicates that the converter did not produce a value, and that the binding will use the
+        ///     <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> if it is available, or else will use the default
+        ///     value.A return value of <see cref="T:System.Windows.Data.Binding" />.
+        ///     <see cref="F:System.Windows.Data.Binding.DoNothing" /> indicates that the binding does not transfer the value or
+        ///     use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> or the default value.
         /// </returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double) values[0]/(double) values[1];
+            return (double) values[0] / (double) values[1];
         }
 
         /// <summary>
-        /// Converts a binding target value to the source binding values.
+        ///     Converts a binding target value to the source binding values.
         /// </summary>
         /// <param name="value">The value that the binding target produces.</param>
-        /// <param name="targetTypes">The array of types to convert to. The array length indicates the number and types of values that are suggested for the method to return.</param>
+        /// <param name="targetTypes">
+        ///     The array of types to convert to. The array length indicates the number and types of values
+        ///     that are suggested for the method to return.
+        /// </param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
         /// <returns>
-        /// An array of values that have been converted from the target value back to the source values.
+        ///     An array of values that have been converted from the target value back to the source values.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

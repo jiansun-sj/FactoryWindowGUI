@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：IStackedColumnSeriesView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,24 +31,24 @@
 namespace LiveCharts.Definitions.Series
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Series.IGroupedStackedSeriesView" />
     /// <seealso cref="LiveCharts.Definitions.Series.IStackModelableSeriesView" />
     public interface IStackedColumnSeriesView : IGroupedStackedSeriesView, IStackModelableSeriesView
     {
         /// <summary>
-        /// Gets or sets the maximum width of the column.
+        ///     Gets or sets the maximum width of the column.
         /// </summary>
         /// <value>
-        /// The maximum width of the column.
+        ///     The maximum width of the column.
         /// </value>
         double MaxColumnWidth { get; set; }
+
         /// <summary>
-        /// Gets or sets the column padding.
+        ///     Gets or sets the column padding.
         /// </summary>
         /// <value>
-        /// The column padding.
+        ///     The column padding.
         /// </value>
         double ColumnPadding { get; set; }
     }

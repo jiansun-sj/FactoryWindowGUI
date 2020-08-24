@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：ScrollMode.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,24 +31,27 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// Gets or sets a chart scroll mode
+    ///     Gets or sets a chart scroll mode
     /// </summary>
     public enum ScrollMode
     {
         /// <summary>
-        /// Disables Chart Scroll bars
+        ///     Disables Chart Scroll bars
         /// </summary>
         None,
+
         /// <summary>
-        /// Enables scroll mode at the X axis
+        ///     Enables scroll mode at the X axis
         /// </summary>
         X,
+
         /// <summary>
-        /// Enables scroll mode at the Y axis
+        ///     Enables scroll mode at the Y axis
         /// </summary>
         Y,
+
         /// <summary>
-        /// Enables scroll mode in both, X and Y axis
+        ///     Enables scroll mode in both, X and Y axis
         /// </summary>
         XY
     }

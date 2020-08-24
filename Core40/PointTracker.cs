@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：PointTracker.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,12 +34,11 @@ using LiveCharts.Dtos;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     public class PointTracker
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PointTracker"/> class.
+        ///     Initializes a new instance of the <see cref="PointTracker" /> class.
         /// </summary>
         public PointTracker()
         {
@@ -40,45 +47,50 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Gets the x limit.
+        ///     Gets the x limit.
         /// </summary>
         /// <value>
-        /// The x limit.
+        ///     The x limit.
         /// </value>
         public CoreLimit XLimit { get; internal set; }
+
         /// <summary>
-        /// Gets the y limit.
+        ///     Gets the y limit.
         /// </summary>
         /// <value>
-        /// The y limit.
+        ///     The y limit.
         /// </value>
         public CoreLimit YLimit { get; internal set; }
+
         /// <summary>
-        /// Gets the w limit.
+        ///     Gets the w limit.
         /// </summary>
         /// <value>
-        /// The w limit.
+        ///     The w limit.
         /// </value>
         public CoreLimit WLimit { get; internal set; }
+
         /// <summary>
-        /// Gets the gci.
+        ///     Gets the gci.
         /// </summary>
         /// <value>
-        /// The gci.
+        ///     The gci.
         /// </value>
         public int Gci { get; internal set; }
+
         /// <summary>
-        /// Gets or sets the indexed.
+        ///     Gets or sets the indexed.
         /// </summary>
         /// <value>
-        /// The indexed.
+        ///     The indexed.
         /// </value>
         public Dictionary<int, ChartPoint> Indexed { get; set; }
+
         /// <summary>
-        /// Gets or sets the referenced.
+        ///     Gets or sets the referenced.
         /// </summary>
         /// <value>
-        /// The referenced.
+        ///     The referenced.
         /// </value>
         public Dictionary<object, ChartPoint> Referenced { get; set; }
     }

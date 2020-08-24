@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：CoreColor.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -24,12 +32,12 @@
 namespace LiveCharts.Dtos
 {
     /// <summary>
-    /// Defines a portable color
+    ///     Defines a portable color
     /// </summary>
     public struct CoreColor
     {
         /// <summary>
-        /// Initializes a new instance of CoreColor
+        ///     Initializes a new instance of CoreColor
         /// </summary>
         /// <param name="a">alpha component</param>
         /// <param name="r">red component</param>
@@ -44,19 +52,22 @@ namespace LiveCharts.Dtos
         }
 
         /// <summary>
-        /// Alpha component
+        ///     Alpha component
         /// </summary>
         public byte A { get; set; }
+
         /// <summary>
-        /// Red component
+        ///     Red component
         /// </summary>
         public byte R { get; set; }
+
         /// <summary>
-        /// Green component
+        ///     Green component
         /// </summary>
         public byte G { get; set; }
+
         /// <summary>
-        /// Red component
+        ///     Red component
         /// </summary>
         public byte B { get; set; }
     }

@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：Mappers.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,12 +31,12 @@
 namespace LiveCharts.Configurations
 {
     /// <summary>
-    /// Gets the already built point mappers
+    ///     Gets the already built point mappers
     /// </summary>
     public static class Mappers
     {
         /// <summary>
-        /// Gets a mapper to configure X, Y points
+        ///     Gets a mapper to configure X, Y points
         /// </summary>
         /// <typeparam name="T">Type to map</typeparam>
         /// <returns>A new cartesian mapper instance</returns>
@@ -38,7 +46,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Gets a mapper to configure financial points
+        ///     Gets a mapper to configure financial points
         /// </summary>
         /// <typeparam name="T">type to map</typeparam>
         /// <returns>a new financial mapper instance</returns>
@@ -48,7 +56,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Gets a mapper to configure X, Y and Weight points
+        ///     Gets a mapper to configure X, Y and Weight points
         /// </summary>
         /// <typeparam name="T">type to map</typeparam>
         /// <returns>a new weighted mapper instance</returns>
@@ -58,7 +66,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Gets a Gantt Mapper
+        ///     Gets a Gantt Mapper
         /// </summary>
         /// <typeparam name="T">type to amp</typeparam>
         /// <returns>a new polar mapper insance</returns>
@@ -68,7 +76,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Gets a mapper to configure Radius and Angle
+        ///     Gets a mapper to configure Radius and Angle
         /// </summary>
         /// <typeparam name="T">type to amp</typeparam>
         /// <returns>a new polar mapper insance</returns>
@@ -78,7 +86,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// PGets a mapper to configure a pie chart
+        ///     PGets a mapper to configure a pie chart
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：CandlePointView.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -77,7 +85,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
             }
 
 
-            var candleSeries = (CandleSeries)current.SeriesView;
+            var candleSeries = (CandleSeries) current.SeriesView;
 
             if (candleSeries.ColoringRules == null)
             {
@@ -136,7 +144,6 @@ namespace FactoryWindowGUI.ChartUtil.Points
                 return;
             }
 
-            
 
             var animSpeed = chart.View.AnimationsSpeed;
 
@@ -165,7 +172,6 @@ namespace FactoryWindowGUI.ChartUtil.Points
                 new DoubleAnimation(Width, animSpeed));
             OpenToCloseRectangle.BeginAnimation(FrameworkElement.HeightProperty,
                 new DoubleAnimation(Math.Max(Math.Abs(Open - Close), OpenToCloseRectangle.StrokeThickness), animSpeed));
-
         }
 
         public override void RemoveFromView(ChartCore chart)
@@ -199,6 +205,5 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
             return desiredPosition;
         }
-        
     }
 }

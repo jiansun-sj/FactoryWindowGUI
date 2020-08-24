@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ColumnAlgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -30,14 +38,13 @@ using LiveCharts.Dtos;
 namespace LiveCharts.SeriesAlgorithms
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.SeriesAlgorithm" />
     /// <seealso cref="LiveCharts.Definitions.Series.ICartesianSeries" />
     public class ColumnAlgorithm : SeriesAlgorithm, ICartesianSeries
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColumnAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="ColumnAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public ColumnAlgorithm(ISeriesView view) : base(view)
@@ -46,8 +53,34 @@ namespace LiveCharts.SeriesAlgorithms
             PreferredSelectionMode = TooltipSelectionMode.SharedXValues;
         }
 
+        double ICartesianSeries.GetMinX(AxisCore axis)
+        {
+            return AxisLimits.StretchMin(axis);
+        }
+
+        double ICartesianSeries.GetMaxX(AxisCore axis)
+        {
+            return AxisLimits.UnitRight(axis);
+        }
+
+        double ICartesianSeries.GetMinY(AxisCore axis)
+        {
+            var f = AxisLimits.SeparatorMin(axis);
+            return CurrentYAxis.BotLimit >= 0 && CurrentYAxis.TopLimit > 0
+                ? f >= 0 ? f : 0
+                : f;
+        }
+
+        double ICartesianSeries.GetMaxY(AxisCore axis)
+        {
+            var f = AxisLimits.SeparatorMaxRounded(axis);
+            return CurrentYAxis.BotLimit < 0 && CurrentYAxis.TopLimit <= 0
+                ? f >= 0 ? f : 0
+                : f;
+        }
+
         /// <summary>
-        /// Updates this instance.
+        ///     Updates this instance.
         /// </summary>
         public override void Update()
         {
@@ -71,17 +104,17 @@ namespace LiveCharts.SeriesAlgorithms
 
             if (singleColWidth > columnSeries.MaxColumnWidth)
             {
-                exceed = (singleColWidth - columnSeries.MaxColumnWidth)*typeSeries.Count/2;
+                exceed = (singleColWidth - columnSeries.MaxColumnWidth) * typeSeries.Count / 2;
                 singleColWidth = columnSeries.MaxColumnWidth;
             }
 
-            var relativeLeft = padding + exceed + singleColWidth*(seriesPosition);
+            var relativeLeft = padding + exceed + singleColWidth * seriesPosition;
 
-            var startAt = CurrentYAxis.FirstSeparator >= 0 && CurrentYAxis.LastSeparator > 0   //both positive
-                ? CurrentYAxis.FirstSeparator                                                  //then use axisYMin
-                : (CurrentYAxis.FirstSeparator < 0 && CurrentYAxis.LastSeparator <= 0          //both negative
-                    ? CurrentYAxis.LastSeparator                                               //then use axisYMax
-                    : 0);                                                                      //if mixed then use 0
+            var startAt = CurrentYAxis.FirstSeparator >= 0 && CurrentYAxis.LastSeparator > 0 //both positive
+                ? CurrentYAxis.FirstSeparator //then use axisYMin
+                : CurrentYAxis.FirstSeparator < 0 && CurrentYAxis.LastSeparator <= 0 //both negative
+                    ? CurrentYAxis.LastSeparator //then use axisYMax
+                    : 0; //if mixed then use 0
 
             var zero = ChartFunctions.ToDrawMargin(startAt, AxisOrientation.Y, Chart, View.ScalesYAt);
 
@@ -110,37 +143,11 @@ namespace LiveCharts.SeriesAlgorithms
 
                 rectangleView.ZeroReference = zero;
 
-                chartPoint.ChartLocation = new CorePoint(rectangleView.Data.Left + singleColWidth/2 - padding/2,
+                chartPoint.ChartLocation = new CorePoint(rectangleView.Data.Left + singleColWidth / 2 - padding / 2,
                     t);
 
                 chartPoint.View.DrawOrMove(null, chartPoint, 0, Chart);
             }
-        }
-
-        double ICartesianSeries.GetMinX(AxisCore axis)
-        {
-            return AxisLimits.StretchMin(axis);
-        }
-
-        double ICartesianSeries.GetMaxX(AxisCore axis)
-        {
-            return AxisLimits.UnitRight(axis);
-        }
-
-        double ICartesianSeries.GetMinY(AxisCore axis)
-        {
-            var f = AxisLimits.SeparatorMin(axis);
-            return CurrentYAxis.BotLimit >= 0 && CurrentYAxis.TopLimit > 0
-                ? (f >= 0 ? f : 0)
-                : f;
-        }
-
-        double ICartesianSeries.GetMaxY(AxisCore axis)
-        {
-            var f = AxisLimits.SeparatorMaxRounded(axis);
-            return CurrentYAxis.BotLimit < 0 && CurrentYAxis.TopLimit <= 0
-                ? (f >= 0 ? f : 0)
-                : f;
         }
     }
 }

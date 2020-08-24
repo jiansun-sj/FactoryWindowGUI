@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：ILineSeriesView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,33 +33,35 @@ using LiveCharts.Dtos;
 namespace LiveCharts.Definitions.Series
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Series.ISeriesView" />
     public interface ILineSeriesView : ISeriesView
     {
         /// <summary>
-        /// Gets or sets the line smoothness.
+        ///     Gets or sets the line smoothness.
         /// </summary>
         /// <value>
-        /// The line smoothness.
+        ///     The line smoothness.
         /// </value>
         double LineSmoothness { get; set; }
+
         /// <summary>
-        /// Gets or sets the area limit.
+        ///     Gets or sets the area limit.
         /// </summary>
         /// <value>
-        /// The area limit.
+        ///     The area limit.
         /// </value>
         double AreaLimit { get; set; }
+
         /// <summary>
-        /// Starts the segment.
+        ///     Starts the segment.
         /// </summary>
         /// <param name="atIndex">At index.</param>
         /// <param name="location">The location.</param>
         void StartSegment(int atIndex, CorePoint location);
+
         /// <summary>
-        /// Ends the segment.
+        ///     Ends the segment.
         /// </summary>
         /// <param name="atIndex">At index.</param>
         /// <param name="location">The location.</param>

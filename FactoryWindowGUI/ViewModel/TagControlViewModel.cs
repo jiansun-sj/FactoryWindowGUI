@@ -1,10 +1,10 @@
 ﻿// ==================================================
 // 文件名：TagControlViewModel.cs
-// 创建时间：2020/04/12 16:25
+// 创建时间：2020/04/12 13:39
 // 上海芸浦信息技术有限公司
 // copyright@yumpoo
 // ==================================================
-// 最后修改于：2020/05/11 16:25
+// 最后修改于：2020/07/29 13:39
 // 修改人：jians
 // ==================================================
 
@@ -20,15 +20,15 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using DevExpress.Xpf.Grid;
 using FactoryWindowGUI.Annotations;
-using FactoryWindowGUI.ICommandImpl;
 using FactoryWindowGUI.Model;
 using FactoryWindowGUI.Util;
 using FactoryWindowGUI.View;
 using log4net;
+using RosemaryThemes.Wpf.BaseClass;
 
 namespace FactoryWindowGUI.ViewModel
 {
-    public class TagControlViewModel : INotifyPropertyChanged
+    public sealed class TagControlViewModel : INotifyPropertyChanged
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(TagControlViewModel));
 
@@ -80,7 +80,7 @@ namespace FactoryWindowGUI.ViewModel
         }
 
         //刷新数据源通讯状态
-        public ICommand RefreshDataSourceCommand => new RelayCommandImplementation(RefreshDataSource);
+        public ICommand RefreshDataSourceCommand => new RelayCommand(RefreshDataSource);
 
         public bool AutoRefreshDataSource
         {
@@ -182,20 +182,20 @@ namespace FactoryWindowGUI.ViewModel
 
         //查询Tag功能
         public ICommand QueryTagCommand =>
-            new RelayCommandImplementation(QueryMachineTagAsync, QueryTagCommandCanExecute);
+            new RelayCommand(QueryMachineTagAsync, QueryTagCommandCanExecute);
 
         //刷新Machine资源列表
-        public ICommand RefreshMachineListCommand => new RelayCommandImplementation(RefreshMachineList);
+        public ICommand RefreshMachineListCommand => new RelayCommand(RefreshMachineList);
 
         //清除查询结果
-        public ICommand ClearButtonCommand => new RelayCommandImplementation(ClearTagSearchResult);
+        public ICommand ClearButtonCommand => new RelayCommand(ClearTagSearchResult);
 
         //从查存列表中移除选中的Tag
-        public ICommand RemoveSelectedTagCommand => new RelayCommandImplementation(RemoveSelectedTag);
+        public ICommand RemoveSelectedTagCommand => new RelayCommand(RemoveSelectedTag);
 
         //提交修改Tag值操作
         public ICommand SubmitTagChangeCommand =>
-            new RelayCommandImplementation(SubmitTagChange, SubmitTagChangeCommandCanExecute);
+            new RelayCommand(SubmitTagChange, SubmitTagChangeCommandCanExecute);
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -251,7 +251,7 @@ namespace FactoryWindowGUI.ViewModel
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -266,7 +266,7 @@ namespace FactoryWindowGUI.ViewModel
                     foreach (var item in TagList)
                     {
                         if (item.TagName == "全部") continue;
-                        string[] singleQueryList = {SelectedMachineName.MachineName, item.TagName, "", ""};
+                        string[] singleQueryList = {SelectedMachineName.MachineName, item.TagName, "", "",""};
                         queryList.Add(singleQueryList);
                     }
 
@@ -281,14 +281,14 @@ namespace FactoryWindowGUI.ViewModel
                             TagName = t[1],
                             TagValue = t[2],
                             IsReadOnly = t[3] != "Read",
-                            TagType = t[4]??""
+                            TagType = t[4] ?? ""
                         });
                 }
                 else
                 {
                     var queryList = new List<string[]>();
 
-                    string[] singleQueryList = {SelectedMachineName.MachineName, SelectedTagName.TagName, "", ""};
+                    string[] singleQueryList = {SelectedMachineName.MachineName, SelectedTagName.TagName, "", "",""};
                     queryList.Add(singleQueryList);
 
                     var tagValue = MachineUtil.SearchTagValue(queryList);
@@ -301,7 +301,7 @@ namespace FactoryWindowGUI.ViewModel
                             TagName = tagValue[0][1],
                             TagValue = tagValue[0][2],
                             IsReadOnly = tagValue[0][3] != "Read",
-                            TagType = tagValue[0][4]??""
+                            TagType = tagValue[0][4] ?? ""
                         });
                 }
             }
@@ -342,7 +342,7 @@ namespace FactoryWindowGUI.ViewModel
 
             foreach (var item in QueryResultList)
             {
-                string[] singleQueryList = {item.MachineName, item.TagName, "", ""};
+                string[] singleQueryList = {item.MachineName, item.TagName, "", "",""};
                 queryList.Add(singleQueryList);
             }
 

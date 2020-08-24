@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：Charting.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -29,11 +37,33 @@ using LiveCharts.Helpers;
 namespace LiveCharts
 {
     /// <summary>
-    /// Global LiveCharts configuration
+    ///     Global LiveCharts configuration
     /// </summary>
     public class Charting
     {
         private static readonly Dictionary<Type, ConfigWrapper> Configurations;
+
+        /// <summary>
+        ///     Gets the configuration of a given type and orientation
+        /// </summary>
+        /// <typeparam name="T">type to look for</typeparam>
+        /// <param name="orientation">orientation to look for</param>
+        /// <returns></returns>
+        public object GetConfig<T>(SeriesOrientation orientation = SeriesOrientation.Horizontal)
+        {
+            ConfigWrapper wrapper;
+
+            if (!Configurations.TryGetValue(typeof(T), out wrapper))
+                throw new LiveChartsException("LiveCharts does not know how to plot " + typeof(T).Name + ", " +
+                                              "you can either, use an already configured type " +
+                                              "or configure this type you are trying to use, " +
+                                              "For more info see " +
+                                              "http://lvcharts.net/App/examples/v1/wpf/Types%20and%20Configuration");
+
+            return orientation == SeriesOrientation.Horizontal || orientation == SeriesOrientation.All
+                ? wrapper.HorizontalConfig
+                : wrapper.VerticalConfig;
+        }
 
         #region Constructors
 
@@ -147,12 +177,12 @@ namespace LiveCharts
                 .Weight(value => value.Weight));
 
             For<ObservableValue>(Mappers.Xy<ObservableValue>()
-                .X((value, index) => index)
-                .Y(value => value.Value),
+                    .X((value, index) => index)
+                    .Y(value => value.Value),
                 SeriesOrientation.Horizontal);
             For<ObservableValue>(Mappers.Xy<ObservableValue>()
-                .X(value => value.Value)
-                .Y((value, index) => index),
+                    .X(value => value.Value)
+                    .Y((value, index) => index),
                 SeriesOrientation.Vertical);
 
             For<DateTimePoint>(Mappers.Xy<DateTimePoint>()
@@ -170,11 +200,10 @@ namespace LiveCharts
                 .Y((v, i) => -i)
                 .XStart(v => v.StartPoint)
                 .X(v => v.EndPoint), SeriesOrientation.Vertical);
-
         }
 
         /// <summary>
-        /// Saves a type mapper globally.
+        ///     Saves a type mapper globally.
         /// </summary>
         /// <typeparam name="T">Type to configure</typeparam>
         /// <param name="config">mapper</param>
@@ -182,7 +211,7 @@ namespace LiveCharts
         public static void For<T>(object config, SeriesOrientation orientation = SeriesOrientation.All)
         {
             ConfigWrapper wrapper;
-            var t = typeof (T);
+            var t = typeof(T);
 
             if (!Configurations.TryGetValue(t, out wrapper))
             {
@@ -203,28 +232,6 @@ namespace LiveCharts
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets the configuration of a given type and orientation
-        /// </summary>
-        /// <typeparam name="T">type to look for</typeparam>
-        /// <param name="orientation">orientation to look for</param>
-        /// <returns></returns>
-        public object GetConfig<T>(SeriesOrientation orientation = SeriesOrientation.Horizontal)
-        {
-            ConfigWrapper wrapper;
-
-            if (!Configurations.TryGetValue(typeof(T), out wrapper))
-                throw new LiveChartsException("LiveCharts does not know how to plot " + typeof(T).Name + ", " +
-                                              "you can either, use an already configured type " +
-                                              "or configure this type you are trying to use, " +
-                                              "For more info see " +
-                                              "http://lvcharts.net/App/examples/v1/wpf/Types%20and%20Configuration");
-
-            return orientation == SeriesOrientation.Horizontal || orientation == SeriesOrientation.All
-                ? wrapper.HorizontalConfig
-                : wrapper.VerticalConfig;
-        }
     }
 
     internal class ConfigWrapper

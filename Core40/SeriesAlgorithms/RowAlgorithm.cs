@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：RowAlgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -30,14 +38,13 @@ using LiveCharts.Dtos;
 namespace LiveCharts.SeriesAlgorithms
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.SeriesAlgorithm" />
     /// <seealso cref="LiveCharts.Definitions.Series.ICartesianSeries" />
     public class RowAlgorithm : SeriesAlgorithm, ICartesianSeries
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RowAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="RowAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public RowAlgorithm(ISeriesView view) : base(view)
@@ -46,19 +53,45 @@ namespace LiveCharts.SeriesAlgorithms
             PreferredSelectionMode = TooltipSelectionMode.SharedYInSeries;
         }
 
+        double ICartesianSeries.GetMinX(AxisCore axis)
+        {
+            var f = AxisLimits.SeparatorMin(axis);
+            return CurrentXAxis.BotLimit >= 0 && CurrentXAxis.TopLimit > 0
+                ? f >= 0 ? f : 0
+                : f;
+        }
+
+        double ICartesianSeries.GetMaxX(AxisCore axis)
+        {
+            var f = AxisLimits.SeparatorMaxRounded(axis);
+            return CurrentXAxis.BotLimit < 0 && CurrentXAxis.TopLimit <= 0
+                ? f >= 0 ? f : 0
+                : f;
+        }
+
+        double ICartesianSeries.GetMinY(AxisCore axis)
+        {
+            return AxisLimits.StretchMin(axis);
+        }
+
+        double ICartesianSeries.GetMaxY(AxisCore axis)
+        {
+            return AxisLimits.UnitRight(axis);
+        }
+
         /// <summary>
-        /// Updates this instance.
+        ///     Updates this instance.
         /// </summary>
         public override void Update()
         {
             var castedSeries = (IRowSeriesView) View;
 
             var padding = castedSeries.RowPadding;
-            
+
             var totalSpace = ChartFunctions.GetUnitWidth(AxisOrientation.Y, Chart, View.ScalesYAt) - padding;
             var typeSeries = Chart.View.ActualSeries.OfType<IRowSeriesView>().ToList();
 
-            var singleRowHeight = totalSpace/typeSeries.Count;
+            var singleRowHeight = totalSpace / typeSeries.Count;
 
             double exceed = 0;
 
@@ -66,17 +99,17 @@ namespace LiveCharts.SeriesAlgorithms
 
             if (singleRowHeight > castedSeries.MaxRowHeigth)
             {
-                exceed = (singleRowHeight - castedSeries.MaxRowHeigth)*typeSeries.Count/2;
+                exceed = (singleRowHeight - castedSeries.MaxRowHeigth) * typeSeries.Count / 2;
                 singleRowHeight = castedSeries.MaxRowHeigth;
             }
 
-            var relativeTop = padding + exceed + singleRowHeight * (seriesPosition);
+            var relativeTop = padding + exceed + singleRowHeight * seriesPosition;
 
-            var startAt = CurrentXAxis.FirstSeparator >= 0 && CurrentXAxis.LastSeparator > 0   //both positive
-                ? CurrentXAxis.FirstSeparator                                                  //then use Min
-                : (CurrentXAxis.FirstSeparator < 0 && CurrentXAxis.LastSeparator <= 0          //both negative
-                    ? CurrentXAxis.LastSeparator                                               //then use Max
-                    : 0);                                                                      //if mixed then use 0
+            var startAt = CurrentXAxis.FirstSeparator >= 0 && CurrentXAxis.LastSeparator > 0 //both positive
+                ? CurrentXAxis.FirstSeparator //then use Min
+                : CurrentXAxis.FirstSeparator < 0 && CurrentXAxis.LastSeparator <= 0 //both negative
+                    ? CurrentXAxis.LastSeparator //then use Max
+                    : 0; //if mixed then use 0
 
             var zero = ChartFunctions.ToDrawMargin(startAt, AxisOrientation.X, Chart, View.ScalesXAt);
 
@@ -99,7 +132,7 @@ namespace LiveCharts.SeriesAlgorithms
                     ? reference.X
                     : zero;
 
-            
+
                 if (chartPoint.EvaluatesGantt)
                 {
                     l = ChartFunctions.ToDrawMargin(chartPoint.XStart, AxisOrientation.X, Chart, View.ScalesXAt);
@@ -119,32 +152,6 @@ namespace LiveCharts.SeriesAlgorithms
 
                 chartPoint.View.DrawOrMove(null, chartPoint, 0, Chart);
             }
-        }
-
-        double ICartesianSeries.GetMinX(AxisCore axis)
-        {
-            var f = AxisLimits.SeparatorMin(axis);
-            return CurrentXAxis.BotLimit >= 0 && CurrentXAxis.TopLimit > 0
-                ? (f >= 0 ? f : 0)
-                : f;
-        }
-
-        double ICartesianSeries.GetMaxX(AxisCore axis)
-        {
-            var f = AxisLimits.SeparatorMaxRounded(axis);
-            return CurrentXAxis.BotLimit < 0 && CurrentXAxis.TopLimit <= 0
-                ? (f >= 0 ? f : 0)
-                : f;
-        }
-
-        double ICartesianSeries.GetMinY(AxisCore axis)
-        {
-            return AxisLimits.StretchMin(axis);
-        }
-
-        double ICartesianSeries.GetMaxY(AxisCore axis)
-        {
-            return AxisLimits.UnitRight(axis);
         }
     }
 }

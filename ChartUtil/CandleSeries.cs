@@ -1,5 +1,12 @@
-﻿
-//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：CandleSeries.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -33,18 +40,36 @@ using LiveCharts;
 using LiveCharts.Definitions.Points;
 using LiveCharts.Definitions.Series;
 using LiveCharts.SeriesAlgorithms;
-using LiveCharts.Wpf;
 
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The Candle series defines a financial series, add this series to a cartesian chart
+    ///     The Candle series defines a financial series, add this series to a cartesian chart
     /// </summary>
     public class CandleSeries : Series, IFinancialSeriesView
     {
+        #region Private Methods
+
+        private void InitializeDefuaults()
+        {
+            SetCurrentValue(StrokeThicknessProperty, 1d);
+            SetCurrentValue(MaxColumnWidthProperty, 35d);
+            SetCurrentValue(IncreaseBrushProperty, new SolidColorBrush(Color.FromRgb(76, 174, 80)));
+            SetCurrentValue(DecreaseBrushProperty, new SolidColorBrush(Color.FromRgb(238, 83, 80)));
+
+            Func<ChartPoint, string> defaultLabel = x =>
+                string.Format("O: {0}, H: {1}, L: {2} C: {3}", x.Open, x.High, x.Low, x.Close);
+            SetCurrentValue(LabelPointProperty, defaultLabel);
+
+            DefaultFillOpacity = 1;
+        }
+
+        #endregion
+
         #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of OhclSeries class
+        ///     Initializes a new instance of OhclSeries class
         /// </summary>
         public CandleSeries()
         {
@@ -53,7 +78,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Initializes a new instance of OhclSeries class with a given mapper
+        ///     Initializes a new instance of OhclSeries class with a given mapper
         /// </summary>
         /// <param name="configuration"></param>
         public CandleSeries(object configuration)
@@ -72,12 +97,13 @@ namespace FactoryWindowGUI.ChartUtil
         #region Properties
 
         /// <summary>
-        /// The maximum column width property
+        ///     The maximum column width property
         /// </summary>
         public static readonly DependencyProperty MaxColumnWidthProperty = DependencyProperty.Register(
-            "MaxColumnWidth", typeof (double), typeof (CandleSeries), new PropertyMetadata(default(double)));
+            "MaxColumnWidth", typeof(double), typeof(CandleSeries), new PropertyMetadata(default(double)));
+
         /// <summary>
-        /// Gets or sets the maximum with of a point, a point will be capped to this width.
+        ///     Gets or sets the maximum with of a point, a point will be capped to this width.
         /// </summary>
         public double MaxColumnWidth
         {
@@ -86,12 +112,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The increase brush property
+        ///     The increase brush property
         /// </summary>
         public static readonly DependencyProperty IncreaseBrushProperty = DependencyProperty.Register(
-            "IncreaseBrush", typeof (Brush), typeof (CandleSeries), new PropertyMetadata(default(Brush)));
+            "IncreaseBrush", typeof(Brush), typeof(CandleSeries), new PropertyMetadata(default(Brush)));
+
         /// <summary>
-        /// Gets or sets the brush of the point when close value is grater than open value
+        ///     Gets or sets the brush of the point when close value is grater than open value
         /// </summary>
         public Brush IncreaseBrush
         {
@@ -100,12 +127,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The decrease brush property
+        ///     The decrease brush property
         /// </summary>
         public static readonly DependencyProperty DecreaseBrushProperty = DependencyProperty.Register(
-            "DecreaseBrush", typeof (Brush), typeof (CandleSeries), new PropertyMetadata(default(Brush)));
+            "DecreaseBrush", typeof(Brush), typeof(CandleSeries), new PropertyMetadata(default(Brush)));
+
         /// <summary>
-        /// Gets or sets the brush of the point when close value is less than open value
+        ///     Gets or sets the brush of the point when close value is less than open value
         /// </summary>
         public Brush DecreaseBrush
         {
@@ -114,15 +142,20 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The coloring rules property
+        ///     The coloring rules property
         /// </summary>
         public static readonly DependencyProperty ColoringRulesProperty = DependencyProperty.Register(
-            "ColoringRules", typeof(IList<FinancialColoringRule>), typeof(CandleSeries), new PropertyMetadata(default(IList<FinancialColoringRule>)));
+            "ColoringRules", typeof(IList<FinancialColoringRule>), typeof(CandleSeries),
+            new PropertyMetadata(default(IList<FinancialColoringRule>)));
+
         /// <summary>
-        /// Gets or sets the coloring rules, the coloring rules allows you to customize Stroke and Fill properties according to your needs, the first rule in this collection that returns true, will decide the Stroke/Fill of every point. If this property is not null (default is null), CandleSeries Fill/Stroke will be based on DecreaseBrush and IncreaseBrush properties.
+        ///     Gets or sets the coloring rules, the coloring rules allows you to customize Stroke and Fill properties according to
+        ///     your needs, the first rule in this collection that returns true, will decide the Stroke/Fill of every point. If
+        ///     this property is not null (default is null), CandleSeries Fill/Stroke will be based on DecreaseBrush and
+        ///     IncreaseBrush properties.
         /// </summary>
         /// <value>
-        /// The coloring rules.
+        ///     The coloring rules.
         /// </value>
         public IList<FinancialColoringRule> ColoringRules
         {
@@ -135,7 +168,7 @@ namespace FactoryWindowGUI.ChartUtil
         #region Overridden Methods
 
         /// <summary>
-        /// This method runs when the update starts
+        ///     This method runs when the update starts
         /// </summary>
         public override void OnSeriesUpdateStart()
         {
@@ -143,14 +176,14 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets the point view.
+        ///     Gets the point view.
         /// </summary>
         /// <param name="point">The point.</param>
         /// <param name="label">The label.</param>
         /// <returns></returns>
         public override IChartPointView GetPointView(ChartPoint point, string label)
         {
-            var pbv = (CandlePointView)point.View;
+            var pbv = (CandlePointView) point.View;
 
             if (pbv == null)
             {
@@ -201,7 +234,7 @@ namespace FactoryWindowGUI.ChartUtil
 
                 Panel.SetZIndex(pbv.HoverShape, int.MaxValue);
 
-                var wpfChart = (Chart)Model.Chart.View;
+                var wpfChart = (Chart) Model.Chart.View;
                 wpfChart.AttachHoverableEventTo(pbv.HoverShape);
 
                 Model.Chart.View.AddToDrawMargin(pbv.HoverShape);
@@ -210,13 +243,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (pbv.HoverShape != null) pbv.HoverShape.Visibility = Visibility;
 
             if (DataLabels)
-            {
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -225,24 +256,6 @@ namespace FactoryWindowGUI.ChartUtil
             }
 
             return pbv;
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private void InitializeDefuaults()
-        {
-            SetCurrentValue(StrokeThicknessProperty, 1d);
-            SetCurrentValue(MaxColumnWidthProperty, 35d);
-            SetCurrentValue(IncreaseBrushProperty, new SolidColorBrush(Color.FromRgb(76, 174, 80)));
-            SetCurrentValue(DecreaseBrushProperty, new SolidColorBrush(Color.FromRgb(238, 83, 80)));
-
-            Func<ChartPoint, string> defaultLabel = x =>
-                string.Format("O: {0}, H: {1}, L: {2} C: {3}", x.Open, x.High, x.Low, x.Close);
-            SetCurrentValue(LabelPointProperty, defaultLabel);
-
-            DefaultFillOpacity = 1;
         }
 
         #endregion

@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：CoreSize.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,12 +31,11 @@
 namespace LiveCharts.Dtos
 {
     /// <summary>
-    /// 
     /// </summary>
     public struct CoreSize
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreSize"/> struct.
+        ///     Initializes a new instance of the <see cref="CoreSize" /> struct.
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="heigth">The heigth.</param>
@@ -39,17 +46,18 @@ namespace LiveCharts.Dtos
         }
 
         /// <summary>
-        /// Gets or sets the width.
+        ///     Gets or sets the width.
         /// </summary>
         /// <value>
-        /// The width.
+        ///     The width.
         /// </value>
         public double Width { get; set; }
+
         /// <summary>
-        /// Gets or sets the height.
+        ///     Gets or sets the height.
         /// </summary>
         /// <value>
-        /// The height.
+        ///     The height.
         /// </value>
         public double Height { get; set; }
     }

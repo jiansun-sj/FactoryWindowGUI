@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：PieLabelPosition.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,16 +31,17 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// Describes where a label should be placed
+    ///     Describes where a label should be placed
     /// </summary>
     public enum PieLabelPosition
     {
         /// <summary>
-        /// Places the label inside the pie slice
+        ///     Places the label inside the pie slice
         /// </summary>
         InsideSlice,
+
         /// <summary>
-        /// Places the label outside the pie slice
+        ///     Places the label outside the pie slice
         /// </summary>
         OutsideSlice
     }

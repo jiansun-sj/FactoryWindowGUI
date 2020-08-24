@@ -1,4 +1,12 @@
-﻿//MIT License(MIT)
+﻿// ==================================================
+// 文件名：ChartFunctions.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //copyright(c) 2016 Alberto Rodriguez
 
@@ -30,12 +38,12 @@ using LiveCharts.Dtos;
 namespace LiveCharts
 {
     /// <summary>
-    /// Contains useful methods to apply to a chart
+    ///     Contains useful methods to apply to a chart
     /// </summary>
     public static class ChartFunctions
     {
         /// <summary>
-        /// Converts from chart values to chart control size.
+        ///     Converts from chart values to chart control size.
         /// </summary>
         /// <param name="value">value to scale</param>
         /// <param name="source">axis orientation to scale value at</param>
@@ -66,12 +74,12 @@ namespace LiveCharts
 
             var deltaX = p2.X - p1.X;
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            var m = (p2.Y - p1.Y)/(deltaX == 0 ? double.MinValue : deltaX);
+            var m = (p2.Y - p1.Y) / (deltaX == 0 ? double.MinValue : deltaX);
             return m * (value - p1.X) + p1.Y;
         }
 
         /// <summary>
-        /// Converts from chart values to chart control size.
+        ///     Converts from chart values to chart control size.
         /// </summary>
         /// <param name="value">value to scale</param>
         /// <param name="source">axis orientation to scale value at</param>
@@ -107,7 +115,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Converts from chart control size to chart values.
+        ///     Converts from chart control size to chart values.
         /// </summary>
         /// <param name="value">value to scale</param>
         /// <param name="source">axis orientation to scale value at</param>
@@ -118,7 +126,7 @@ namespace LiveCharts
         {
             var p1 = new CorePoint();
             var p2 = new CorePoint();
-            
+
             if (source == AxisOrientation.Y)
             {
                 p1.X = chart.AxisY[axis].TopLimit;
@@ -143,7 +151,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Converts from chart values to chart draw margin size.
+        ///     Converts from chart values to chart draw margin size.
         /// </summary>
         /// <param name="value">value to scale</param>
         /// <param name="source">axis orientation</param>
@@ -160,7 +168,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Converts from chart values to chart draw margin size.
+        ///     Converts from chart values to chart draw margin size.
         /// </summary>
         /// <param name="value">value to scale</param>
         /// <param name="source">axis orientation</param>
@@ -177,7 +185,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Converts from chart values to chart draw margin size.
+        ///     Converts from chart values to chart draw margin size.
         /// </summary>
         /// <param name="point">point to scale</param>
         /// <param name="axisXIndex">axis orientation</param>
@@ -192,7 +200,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Gets the width of a unit in the chart
+        ///     Gets the width of a unit in the chart
         /// </summary>
         /// <param name="source">axis orientation</param>
         /// <param name="chart">chart model to get the scale at</param>
@@ -205,7 +213,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Gets the width of a unit in the chart
+        ///     Gets the width of a unit in the chart
         /// </summary>
         /// <param name="source">axis orientation</param>
         /// <param name="chart">chart model to get the scale at</param>
@@ -214,11 +222,11 @@ namespace LiveCharts
         public static double GetUnitWidth(AxisOrientation source, ChartCore chart, AxisCore axis)
         {
             double min;
-            double u = !double.IsNaN(axis.View.BarUnit)
-                    ? axis.View.BarUnit
-                    : (!double.IsNaN(axis.View.Unit)
-                        ? axis.View.Unit
-                        : 1);
+            var u = !double.IsNaN(axis.View.BarUnit)
+                ? axis.View.BarUnit
+                : !double.IsNaN(axis.View.Unit)
+                    ? axis.View.Unit
+                    : 1;
 
             if (source == AxisOrientation.Y)
             {
@@ -234,13 +242,14 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Returns data in the chart according to:
+        ///     Returns data in the chart according to:
         /// </summary>
         /// <param name="senderPoint">point that was hovered</param>
         /// <param name="chart">chart model to get the data from</param>
         /// <param name="selectionMode">selection mode</param>
         /// <returns></returns>
-        public static TooltipDataViewModel GetTooltipData(ChartPoint senderPoint, ChartCore chart, TooltipSelectionMode selectionMode)
+        public static TooltipDataViewModel GetTooltipData(ChartPoint senderPoint, ChartCore chart,
+            TooltipSelectionMode selectionMode)
         {
             var ax = chart.AxisX[senderPoint.SeriesView.ScalesXAt];
             var ay = chart.AxisY[senderPoint.SeriesView.ScalesYAt];
@@ -257,7 +266,8 @@ namespace LiveCharts
                     };
                 case TooltipSelectionMode.SharedXValues:
                     var tx = Math.Abs(FromPlotArea(1, AxisOrientation.X, chart, senderPoint.SeriesView.ScalesXAt)
-                                      - FromPlotArea(2, AxisOrientation.X, chart, senderPoint.SeriesView.ScalesXAt)) * .01;
+                                      - FromPlotArea(2, AxisOrientation.X, chart, senderPoint.SeriesView.ScalesXAt)) *
+                             .01;
                     return new TooltipDataViewModel
                     {
                         XFormatter = ax.GetFormatter(),
@@ -265,11 +275,12 @@ namespace LiveCharts
                         Points = chart.View.ActualSeries.Where(x => x.ScalesXAt == senderPoint.SeriesView.ScalesXAt)
                             .SelectMany(x => x.Values.GetPoints(x))
                             .Where(x => Math.Abs(x.X - senderPoint.X) < tx),
-                        Shares = (chart.View is IPieChart) ? null : (double?) senderPoint.X
+                        Shares = chart.View is IPieChart ? null : (double?) senderPoint.X
                     };
                 case TooltipSelectionMode.SharedYValues:
                     var ty = Math.Abs(FromPlotArea(1, AxisOrientation.Y, chart, senderPoint.SeriesView.ScalesYAt)
-                                     - FromPlotArea(2, AxisOrientation.Y, chart, senderPoint.SeriesView.ScalesYAt)) * .01;
+                                      - FromPlotArea(2, AxisOrientation.Y, chart, senderPoint.SeriesView.ScalesYAt)) *
+                             .01;
                     return new TooltipDataViewModel
                     {
                         XFormatter = ax.GetFormatter(),
@@ -281,7 +292,8 @@ namespace LiveCharts
                     };
                 case TooltipSelectionMode.SharedXInSeries:
                     var txs = Math.Abs(FromPlotArea(1, AxisOrientation.X, chart, senderPoint.SeriesView.ScalesXAt)
-                                     - FromPlotArea(2, AxisOrientation.X, chart, senderPoint.SeriesView.ScalesXAt)) * .01;
+                                       - FromPlotArea(2, AxisOrientation.X, chart, senderPoint.SeriesView.ScalesXAt)) *
+                              .01;
                     return new TooltipDataViewModel
                     {
                         XFormatter = ax.GetFormatter(),
@@ -292,7 +304,8 @@ namespace LiveCharts
                     };
                 case TooltipSelectionMode.SharedYInSeries:
                     var tys = Math.Abs(FromPlotArea(1, AxisOrientation.Y, chart, senderPoint.SeriesView.ScalesYAt)
-                                     - FromPlotArea(2, AxisOrientation.Y, chart, senderPoint.SeriesView.ScalesYAt)) * .01;
+                                       - FromPlotArea(2, AxisOrientation.Y, chart, senderPoint.SeriesView.ScalesYAt)) *
+                              .01;
                     return new TooltipDataViewModel
                     {
                         XFormatter = ax.GetFormatter(),
@@ -305,7 +318,5 @@ namespace LiveCharts
                     throw new ArgumentOutOfRangeException();
             }
         }
-
     }
 }
- 

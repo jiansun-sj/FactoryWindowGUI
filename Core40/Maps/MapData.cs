@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：MapData.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,71 +33,75 @@ using System.Collections.Generic;
 namespace LiveCharts.Maps
 {
     /// <summary>
-    /// 
     /// </summary>
     public class LvcMap
     {
         /// <summary>
-        /// Gets or sets the width of the desired.
+        ///     Gets or sets the width of the desired.
         /// </summary>
         /// <value>
-        /// The width of the desired.
+        ///     The width of the desired.
         /// </value>
         public double DesiredWidth { get; set; }
+
         /// <summary>
-        /// Gets or sets the height of the desired.
+        ///     Gets or sets the height of the desired.
         /// </summary>
         /// <value>
-        /// The height of the desired.
+        ///     The height of the desired.
         /// </value>
         public double DesiredHeight { get; set; }
+
         /// <summary>
-        /// Gets or sets the data.
+        ///     Gets or sets the data.
         /// </summary>
         /// <value>
-        /// The data.
+        ///     The data.
         /// </value>
         public List<MapData> Data { get; set; }
     }
 
     /// <summary>
-    /// 
     /// </summary>
     public class MapData
     {
         /// <summary>
-        /// Gets or sets the identifier.
+        ///     Gets or sets the identifier.
         /// </summary>
         /// <value>
-        /// The identifier.
+        ///     The identifier.
         /// </value>
         public string Id { get; set; }
+
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         public string Name { get; set; }
+
         /// <summary>
-        /// Gets or sets the data.
+        ///     Gets or sets the data.
         /// </summary>
         /// <value>
-        /// The data.
+        ///     The data.
         /// </value>
         public string Data { get; set; }
+
         /// <summary>
-        /// Gets or sets the shape.
+        ///     Gets or sets the shape.
         /// </summary>
         /// <value>
-        /// The shape.
+        ///     The shape.
         /// </value>
         public object Shape { get; set; }
+
         /// <summary>
-        /// Gets or sets the LVC map.
+        ///     Gets or sets the LVC map.
         /// </summary>
         /// <value>
-        /// The LVC map.
+        ///     The LVC map.
         /// </value>
         public LvcMap LvcMap { get; set; }
     }

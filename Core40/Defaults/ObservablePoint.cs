@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ObservablePoint.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -20,13 +28,12 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-using System;
 using System.ComponentModel;
 
 namespace LiveCharts.Defaults
 {
     /// <summary>
-    /// An already configured chart point, this class notifies a chart to update every time a property changes
+    ///     An already configured chart point, this class notifies a chart to update every time a property changes
     /// </summary>
     public class ObservablePoint : INotifyPropertyChanged
     {
@@ -34,15 +41,14 @@ namespace LiveCharts.Defaults
         private double _y;
 
         /// <summary>
-        /// Initializes a new instance of ObservablePoint class
+        ///     Initializes a new instance of ObservablePoint class
         /// </summary>
         public ObservablePoint()
         {
-            
         }
-        
+
         /// <summary>
-        /// Initializes a new instance of ObservablePoint class giving the x and y coordinates
+        ///     Initializes a new instance of ObservablePoint class giving the x and y coordinates
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -53,11 +59,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// X coordinate
+        ///     X coordinate
         /// </summary>
         public double X
         {
-            get { return _x; }
+            get => _x;
             set
             {
                 _x = value;
@@ -66,11 +72,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// Y coordinate
+        ///     Y coordinate
         /// </summary>
         public double Y
         {
-            get { return _y; }
+            get => _y;
             set
             {
                 _y = value;
@@ -81,12 +87,12 @@ namespace LiveCharts.Defaults
         #region INotifyPropertyChangedImplementation
 
         /// <summary>
-        /// Occurs when a property value changes.
+        ///     Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Called when [property changed].
+        ///     Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         protected virtual void OnPropertyChanged(string propertyName = null)

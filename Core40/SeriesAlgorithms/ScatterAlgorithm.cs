@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ScatterAlgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -28,65 +36,18 @@ using LiveCharts.Dtos;
 namespace LiveCharts.SeriesAlgorithms
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.SeriesAlgorithm" />
     /// <seealso cref="LiveCharts.Definitions.Series.ICartesianSeries" />
     public class ScatterAlgorithm : SeriesAlgorithm, ICartesianSeries
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScatterAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="ScatterAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public ScatterAlgorithm(ISeriesView view) : base(view)
         {
             PreferredSelectionMode = TooltipSelectionMode.OnlySender;
-        }
-
-        /// <summary>
-        /// Updates this instance.
-        /// </summary>
-        public override void Update()
-        {
-            var bubbleSeries = (IScatterSeriesView) View;
-
-            var p1 = new CorePoint();
-            var p2 = new CorePoint();
-
-            p1.X = Chart.WLimit.Max;
-            p1.Y = bubbleSeries.MaxPointShapeDiameter;
-
-            p2.X = Chart.WLimit.Min;
-            p2.Y = bubbleSeries.MinPointShapeDiameter;
-
-            var deltaX = p2.X - p1.X;
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            var m = (p2.Y - p1.Y) / (deltaX == 0 ? double.MinValue : deltaX);
-
-            var uw = new CorePoint(
-                    CurrentXAxis.EvaluatesUnitWidth
-                        ? ChartFunctions.GetUnitWidth(AxisOrientation.X, Chart, View.ScalesXAt) / 2
-                        : 0,
-                    CurrentYAxis.EvaluatesUnitWidth
-                        ? ChartFunctions.GetUnitWidth(AxisOrientation.Y, Chart, View.ScalesYAt) / 2
-                        : 0);
-
-            foreach (var chartPoint in View.ActualValues.GetPoints(View))
-            {
-                chartPoint.ChartLocation = ChartFunctions.ToDrawMargin(
-                    chartPoint, View.ScalesXAt, View.ScalesYAt, Chart) + uw;
-
-                chartPoint.SeriesView = View;
-
-                chartPoint.View = View.GetPointView(chartPoint,
-                    View.DataLabels ? View.GetLabelPointFormatter()(chartPoint) : null);
-
-                var bubbleView = (IScatterPointView) chartPoint.View;
-
-                bubbleView.Diameter = m*(chartPoint.Weight - p1.X) + p1.Y;
-
-                chartPoint.View.DrawOrMove(null, chartPoint, 0, Chart);
-            }
         }
 
         double ICartesianSeries.GetMinX(AxisCore axis)
@@ -107,6 +68,52 @@ namespace LiveCharts.SeriesAlgorithms
         double ICartesianSeries.GetMaxY(AxisCore axis)
         {
             return AxisLimits.StretchMax(axis);
+        }
+
+        /// <summary>
+        ///     Updates this instance.
+        /// </summary>
+        public override void Update()
+        {
+            var bubbleSeries = (IScatterSeriesView) View;
+
+            var p1 = new CorePoint();
+            var p2 = new CorePoint();
+
+            p1.X = Chart.WLimit.Max;
+            p1.Y = bubbleSeries.MaxPointShapeDiameter;
+
+            p2.X = Chart.WLimit.Min;
+            p2.Y = bubbleSeries.MinPointShapeDiameter;
+
+            var deltaX = p2.X - p1.X;
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            var m = (p2.Y - p1.Y) / (deltaX == 0 ? double.MinValue : deltaX);
+
+            var uw = new CorePoint(
+                CurrentXAxis.EvaluatesUnitWidth
+                    ? ChartFunctions.GetUnitWidth(AxisOrientation.X, Chart, View.ScalesXAt) / 2
+                    : 0,
+                CurrentYAxis.EvaluatesUnitWidth
+                    ? ChartFunctions.GetUnitWidth(AxisOrientation.Y, Chart, View.ScalesYAt) / 2
+                    : 0);
+
+            foreach (var chartPoint in View.ActualValues.GetPoints(View))
+            {
+                chartPoint.ChartLocation = ChartFunctions.ToDrawMargin(
+                    chartPoint, View.ScalesXAt, View.ScalesYAt, Chart) + uw;
+
+                chartPoint.SeriesView = View;
+
+                chartPoint.View = View.GetPointView(chartPoint,
+                    View.DataLabels ? View.GetLabelPointFormatter()(chartPoint) : null);
+
+                var bubbleView = (IScatterPointView) chartPoint.View;
+
+                bubbleView.Diameter = m * (chartPoint.Weight - p1.X) + p1.Y;
+
+                chartPoint.View.DrawOrMove(null, chartPoint, 0, Chart);
+            }
         }
     }
 }

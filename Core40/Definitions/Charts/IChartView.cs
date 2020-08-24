@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：IChartView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -30,221 +38,246 @@ using LiveCharts.Events;
 namespace LiveCharts.Definitions.Charts
 {
     /// <summary>
-    /// 
     /// </summary>
     public interface IChartView
     {
         /// <summary>
-        /// Gets the model.
+        ///     Gets the model.
         /// </summary>
         /// <value>
-        /// The model.
+        ///     The model.
         /// </value>
         ChartCore Model { get; }
 
         /// <summary>
-        /// Occurs when [data click].
-        /// </summary>
-        event DataClickHandler DataClick;
-
-        /// <summary>
-        /// Occurs when [data hover]
-        /// </summary>
-        event DataHoverHandler DataHover;
-
-        /// <summary>
-        /// Gets or sets the series.
+        ///     Gets or sets the series.
         /// </summary>
         /// <value>
-        /// The series.
+        ///     The series.
         /// </value>
         SeriesCollection Series { get; set; }
+
         /// <summary>
-        /// Gets the actual series.
+        ///     Gets the actual series.
         /// </summary>
         /// <value>
-        /// The actual series.
+        ///     The actual series.
         /// </value>
         IEnumerable<ISeriesView> ActualSeries { get; }
+
         /// <summary>
-        /// Gets or sets the tooltip timeout.
+        ///     Gets or sets the tooltip timeout.
         /// </summary>
         /// <value>
-        /// The tooltip timeout.
+        ///     The tooltip timeout.
         /// </value>
         TimeSpan TooltipTimeout { get; set; }
+
         /// <summary>
-        /// Gets or sets the zoom.
+        ///     Gets or sets the zoom.
         /// </summary>
         /// <value>
-        /// The zoom.
+        ///     The zoom.
         /// </value>
         ZoomingOptions Zoom { get; set; }
+
         /// <summary>
-        /// Gets or sets the zoom.
+        ///     Gets or sets the zoom.
         /// </summary>
         /// <value>
-        /// The zoom.
+        ///     The zoom.
         /// </value>
         PanningOptions Pan { get; set; }
+
         /// <summary>
-        /// Gets or sets the zooming speed.
+        ///     Gets or sets the zooming speed.
         /// </summary>
         /// <value>
-        /// The zooming speed.
+        ///     The zooming speed.
         /// </value>
         double ZoomingSpeed { get; set; }
+
         /// <summary>
-        /// Gets or sets the legend location.
+        ///     Gets or sets the legend location.
         /// </summary>
         /// <value>
-        /// The legend location.
+        ///     The legend location.
         /// </value>
         LegendLocation LegendLocation { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether [disable animations].
+        ///     Gets or sets a value indicating whether [disable animations].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [disable animations]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [disable animations]; otherwise, <c>false</c>.
         /// </value>
         bool DisableAnimations { get; set; }
+
         /// <summary>
-        /// Gets or sets the animations speed.
+        ///     Gets or sets the animations speed.
         /// </summary>
         /// <value>
-        /// The animations speed.
+        ///     The animations speed.
         /// </value>
         TimeSpan AnimationsSpeed { get; set; }
+
         /// <summary>
-        /// Gets or sets the state of the updater.
+        ///     Gets or sets the state of the updater.
         /// </summary>
         /// <value>
-        /// The state of the updater.
+        ///     The state of the updater.
         /// </value>
         UpdaterState UpdaterState { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether this instance has tooltip.
+        ///     Gets a value indicating whether this instance has tooltip.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance has tooltip; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance has tooltip; otherwise, <c>false</c>.
         /// </value>
         bool HasTooltip { get; }
+
         /// <summary>
-        /// Gets a value indicating whether this instance has data click event attached.
+        ///     Gets a value indicating whether this instance has data click event attached.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance has data click event attached; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance has data click event attached; otherwise, <c>false</c>.
         /// </value>
         bool HasDataClickEventAttached { get; }
+
         /// <summary>
-        /// Gets a value indicating whether this instance has data hover event attached.
+        ///     Gets a value indicating whether this instance has data hover event attached.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance has data hover event attached; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance has data hover event attached; otherwise, <c>false</c>.
         /// </value>
         bool HasDataHoverEventAttached { get; }
+
         /// <summary>
-        /// Gets a value indicating whether this <see cref="IChartView"/> is hoverable.
+        ///     Gets a value indicating whether this <see cref="IChartView" /> is hoverable.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if hoverable; otherwise, <c>false</c>.
+        ///     <c>true</c> if hoverable; otherwise, <c>false</c>.
         /// </value>
         bool Hoverable { get; }
+
         /// <summary>
-        /// Gets a value indicating whether this instance is control loaded.
+        ///     Gets a value indicating whether this instance is control loaded.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is control loaded; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is control loaded; otherwise, <c>false</c>.
         /// </value>
         bool IsControlLoaded { get; }
+
         /// <summary>
-        /// Gets a value indicating whether this instance is in design mode.
+        ///     Gets a value indicating whether this instance is in design mode.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is in design mode; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is in design mode; otherwise, <c>false</c>.
         /// </value>
         bool IsInDesignMode { get; }
 
         /// <summary>
-        /// Sets the draw margin top.
+        ///     Occurs when [data click].
+        /// </summary>
+        event DataClickHandler DataClick;
+
+        /// <summary>
+        ///     Occurs when [data hover]
+        /// </summary>
+        event DataHoverHandler DataHover;
+
+        /// <summary>
+        ///     Sets the draw margin top.
         /// </summary>
         /// <param name="value">The value.</param>
         void SetDrawMarginTop(double value);
+
         /// <summary>
-        /// Sets the draw margin left.
+        ///     Sets the draw margin left.
         /// </summary>
         /// <param name="value">The value.</param>
         void SetDrawMarginLeft(double value);
+
         /// <summary>
-        /// Sets the height of the draw margin.
+        ///     Sets the height of the draw margin.
         /// </summary>
         /// <param name="value">The value.</param>
         void SetDrawMarginHeight(double value);
+
         /// <summary>
-        /// Sets the width of the draw margin.
+        ///     Sets the width of the draw margin.
         /// </summary>
         /// <param name="value">The value.</param>
         void SetDrawMarginWidth(double value);
 
         /// <summary>
-        /// Adds to view.
+        ///     Adds to view.
         /// </summary>
         /// <param name="element">The element.</param>
         void AddToView(object element);
+
         /// <summary>
-        /// Adds to draw margin.
+        ///     Adds to draw margin.
         /// </summary>
         /// <param name="element">The element.</param>
         void AddToDrawMargin(object element);
+
         /// <summary>
-        /// Removes from view.
+        ///     Removes from view.
         /// </summary>
         /// <param name="element">The element.</param>
         void RemoveFromView(object element);
+
         /// <summary>
-        /// Removes from draw margin.
+        ///     Removes from draw margin.
         /// </summary>
         /// <param name="element">The element.</param>
         void RemoveFromDrawMargin(object element);
+
         /// <summary>
-        /// Ensures the element belongs to current view.
+        ///     Ensures the element belongs to current view.
         /// </summary>
         /// <param name="element">The element.</param>
         void EnsureElementBelongsToCurrentView(object element);
+
         /// <summary>
-        /// Ensures the element belongs to current draw margin.
+        ///     Ensures the element belongs to current draw margin.
         /// </summary>
         /// <param name="element">The element.</param>
         void EnsureElementBelongsToCurrentDrawMargin(object element);
-        
+
         /// <summary>
-        /// Hides the tooltip.
+        ///     Hides the tooltip.
         /// </summary>
         void HideTooltip();
+
         /// <summary>
-        /// Shows the legend.
+        ///     Shows the legend.
         /// </summary>
         /// <param name="at">At.</param>
         void ShowLegend(CorePoint at);
+
         /// <summary>
-        /// Hides the legend.
+        ///     Hides the legend.
         /// </summary>
         void HideLegend();
 
         /// <summary>
-        /// Loads the legend.
+        ///     Loads the legend.
         /// </summary>
         /// <returns></returns>
         CoreSize LoadLegend();
+
         /// <summary>
-        /// Maps the x axes.
+        ///     Maps the x axes.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <returns></returns>
         List<AxisCore> MapXAxes(ChartCore chart);
+
         /// <summary>
-        /// Maps the y axes.
+        ///     Maps the y axes.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <returns></returns>

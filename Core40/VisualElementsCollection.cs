@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：VisualElementsCollection.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -28,12 +36,12 @@ using LiveCharts.Helpers;
 namespace LiveCharts
 {
     /// <summary>
-    /// Defines a collection of items to be added in a cartesian chart
+    ///     Defines a collection of items to be added in a cartesian chart
     /// </summary>
     public class VisualElementsCollection : NoisyCollection<ICartesianVisualElement>
     {
         /// <summary>
-        /// Initializes a new instance of VisualElementsCollection
+        ///     Initializes a new instance of VisualElementsCollection
         /// </summary>
         public VisualElementsCollection()
         {
@@ -41,17 +49,22 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Gets or sets the chart.
+        ///     Gets or sets the chart.
         /// </summary>
         /// <value>
-        /// The chart.
+        ///     The chart.
         /// </value>
         public ChartCore Chart { get; set; }
 
-        private void OnNoisyCollectionChanged(IEnumerable<ICartesianVisualElement> oldItems, IEnumerable<ICartesianVisualElement> newItems)
+        private void OnNoisyCollectionChanged(IEnumerable<ICartesianVisualElement> oldItems,
+            IEnumerable<ICartesianVisualElement> newItems)
         {
-            if (oldItems != null) foreach (var oltItem in oldItems) oltItem.Remove(Chart);
-            if (newItems != null) foreach (var newItem in newItems) newItem.AddOrMove(Chart);
+            if (oldItems != null)
+                foreach (var oltItem in oldItems)
+                    oltItem.Remove(Chart);
+            if (newItems != null)
+                foreach (var newItem in newItems)
+                    newItem.AddOrMove(Chart);
         }
     }
 }

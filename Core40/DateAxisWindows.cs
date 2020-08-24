@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：DateAxisWindows.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,12 +34,11 @@ using System.Collections.Generic;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     public static class DateAxisWindows
     {
         /// <summary>
-        /// Gets preconfigured windows that can be used to build a datetime window axis
+        ///     Gets preconfigured windows that can be used to build a datetime window axis
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<DateAxisWindow> GetDateAxisWindows()
@@ -59,10 +66,7 @@ namespace LiveCharts
         public sealed class MilliSecondAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 10; }
-            }
+            public override double MinimumSeparatorWidth => 10;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -76,6 +80,7 @@ namespace LiveCharts
                 // This is the smallest instance of DateTime.
                 return true;
             }
+
             /// <inheritdoc />
             public override string FormatAxisLabel(DateTime x)
             {
@@ -95,10 +100,7 @@ namespace LiveCharts
         public sealed class TenMilliSecondAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 10; }
-            }
+            public override double MinimumSeparatorWidth => 10;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -112,6 +114,7 @@ namespace LiveCharts
                 // This is the smallest instance of DateTime.
                 return x.Millisecond % 10 == 0;
             }
+
             /// <inheritdoc />
             public override string FormatAxisLabel(DateTime x)
             {
@@ -131,10 +134,7 @@ namespace LiveCharts
         public sealed class HundredMilliSecondAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 10; }
-            }
+            public override double MinimumSeparatorWidth => 10;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -148,6 +148,7 @@ namespace LiveCharts
                 // This is the smallest instance of DateTime.
                 return x.Millisecond % 100 == 0;
             }
+
             /// <inheritdoc />
             public override string FormatAxisLabel(DateTime x)
             {
@@ -167,10 +168,7 @@ namespace LiveCharts
         public sealed class SecondAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 20; }
-            }
+            public override double MinimumSeparatorWidth => 20;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -183,6 +181,7 @@ namespace LiveCharts
             {
                 return IsSecond(x);
             }
+
             /// <inheritdoc />
             public override string FormatAxisLabel(DateTime x)
             {
@@ -202,10 +201,7 @@ namespace LiveCharts
         public sealed class FifteenSecondsAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 50; }
-            }
+            public override double MinimumSeparatorWidth => 50;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -236,10 +232,7 @@ namespace LiveCharts
         public sealed class ThirtySecondsAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 40; }
-            }
+            public override double MinimumSeparatorWidth => 40;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -270,10 +263,7 @@ namespace LiveCharts
         public sealed class MinuteAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 20; }
-            }
+            public override double MinimumSeparatorWidth => 20;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -304,10 +294,7 @@ namespace LiveCharts
         public sealed class QuarterAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 20; }
-            }
+            public override double MinimumSeparatorWidth => 20;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -340,10 +327,7 @@ namespace LiveCharts
         public sealed class HalfHourAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 20; }
-            }
+            public override double MinimumSeparatorWidth => 20;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -376,10 +360,7 @@ namespace LiveCharts
         public sealed class HourAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 20; }
-            }
+            public override double MinimumSeparatorWidth => 20;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -412,10 +393,7 @@ namespace LiveCharts
         public sealed class DayAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 10; }
-            }
+            public override double MinimumSeparatorWidth => 10;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -450,10 +428,7 @@ namespace LiveCharts
         public sealed class WeekAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 10; }
-            }
+            public override double MinimumSeparatorWidth => 10;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -481,10 +456,7 @@ namespace LiveCharts
         public sealed class MonthAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 10; }
-            }
+            public override double MinimumSeparatorWidth => 10;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -517,10 +489,7 @@ namespace LiveCharts
         public sealed class YearAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 20; }
-            }
+            public override double MinimumSeparatorWidth => 20;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -551,10 +520,7 @@ namespace LiveCharts
         public sealed class DecadeAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 10; }
-            }
+            public override double MinimumSeparatorWidth => 10;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -585,10 +551,7 @@ namespace LiveCharts
         public sealed class CenturyAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 10; }
-            }
+            public override double MinimumSeparatorWidth => 10;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)
@@ -619,10 +582,7 @@ namespace LiveCharts
         public sealed class MillenniumAxisWindow : DateAxisWindow
         {
             /// <inheritdoc />
-            public override double MinimumSeparatorWidth
-            {
-                get { return 10; }
-            }
+            public override double MinimumSeparatorWidth => 10;
 
             /// <inheritdoc />
             public override bool IsHeader(DateTime x)

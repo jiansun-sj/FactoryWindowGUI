@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：StackedRowSeries.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -36,116 +44,14 @@ using LiveCharts.SeriesAlgorithms;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The stacked row series compares the proportion of every series in a point
+    ///     The stacked row series compares the proportion of every series in a point
     /// </summary>
     public class StackedRowSeries : Series, IStackedRowSeriesView
     {
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of StackedRow series class
-        /// </summary>
-        public StackedRowSeries()
-        {
-            Model = new StackedRowAlgorithm(this);
-            InitializeDefuaults();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of StackedRow series class, with a given mapper
-        /// </summary>
-        public StackedRowSeries(object configuration)
-        {
-            Model = new StackedRowAlgorithm(this);
-            Configuration = configuration;
-            InitializeDefuaults();
-        }
-
-        #endregion
-
-        #region Private Properties
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// The maximum row height property
-        /// </summary>
-        public static readonly DependencyProperty MaxRowHeightProperty = DependencyProperty.Register(
-            "MaxRowHeight", typeof (double), typeof (StackedRowSeries), new PropertyMetadata(default(double)));
-        /// <summary>
-        /// Gets or sets the maximum height of row, any row height will be capped at this value.
-        /// </summary>
-        public double MaxRowHeight
-        {
-            get { return (double) GetValue(MaxRowHeightProperty); }
-            set { SetValue(MaxRowHeightProperty, value); }
-        }
-
-        /// <summary>
-        /// The row padding property
-        /// </summary>
-        public static readonly DependencyProperty RowPaddingProperty = DependencyProperty.Register(
-            "RowPadding", typeof (double), typeof (StackedRowSeries), new PropertyMetadata(default(double)));
-        /// <summary>
-        /// Gets or sets the padding between each row in the series.
-        /// </summary>
-        public double RowPadding
-        {
-            get { return (double) GetValue(RowPaddingProperty); }
-            set { SetValue(RowPaddingProperty, value); }
-        }
-
-        /// <summary>
-        /// The stack mode property
-        /// </summary>
-        public static readonly DependencyProperty StackModeProperty = DependencyProperty.Register(
-            "StackMode", typeof (StackMode), typeof (StackedRowSeries), new PropertyMetadata(default(StackMode)));
-        /// <summary>
-        /// Gets or sets the stacked mode, values or percentage.
-        /// </summary>
-        public StackMode StackMode
-        {
-            get { return (StackMode) GetValue(StackModeProperty); }
-            set { SetValue(StackModeProperty, value); }
-        }
-
-        /// <summary>
-        /// The labels position property
-        /// </summary>
-        public static readonly DependencyProperty LabelsPositionProperty = DependencyProperty.Register(
-            "LabelsPosition", typeof(BarLabelPosition), typeof(StackedRowSeries),
-            new PropertyMetadata(BarLabelPosition.Parallel, CallChartUpdater()));
-        /// <summary>
-        /// Gets or sets where the label is placed
-        /// </summary>
-        public BarLabelPosition LabelsPosition
-        {
-            get { return (BarLabelPosition)GetValue(LabelsPositionProperty); }
-            set { SetValue(LabelsPositionProperty, value); }
-        }
-
-        /// <summary>
-        /// The Grouping property
-        /// </summary>
-        public object Grouping
-        {
-            get { return (object)GetValue(GroupingProperty); }
-            set { SetValue(GroupingProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets which columns are grouped together
-        /// </summary>
-        public static readonly DependencyProperty GroupingProperty =
-            DependencyProperty.Register("Grouping", typeof(object), typeof(StackedRowSeries), new PropertyMetadata(null));
-        #endregion
-
         #region Overridden Methods
 
         /// <summary>
-        /// Gets the view of a given point
+        ///     Gets the view of a given point
         /// </summary>
         /// <param name="point"></param>
         /// <param name="label"></param>
@@ -193,7 +99,7 @@ namespace FactoryWindowGUI.ChartUtil
 
                 Panel.SetZIndex(pbv.HoverShape, int.MaxValue);
 
-                var wpfChart = (Chart)Model.Chart.View;
+                var wpfChart = (Chart) Model.Chart.View;
                 wpfChart.AttachHoverableEventTo(pbv.HoverShape);
 
                 Model.Chart.View.AddToDrawMargin(pbv.HoverShape);
@@ -202,13 +108,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (pbv.HoverShape != null) pbv.HoverShape.Visibility = Visibility;
 
             if (DataLabels)
-            {
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -216,8 +120,8 @@ namespace FactoryWindowGUI.ChartUtil
                 pbv.DataLabel = null;
             }
 
-            if (point.Stroke != null) pbv.Rectangle.Stroke = (Brush)point.Stroke;
-            if (point.Fill != null) pbv.Rectangle.Fill = (Brush)point.Fill;
+            if (point.Stroke != null) pbv.Rectangle.Stroke = (Brush) point.Stroke;
+            if (point.Fill != null) pbv.Rectangle.Fill = (Brush) point.Fill;
 
             pbv.LabelPosition = LabelsPosition;
 
@@ -235,11 +139,119 @@ namespace FactoryWindowGUI.ChartUtil
             SetCurrentValue(RowPaddingProperty, 2d);
             SetCurrentValue(ForegroundProperty, Brushes.White);
 
-            Func<ChartPoint, string> defaultLabel = x =>  Model.CurrentXAxis.GetFormatter()(x.X);
+            Func<ChartPoint, string> defaultLabel = x => Model.CurrentXAxis.GetFormatter()(x.X);
             SetCurrentValue(LabelPointProperty, defaultLabel);
 
             DefaultFillOpacity = 1;
         }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of StackedRow series class
+        /// </summary>
+        public StackedRowSeries()
+        {
+            Model = new StackedRowAlgorithm(this);
+            InitializeDefuaults();
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of StackedRow series class, with a given mapper
+        /// </summary>
+        public StackedRowSeries(object configuration)
+        {
+            Model = new StackedRowAlgorithm(this);
+            Configuration = configuration;
+            InitializeDefuaults();
+        }
+
+        #endregion
+
+        #region Private Properties
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     The maximum row height property
+        /// </summary>
+        public static readonly DependencyProperty MaxRowHeightProperty = DependencyProperty.Register(
+            "MaxRowHeight", typeof(double), typeof(StackedRowSeries), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        ///     Gets or sets the maximum height of row, any row height will be capped at this value.
+        /// </summary>
+        public double MaxRowHeight
+        {
+            get { return (double) GetValue(MaxRowHeightProperty); }
+            set { SetValue(MaxRowHeightProperty, value); }
+        }
+
+        /// <summary>
+        ///     The row padding property
+        /// </summary>
+        public static readonly DependencyProperty RowPaddingProperty = DependencyProperty.Register(
+            "RowPadding", typeof(double), typeof(StackedRowSeries), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        ///     Gets or sets the padding between each row in the series.
+        /// </summary>
+        public double RowPadding
+        {
+            get { return (double) GetValue(RowPaddingProperty); }
+            set { SetValue(RowPaddingProperty, value); }
+        }
+
+        /// <summary>
+        ///     The stack mode property
+        /// </summary>
+        public static readonly DependencyProperty StackModeProperty = DependencyProperty.Register(
+            "StackMode", typeof(StackMode), typeof(StackedRowSeries), new PropertyMetadata(default(StackMode)));
+
+        /// <summary>
+        ///     Gets or sets the stacked mode, values or percentage.
+        /// </summary>
+        public StackMode StackMode
+        {
+            get { return (StackMode) GetValue(StackModeProperty); }
+            set { SetValue(StackModeProperty, value); }
+        }
+
+        /// <summary>
+        ///     The labels position property
+        /// </summary>
+        public static readonly DependencyProperty LabelsPositionProperty = DependencyProperty.Register(
+            "LabelsPosition", typeof(BarLabelPosition), typeof(StackedRowSeries),
+            new PropertyMetadata(BarLabelPosition.Parallel, CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets where the label is placed
+        /// </summary>
+        public BarLabelPosition LabelsPosition
+        {
+            get { return (BarLabelPosition) GetValue(LabelsPositionProperty); }
+            set { SetValue(LabelsPositionProperty, value); }
+        }
+
+        /// <summary>
+        ///     The Grouping property
+        /// </summary>
+        public object Grouping
+        {
+            get { return GetValue(GroupingProperty); }
+            set { SetValue(GroupingProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets which columns are grouped together
+        /// </summary>
+        public static readonly DependencyProperty GroupingProperty =
+            DependencyProperty.Register("Grouping", typeof(object), typeof(StackedRowSeries),
+                new PropertyMetadata(null));
 
         #endregion
     }

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：StackedColumnSeries.cs
+// 创建时间：2020/05/25 13:39
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:39
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -36,115 +44,14 @@ using LiveCharts.SeriesAlgorithms;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The stacked column series compares the proportion of every series in a point
+    ///     The stacked column series compares the proportion of every series in a point
     /// </summary>
     public class StackedColumnSeries : Series, IStackedColumnSeriesView
     {
-        #region Constructors
-        /// <summary>
-        /// Initializes a new instance of StackedColumnSeries class
-        /// </summary>
-        public StackedColumnSeries()
-        {
-            Model = new StackedColumnAlgorithm(this);
-            InitializeDefuaults();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of StackedColumnSeries class, with a given mapper
-        /// </summary>
-        public StackedColumnSeries(object configuration)
-        {
-            Model = new StackedColumnAlgorithm(this);
-            Configuration = configuration;
-            InitializeDefuaults();
-        }
-
-        #endregion
-
-        #region Private Properties
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// The maximum column width property
-        /// </summary>
-        public static readonly DependencyProperty MaxColumnWidthProperty = DependencyProperty.Register(
-            "MaxColumnWidth", typeof (double), typeof (StackedColumnSeries), new PropertyMetadata(default(double)));
-        /// <summary>
-        /// Gets or sets the maximum width of a column, any column will be capped at this value
-        /// </summary>
-        public double MaxColumnWidth
-        {
-            get { return (double) GetValue(MaxColumnWidthProperty); }
-            set { SetValue(MaxColumnWidthProperty, value); }
-        }
-
-        /// <summary>
-        /// The column padding property
-        /// </summary>
-        public static readonly DependencyProperty ColumnPaddingProperty = DependencyProperty.Register(
-            "ColumnPadding", typeof (double), typeof (StackedColumnSeries), new PropertyMetadata(default(double)));
-        /// <summary>
-        /// Gets or sets the padding between every column in this series
-        /// </summary>
-        public double ColumnPadding
-        {
-            get { return (double) GetValue(ColumnPaddingProperty); }
-            set { SetValue(ColumnPaddingProperty, value); }
-        }
-
-        /// <summary>
-        /// The stack mode property
-        /// </summary>
-        public static readonly DependencyProperty StackModeProperty = DependencyProperty.Register(
-            "StackMode", typeof (StackMode), typeof (StackedColumnSeries), new PropertyMetadata(default(StackMode)));
-        /// <summary>
-        /// Gets or sets stacked mode, values or percentage
-        /// </summary>
-        public StackMode StackMode
-        {
-            get { return (StackMode) GetValue(StackModeProperty); }
-            set { SetValue(StackModeProperty, value); }
-        }
-        
-        /// <summary>
-        /// The labels position property
-        /// </summary>
-        public static readonly DependencyProperty LabelsPositionProperty = DependencyProperty.Register(
-            "LabelsPosition", typeof(BarLabelPosition), typeof(StackedColumnSeries),
-            new PropertyMetadata(BarLabelPosition.Parallel, CallChartUpdater()));
-        /// <summary>
-        /// Gets or sets where the label is placed
-        /// </summary>
-        public BarLabelPosition LabelsPosition
-        {
-            get { return (BarLabelPosition)GetValue(LabelsPositionProperty); }
-            set { SetValue(LabelsPositionProperty, value); }
-        }
-
-        /// <summary>
-        /// The Grouping property
-        /// </summary>
-        public object Grouping
-        {
-            get { return (object)GetValue(GroupingProperty); }
-            set { SetValue(GroupingProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets which columns are grouped together
-        /// </summary>
-        public static readonly DependencyProperty GroupingProperty =
-            DependencyProperty.Register("Grouping", typeof(object), typeof(StackedColumnSeries), new PropertyMetadata(null));
-        #endregion
-
         #region Overridden Methods
 
         /// <summary>
-        /// Gets the view of a given point
+        ///     Gets the view of a given point
         /// </summary>
         /// <param name="point"></param>
         /// <param name="label"></param>
@@ -190,7 +97,7 @@ namespace FactoryWindowGUI.ChartUtil
 
                 Panel.SetZIndex(pbv.HoverShape, int.MaxValue);
 
-                var wpfChart = (Chart)Model.Chart.View;
+                var wpfChart = (Chart) Model.Chart.View;
                 wpfChart.AttachHoverableEventTo(pbv.HoverShape);
 
                 Model.Chart.View.AddToDrawMargin(pbv.HoverShape);
@@ -199,13 +106,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (pbv.HoverShape != null) pbv.HoverShape.Visibility = Visibility;
 
             if (DataLabels)
-            {
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -229,11 +134,119 @@ namespace FactoryWindowGUI.ChartUtil
             SetCurrentValue(ColumnPaddingProperty, 2d);
             SetCurrentValue(ForegroundProperty, Brushes.White);
 
-            Func<ChartPoint, string> defaultLabel = x =>  Model.CurrentYAxis.GetFormatter()(x.Y);
+            Func<ChartPoint, string> defaultLabel = x => Model.CurrentYAxis.GetFormatter()(x.Y);
             SetCurrentValue(LabelPointProperty, defaultLabel);
 
             DefaultFillOpacity = 1;
         }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of StackedColumnSeries class
+        /// </summary>
+        public StackedColumnSeries()
+        {
+            Model = new StackedColumnAlgorithm(this);
+            InitializeDefuaults();
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of StackedColumnSeries class, with a given mapper
+        /// </summary>
+        public StackedColumnSeries(object configuration)
+        {
+            Model = new StackedColumnAlgorithm(this);
+            Configuration = configuration;
+            InitializeDefuaults();
+        }
+
+        #endregion
+
+        #region Private Properties
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     The maximum column width property
+        /// </summary>
+        public static readonly DependencyProperty MaxColumnWidthProperty = DependencyProperty.Register(
+            "MaxColumnWidth", typeof(double), typeof(StackedColumnSeries), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        ///     Gets or sets the maximum width of a column, any column will be capped at this value
+        /// </summary>
+        public double MaxColumnWidth
+        {
+            get { return (double) GetValue(MaxColumnWidthProperty); }
+            set { SetValue(MaxColumnWidthProperty, value); }
+        }
+
+        /// <summary>
+        ///     The column padding property
+        /// </summary>
+        public static readonly DependencyProperty ColumnPaddingProperty = DependencyProperty.Register(
+            "ColumnPadding", typeof(double), typeof(StackedColumnSeries), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        ///     Gets or sets the padding between every column in this series
+        /// </summary>
+        public double ColumnPadding
+        {
+            get { return (double) GetValue(ColumnPaddingProperty); }
+            set { SetValue(ColumnPaddingProperty, value); }
+        }
+
+        /// <summary>
+        ///     The stack mode property
+        /// </summary>
+        public static readonly DependencyProperty StackModeProperty = DependencyProperty.Register(
+            "StackMode", typeof(StackMode), typeof(StackedColumnSeries), new PropertyMetadata(default(StackMode)));
+
+        /// <summary>
+        ///     Gets or sets stacked mode, values or percentage
+        /// </summary>
+        public StackMode StackMode
+        {
+            get { return (StackMode) GetValue(StackModeProperty); }
+            set { SetValue(StackModeProperty, value); }
+        }
+
+        /// <summary>
+        ///     The labels position property
+        /// </summary>
+        public static readonly DependencyProperty LabelsPositionProperty = DependencyProperty.Register(
+            "LabelsPosition", typeof(BarLabelPosition), typeof(StackedColumnSeries),
+            new PropertyMetadata(BarLabelPosition.Parallel, CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets where the label is placed
+        /// </summary>
+        public BarLabelPosition LabelsPosition
+        {
+            get { return (BarLabelPosition) GetValue(LabelsPositionProperty); }
+            set { SetValue(LabelsPositionProperty, value); }
+        }
+
+        /// <summary>
+        ///     The Grouping property
+        /// </summary>
+        public object Grouping
+        {
+            get { return GetValue(GroupingProperty); }
+            set { SetValue(GroupingProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets which columns are grouped together
+        /// </summary>
+        public static readonly DependencyProperty GroupingProperty =
+            DependencyProperty.Register("Grouping", typeof(object), typeof(StackedColumnSeries),
+                new PropertyMetadata(null));
 
         #endregion
     }

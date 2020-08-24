@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：HeatSeries.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -42,14 +50,20 @@ using LiveCharts.Wpf;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// Use a HeatSeries in a cartesian chart to draw heat maps.
+    ///     Use a HeatSeries in a cartesian chart to draw heat maps.
     /// </summary>
     public class HeatSeries : Series, IHeatSeriesView
     {
+        #region Private Properties
+
+        private HeatColorRange ColorRangeControl { get; set; }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of HeatSeries class
+        ///     Initializes a new instance of HeatSeries class
         /// </summary>
         public HeatSeries()
         {
@@ -58,7 +72,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Initializes a new instance of HeatSries class, using a given mapper
+        ///     Initializes a new instance of HeatSries class, using a given mapper
         /// </summary>
         /// <param name="configuration"></param>
         public HeatSeries(object configuration)
@@ -70,44 +84,43 @@ namespace FactoryWindowGUI.ChartUtil
 
         #endregion
 
-        #region Private Properties
-
-        private HeatColorRange ColorRangeControl { get; set; }
-        #endregion
-
         #region Properties
 
         /// <summary>
-        /// The draws heat range property
+        ///     The draws heat range property
         /// </summary>
         public static readonly DependencyProperty DrawsHeatRangeProperty = DependencyProperty.Register(
             "DrawsHeatRange", typeof(bool), typeof(HeatSeries),
             new PropertyMetadata(default(bool), CallChartUpdater()));
+
         /// <summary>
-        /// Gets or sets whether the series should draw the heat range control, it is the vertical frame to the right that displays the heat gradient.
+        ///     Gets or sets whether the series should draw the heat range control, it is the vertical frame to the right that
+        ///     displays the heat gradient.
         /// </summary>
         public bool DrawsHeatRange
         {
-            get { return (bool)GetValue(DrawsHeatRangeProperty); }
+            get { return (bool) GetValue(DrawsHeatRangeProperty); }
             set { SetValue(DrawsHeatRangeProperty, value); }
         }
 
         /// <summary>
-        /// The gradient stop collection property
+        ///     The gradient stop collection property
         /// </summary>
         public static readonly DependencyProperty GradientStopCollectionProperty = DependencyProperty.Register(
-            "GradientStopCollection", typeof(GradientStopCollection), typeof(HeatSeries), new PropertyMetadata(default(GradientStopCollection)));
+            "GradientStopCollection", typeof(GradientStopCollection), typeof(HeatSeries),
+            new PropertyMetadata(default(GradientStopCollection)));
+
         /// <summary>
-        /// Gets or sets the gradient stop collection, use every gradient offset and color properties to define your gradient.
+        ///     Gets or sets the gradient stop collection, use every gradient offset and color properties to define your gradient.
         /// </summary>
         public GradientStopCollection GradientStopCollection
         {
-            get { return (GradientStopCollection)GetValue(GradientStopCollectionProperty); }
+            get { return (GradientStopCollection) GetValue(GradientStopCollectionProperty); }
             set { SetValue(GradientStopCollectionProperty, value); }
         }
 
         /// <summary>
-        /// Gets the gradient stops, this property is normally used internally to communicate with the core of the library.
+        ///     Gets the gradient stops, this property is normally used internally to communicate with the core of the library.
         /// </summary>
         public IList<CoreGradientStop> Stops
         {
@@ -126,7 +139,7 @@ namespace FactoryWindowGUI.ChartUtil
         #region Overridden Methods
 
         /// <summary>
-        /// Gets the view of a given point
+        ///     Gets the view of a given point
         /// </summary>
         /// <param name="point"></param>
         /// <param name="label"></param>
@@ -172,7 +185,7 @@ namespace FactoryWindowGUI.ChartUtil
 
                 Panel.SetZIndex(pbv.HoverShape, int.MaxValue);
 
-                var wpfChart = (Chart)Model.Chart.View;
+                var wpfChart = (Chart) Model.Chart.View;
                 wpfChart.AttachHoverableEventTo(pbv.HoverShape);
 
                 Model.Chart.View.AddToDrawMargin(pbv.HoverShape);
@@ -181,13 +194,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (pbv.HoverShape != null) pbv.HoverShape.Visibility = Visibility;
 
             if (DataLabels)
-            {
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -199,7 +210,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Erases series
+        ///     Erases series
         /// </summary>
         /// <param name="removeFromView"></param>
         public override void Erase(bool removeFromView = true)
@@ -213,38 +224,34 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Defines special elements to draw according to the series type
+        ///     Defines special elements to draw according to the series type
         /// </summary>
         public override void DrawSpecializedElements()
         {
             if (DrawsHeatRange)
             {
-                if (ColorRangeControl == null)
-                {
-                    ColorRangeControl = new HeatColorRange();
-                }
+                if (ColorRangeControl == null) ColorRangeControl = new HeatColorRange();
 
                 ColorRangeControl.SetBinding(TextBlock.FontFamilyProperty,
                     new Binding {Path = new PropertyPath(FontFamilyProperty), Source = this});
                 ColorRangeControl.SetBinding(TextBlock.FontSizeProperty,
-                    new Binding { Path = new PropertyPath(FontSizeProperty), Source = this });
+                    new Binding {Path = new PropertyPath(FontSizeProperty), Source = this});
                 ColorRangeControl.SetBinding(TextBlock.FontStretchProperty,
-                    new Binding { Path = new PropertyPath(FontStretchProperty), Source = this });
+                    new Binding {Path = new PropertyPath(FontStretchProperty), Source = this});
                 ColorRangeControl.SetBinding(TextBlock.FontStyleProperty,
-                    new Binding { Path = new PropertyPath(FontStyleProperty), Source = this });
+                    new Binding {Path = new PropertyPath(FontStyleProperty), Source = this});
                 ColorRangeControl.SetBinding(TextBlock.FontWeightProperty,
-                    new Binding { Path = new PropertyPath(FontWeightProperty), Source = this });
+                    new Binding {Path = new PropertyPath(FontWeightProperty), Source = this});
                 ColorRangeControl.SetBinding(TextBlock.ForegroundProperty,
-                    new Binding { Path = new PropertyPath(ForegroundProperty), Source = this });
+                    new Binding {Path = new PropertyPath(ForegroundProperty), Source = this});
                 ColorRangeControl.SetBinding(VisibilityProperty,
-                    new Binding { Path = new PropertyPath(VisibilityProperty), Source = this });
+                    new Binding {Path = new PropertyPath(VisibilityProperty), Source = this});
 
-                if (ColorRangeControl.Parent == null)
-                {
-                    Model.Chart.View.AddToView(ColorRangeControl);
-                }
-                var max = ColorRangeControl.SetMax(ActualValues.GetTracker(this).WLimit.Max.ToString(CultureInfo.InvariantCulture));
-                var min = ColorRangeControl.SetMin(ActualValues.GetTracker(this).WLimit.Min.ToString(CultureInfo.InvariantCulture));
+                if (ColorRangeControl.Parent == null) Model.Chart.View.AddToView(ColorRangeControl);
+                var max = ColorRangeControl.SetMax(ActualValues.GetTracker(this).WLimit.Max
+                    .ToString(CultureInfo.InvariantCulture));
+                var min = ColorRangeControl.SetMin(ActualValues.GetTracker(this).WLimit.Min
+                    .ToString(CultureInfo.InvariantCulture));
 
                 var m = max > min ? max : min;
 
@@ -260,7 +267,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Places specializes items
+        ///     Places specializes items
         /// </summary>
         public override void PlaceSpecializedElements()
         {
@@ -293,11 +300,11 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Initializes the series colors if they are not set
+        ///     Initializes the series colors if they are not set
         /// </summary>
         public override void InitializeColors()
         {
-            var wpfChart = (Chart)Model.Chart.View;
+            var wpfChart = (Chart) Model.Chart.View;
             var nextColor = wpfChart.GetNextDefaultColor();
 
             if (Stroke == null)
@@ -307,9 +314,11 @@ namespace FactoryWindowGUI.ChartUtil
 
             var defaultColdColor = new Color
             {
-                A = (byte)(nextColor.A * (DefaultFillOpacity > 1
+                A = (byte) (nextColor.A * (DefaultFillOpacity > 1
                     ? 1
-                    : (DefaultFillOpacity < 0 ? 0 : DefaultFillOpacity))),
+                    : DefaultFillOpacity < 0
+                        ? 0
+                        : DefaultFillOpacity)),
                 R = nextColor.R,
                 G = nextColor.G,
                 B = nextColor.B

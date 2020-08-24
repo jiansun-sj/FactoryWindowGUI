@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：IAxisSectionView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,72 +31,79 @@
 namespace LiveCharts.Definitions.Charts
 {
     /// <summary>
-    /// 
     /// </summary>
     public interface IAxisSectionView
     {
         /// <summary>
-        /// Gets or sets the model.
+        ///     Gets or sets the model.
         /// </summary>
         /// <value>
-        /// The model.
+        ///     The model.
         /// </value>
         AxisSectionCore Model { get; set; }
+
         /// <summary>
-        /// Gets or sets the value.
+        ///     Gets or sets the value.
         /// </summary>
         /// <value>
-        /// The value.
+        ///     The value.
         /// </value>
         double Value { get; set; }
+
         /// <summary>
-        /// Gets or sets the width of the section.
+        ///     Gets or sets the width of the section.
         /// </summary>
         /// <value>
-        /// The width of the section.
+        ///     The width of the section.
         /// </value>
         double SectionWidth { get; set; }
+
         /// <summary>
-        /// Gets or sets the section offset.
+        ///     Gets or sets the section offset.
         /// </summary>
         /// <value>
-        /// The section offset.
+        ///     The section offset.
         /// </value>
         double SectionOffset { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="IAxisSectionView"/> is draggable.
+        ///     Gets or sets a value indicating whether this <see cref="IAxisSectionView" /> is draggable.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if draggable; otherwise, <c>false</c>.
+        ///     <c>true</c> if draggable; otherwise, <c>false</c>.
         /// </value>
         bool Draggable { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether the section is animated
+        ///     Gets or sets a value indicating whether the section is animated
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [disable animations]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [disable animations]; otherwise, <c>false</c>.
         /// </value>
         bool DisableAnimations { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether the section should display a label that displays its current value.
+        ///     Gets or sets a value indicating whether the section should display a label that displays its current value.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [data label]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [data label]; otherwise, <c>false</c>.
         /// </value>
         bool DataLabel { get; set; }
 
         /// <summary>
-        /// Draws the or move.
+        ///     Draws the or move.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="axis">The axis.</param>
         void DrawOrMove(AxisOrientation source, int axis);
+
         /// <summary>
-        /// Removes this instance.
+        ///     Removes this instance.
         /// </summary>
         void Remove();
+
         /// <summary>
-        /// Ases the core element.
+        ///     Ases the core element.
         /// </summary>
         /// <param name="axis">The axis.</param>
         /// <param name="source">The source.</param>

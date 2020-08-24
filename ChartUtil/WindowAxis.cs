@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：WindowAxis.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -33,37 +41,26 @@ using LiveCharts.Definitions.Charts;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="Axis" />
     /// <seealso cref="LiveCharts.Definitions.Charts.IWindowAxisView" />
     public class WindowAxis : Axis, IWindowAxisView
     {
-        public static readonly DependencyProperty WindowsProperty = DependencyProperty.Register("Windows", typeof(AxisWindowCollection), typeof(WindowAxis),new PropertyMetadata(default(AxisWindowCollection)));
-        public static readonly DependencyProperty SelectedWindowProperty = DependencyProperty.Register("SelectedWindow", typeof(IAxisWindow), typeof(WindowAxis), new PropertyMetadata(null));
-        public static readonly DependencyProperty HeaderFontWeightProperty = DependencyProperty.Register("HeaderFontWeight", typeof(FontWeight), typeof(WindowAxis), new PropertyMetadata(FontWeights.ExtraBold));
-        public static readonly DependencyProperty HeaderForegroundProperty = DependencyProperty.Register("HeaderForeground", typeof(Brush), typeof(WindowAxis), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(130, 130, 130))));
+        public static readonly DependencyProperty WindowsProperty = DependencyProperty.Register("Windows",
+            typeof(AxisWindowCollection), typeof(WindowAxis), new PropertyMetadata(default(AxisWindowCollection)));
+
+        public static readonly DependencyProperty SelectedWindowProperty = DependencyProperty.Register("SelectedWindow",
+            typeof(IAxisWindow), typeof(WindowAxis), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty HeaderFontWeightProperty =
+            DependencyProperty.Register("HeaderFontWeight", typeof(FontWeight), typeof(WindowAxis),
+                new PropertyMetadata(FontWeights.ExtraBold));
+
+        public static readonly DependencyProperty HeaderForegroundProperty =
+            DependencyProperty.Register("HeaderForeground", typeof(Brush), typeof(WindowAxis),
+                new PropertyMetadata(new SolidColorBrush(Color.FromRgb(130, 130, 130))));
 
         /// <summary>
-        /// 
-        /// </summary>
-        public AxisWindowCollection Windows
-        {
-            get { return (AxisWindowCollection)GetValue(WindowsProperty); }
-            set { SetValue(WindowsProperty, value); }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public IAxisWindow SelectedWindow
-        {
-            get { return (IAxisWindow)GetValue(SelectedWindowProperty); }
-            set { SetValue(SelectedWindowProperty, value); }
-        }
-
-        /// <summary>
-        /// 
         /// </summary>
         public WindowAxis()
         {
@@ -71,20 +68,36 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets or sets labels font weight
+        /// </summary>
+        public AxisWindowCollection Windows
+        {
+            get { return (AxisWindowCollection) GetValue(WindowsProperty); }
+            set { SetValue(WindowsProperty, value); }
+        }
+
+        /// <summary>
+        /// </summary>
+        public IAxisWindow SelectedWindow
+        {
+            get { return (IAxisWindow) GetValue(SelectedWindowProperty); }
+            set { SetValue(SelectedWindowProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets labels font weight
         /// </summary>
         public FontWeight HeaderFontWeight
         {
-            get { return (FontWeight)GetValue(HeaderFontWeightProperty); }
+            get { return (FontWeight) GetValue(HeaderFontWeightProperty); }
             set { SetValue(HeaderFontWeightProperty, value); }
         }
 
         /// <summary>
-        /// Gets or sets labels text color.
+        ///     Gets or sets labels text color.
         /// </summary>
         public Brush HeaderForeground
         {
-            get { return (Brush)GetValue(HeaderForegroundProperty); }
+            get { return (Brush) GetValue(HeaderForegroundProperty); }
             set { SetValue(HeaderForegroundProperty, value); }
         }
 
@@ -106,14 +119,14 @@ namespace FactoryWindowGUI.ChartUtil
             ((WindowAxisCore) Model).Windows = Windows.ToList();
             return Model;
         }
-                        
+
         public override void RenderSeparator(SeparatorElementCore model, ChartCore chart)
         {
             base.RenderSeparator(model, chart);
 
             // Review whetehr hould we not implement this with a trigger instead of resetting property bindings
-            var element = (AxisSeparatorElement)model.View;
-            if (((DateSeparatorElementCore)model).IsHeader)
+            var element = (AxisSeparatorElement) model.View;
+            if (((DateSeparatorElementCore) model).IsHeader)
             {
                 element.TextBlock.SetBinding(TextBlock.FontWeightProperty, new Binding
                 {

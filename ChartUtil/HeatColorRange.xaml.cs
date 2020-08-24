@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：HeatColorRange.xaml.cs
+// 创建时间：2020/05/25 13:39
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:39
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,12 +34,12 @@ using System.Windows.Media;
 namespace LiveCharts.Wpf
 {
     /// <summary>
-    /// Interaction logic for HeatColorRange.xaml
+    ///     Interaction logic for HeatColorRange.xaml
     /// </summary>
     public partial class HeatColorRange
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HeatColorRange"/> class.
+        ///     Initializes a new instance of the <see cref="HeatColorRange" /> class.
         /// </summary>
         public HeatColorRange()
         {
@@ -39,7 +47,7 @@ namespace LiveCharts.Wpf
         }
 
         /// <summary>
-        /// Updates the fill.
+        ///     Updates the fill.
         /// </summary>
         /// <param name="stops">The stops.</param>
         public void UpdateFill(GradientStopCollection stops)
@@ -53,7 +61,7 @@ namespace LiveCharts.Wpf
         }
 
         /// <summary>
-        /// Sets the maximum.
+        ///     Sets the maximum.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
@@ -65,7 +73,7 @@ namespace LiveCharts.Wpf
         }
 
         /// <summary>
-        /// Sets the minimum.
+        ///     Sets the minimum.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>

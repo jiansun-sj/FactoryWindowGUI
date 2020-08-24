@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：LineSeries.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -41,22 +49,43 @@ using LiveCharts.SeriesAlgorithms;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The line series displays trends between points, you must add this series to a cartesian chart. 
+    ///     The line series displays trends between points, you must add this series to a cartesian chart.
     /// </summary>
     public class LineSeries : Series, ILineSeriesView, IFondeable, IAreaPoint
     {
+        #region Private Methods
+
+        private void InitializeDefuaults()
+        {
+            SetCurrentValue(LineSmoothnessProperty, .7d);
+            SetCurrentValue(PointGeometrySizeProperty, 8d);
+            SetCurrentValue(PointForegroundProperty, Brushes.White);
+            SetCurrentValue(StrokeThicknessProperty, 2d);
+
+            Func<ChartPoint, string> defaultLabel = x => Model.CurrentYAxis.GetFormatter()(x.Y);
+            SetCurrentValue(LabelPointProperty, defaultLabel);
+
+            DefaultFillOpacity = 0.15;
+            Splitters = new List<LineSegmentSplitter>();
+
+            IsNew = true;
+        }
+
+        #endregion
+
         #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of LineSeries class
+        ///     Initializes a new instance of LineSeries class
         /// </summary>
-        public LineSeries() 
+        public LineSeries()
         {
             Model = new LineAlgorithm(this);
             InitializeDefuaults();
         }
 
         /// <summary>
-        /// Initializes a new instance of LineSeries class with a given mapper
+        ///     Initializes a new instance of LineSeries class with a given mapper
         /// </summary>
         /// <param name="configuration"></param>
         public LineSeries(object configuration)
@@ -69,55 +98,64 @@ namespace FactoryWindowGUI.ChartUtil
         #endregion
 
         #region Private Properties
+
         /// <summary>
-        /// Gets or sets the figure.
+        ///     Gets or sets the figure.
         /// </summary>
         /// <value>
-        /// The figure.
+        ///     The figure.
         /// </value>
         protected PathFigure Figure { get; set; }
+
         internal Path Path { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is path initialized.
+        ///     Gets or sets a value indicating whether this instance is path initialized.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is path initialized; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is path initialized; otherwise, <c>false</c>.
         /// </value>
         protected bool IsPathInitialized { get; set; }
+
         internal List<LineSegmentSplitter> Splitters { get; set; }
+
         /// <summary>
-        /// Gets or sets the active splitters.
+        ///     Gets or sets the active splitters.
         /// </summary>
         /// <value>
-        /// The active splitters.
+        ///     The active splitters.
         /// </value>
         protected int ActiveSplitters { get; set; }
+
         /// <summary>
-        /// Gets or sets the splitters collector.
+        ///     Gets or sets the splitters collector.
         /// </summary>
         /// <value>
-        /// The splitters collector.
+        ///     The splitters collector.
         /// </value>
         protected int SplittersCollector { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is new.
+        ///     Gets or sets a value indicating whether this instance is new.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is new; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is new; otherwise, <c>false</c>.
         /// </value>
         protected bool IsNew { get; set; }
+
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// The point geometry size property
+        ///     The point geometry size property
         /// </summary>
         public static readonly DependencyProperty PointGeometrySizeProperty = DependencyProperty.Register(
-            "PointGeometrySize", typeof (double), typeof (LineSeries), 
+            "PointGeometrySize", typeof(double), typeof(LineSeries),
             new PropertyMetadata(default(double), CallChartUpdater()));
+
         /// <summary>
-        /// Gets or sets the point geometry size, increasing this property will make the series points bigger
+        ///     Gets or sets the point geometry size, increasing this property will make the series points bigger
         /// </summary>
         public double PointGeometrySize
         {
@@ -126,13 +164,14 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The point foreground property
+        ///     The point foreground property
         /// </summary>
         public static readonly DependencyProperty PointForegroundProperty = DependencyProperty.Register(
-            "PointForeground", typeof (Brush), typeof (LineSeries), 
+            "PointForeground", typeof(Brush), typeof(LineSeries),
             new PropertyMetadata(default(Brush)));
+
         /// <summary>
-        /// Gets or sets the point shape foreground.
+        ///     Gets or sets the point shape foreground.
         /// </summary>
         public Brush PointForeground
         {
@@ -141,13 +180,14 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The line smoothness property
+        ///     The line smoothness property
         /// </summary>
         public static readonly DependencyProperty LineSmoothnessProperty = DependencyProperty.Register(
-            "LineSmoothness", typeof (double), typeof (LineSeries), 
+            "LineSmoothness", typeof(double), typeof(LineSeries),
             new PropertyMetadata(default(double), CallChartUpdater()));
+
         /// <summary>
-        /// Gets or sets line smoothness, this property goes from 0 to 1, use 0 to draw straight lines, 1 really curved lines.
+        ///     Gets or sets line smoothness, this property goes from 0 to 1, use 0 to draw straight lines, 1 really curved lines.
         /// </summary>
         public double LineSmoothness
         {
@@ -156,12 +196,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The area limit property
+        ///     The area limit property
         /// </summary>
         public static readonly DependencyProperty AreaLimitProperty = DependencyProperty.Register(
             "AreaLimit", typeof(double), typeof(LineSeries), new PropertyMetadata(double.NaN));
+
         /// <summary>
-        /// Gets or sets the limit where the fill area changes orientation
+        ///     Gets or sets the limit where the fill area changes orientation
         /// </summary>
         public double AreaLimit
         {
@@ -174,7 +215,7 @@ namespace FactoryWindowGUI.ChartUtil
         #region Overridden Methods
 
         /// <summary>
-        /// This method runs when the update starts
+        ///     This method runs when the update starts
         /// </summary>
         public override void OnSeriesUpdateStart()
         {
@@ -213,17 +254,17 @@ namespace FactoryWindowGUI.ChartUtil
             };
 
             Panel.SetZIndex(Path, Panel.GetZIndex(this));
-      
+
             var geometry = new PathGeometry();
             Figure = new PathFigure();
             geometry.Figures.Add(Figure);
             Path.Data = geometry;
-            
+
             Model.Chart.View.EnsureElementBelongsToCurrentDrawMargin(Path);
         }
 
         /// <summary>
-        /// Gets the view of a given point
+        ///     Gets the view of a given point
         /// </summary>
         /// <param name="point"></param>
         /// <param name="label"></param>
@@ -266,7 +307,7 @@ namespace FactoryWindowGUI.ChartUtil
 
                 Panel.SetZIndex(pbv.HoverShape, int.MaxValue);
 
-                var wpfChart = (Chart)Model.Chart.View;
+                var wpfChart = (Chart) Model.Chart.View;
                 wpfChart.AttachHoverableEventTo(pbv.HoverShape);
 
                 Model.Chart.View.AddToDrawMargin(pbv.HoverShape);
@@ -277,13 +318,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (PointGeometry != null && Math.Abs(PointGeometrySize) > 0.1 && pbv.Shape == null)
             {
                 if (PointGeometry != null)
-                {
                     pbv.Shape = new Path
                     {
                         Stretch = Stretch.Fill,
                         StrokeThickness = StrokeThickness
                     };
-                }
 
                 Model.Chart.View.AddToDrawMargin(pbv.Shape);
             }
@@ -304,13 +343,11 @@ namespace FactoryWindowGUI.ChartUtil
             }
 
             if (DataLabels)
-            {
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -322,7 +359,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// This method runs when the update finishes
+        ///     This method runs when the update finishes
         /// </summary>
         public override void OnSeriesUpdatedFinish()
         {
@@ -339,7 +376,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Erases series
+        ///     Erases series
         /// </summary>
         /// <param name="removeFromView"></param>
         public override void Erase(bool removeFromView = true)
@@ -359,18 +396,19 @@ namespace FactoryWindowGUI.ChartUtil
 
         #endregion
 
-        #region Public Methods         
+        #region Public Methods
+
         /// <summary>
-        /// Gets the point diameter.
+        ///     Gets the point diameter.
         /// </summary>
         /// <returns></returns>
         public double GetPointDiameter()
         {
-            return (PointGeometry == null ? 0 : PointGeometrySize)/2;
+            return (PointGeometry == null ? 0 : PointGeometrySize) / 2;
         }
 
         /// <summary>
-        /// Starts the segment.
+        ///     Starts the segment.
         /// </summary>
         /// <param name="atIndex">At index.</param>
         /// <param name="location">The location.</param>
@@ -445,30 +483,27 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Ends the segment.
+        ///     Ends the segment.
         /// </summary>
         /// <param name="atIndex">At index.</param>
         /// <param name="location">The location.</param>
         public virtual void EndSegment(int atIndex, CorePoint location)
         {
-            var splitter = Splitters[ActiveSplitters-1];
+            var splitter = Splitters[ActiveSplitters - 1];
 
             var animSpeed = Model.Chart.View.AnimationsSpeed;
             var noAnim = Model.Chart.View.DisableAnimations;
 
             var areaLimit = ChartFunctions.ToDrawMargin(double.IsNaN(AreaLimit)
-                 ? Model.Chart.AxisY[ScalesYAt].FirstSeparator
-                 : AreaLimit, AxisOrientation.Y, Model.Chart, ScalesYAt);
+                ? Model.Chart.AxisY[ScalesYAt].FirstSeparator
+                : AreaLimit, AxisOrientation.Y, Model.Chart, ScalesYAt);
 
             var uw = Model.Chart.AxisX[ScalesXAt].EvaluatesUnitWidth
-                ? ChartFunctions.GetUnitWidth(AxisOrientation.X, Model.Chart, ScalesXAt)/2
+                ? ChartFunctions.GetUnitWidth(AxisOrientation.X, Model.Chart, ScalesXAt) / 2
                 : 0;
             location.X -= uw;
 
-            if (splitter.IsNew)
-            {
-                splitter.Right.Point = new Point(location.X, Model.Chart.DrawMargin.Height);
-            }
+            if (splitter.IsNew) splitter.Right.Point = new Point(location.X, Model.Chart.DrawMargin.Height);
 
             Figure.Segments.Remove(splitter.Right);
             if (noAnim)
@@ -479,25 +514,6 @@ namespace FactoryWindowGUI.ChartUtil
             Figure.Segments.Insert(atIndex, splitter.Right);
 
             splitter.IsNew = false;
-        }
-        #endregion
-
-        #region Private Methods
-
-        private void InitializeDefuaults()
-        {
-            SetCurrentValue(LineSmoothnessProperty, .7d);
-            SetCurrentValue(PointGeometrySizeProperty, 8d);
-            SetCurrentValue(PointForegroundProperty, Brushes.White);
-            SetCurrentValue(StrokeThicknessProperty, 2d);
-
-            Func<ChartPoint, string> defaultLabel = x => Model.CurrentYAxis.GetFormatter()(x.Y);
-            SetCurrentValue(LabelPointProperty, defaultLabel);
-
-            DefaultFillOpacity = 0.15;
-            Splitters = new List<LineSegmentSplitter>();
-
-            IsNew = true;
         }
 
         #endregion

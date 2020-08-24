@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：PieSeries.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -34,77 +42,14 @@ using LiveCharts.SeriesAlgorithms;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The pie series should be added only in a pie chart.
+    ///     The pie series should be added only in a pie chart.
     /// </summary>
     public class PieSeries : Series, IPieSeriesView
     {
-        #region Constructors
-        /// <summary>
-        /// Initializes a new instance of PieSeries class
-        /// </summary>
-        public PieSeries()
-        {
-            Model = new PieAlgorithm(this);
-            InitializeDefuaults();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of PieSeries class with a given mapper.
-        /// </summary>
-        /// <param name="configuration"></param>
-        public PieSeries(object configuration)
-        {
-            Model = new PieAlgorithm(this);
-            Configuration = configuration;
-            InitializeDefuaults();
-        }
-
-        #endregion
-
-        #region Private Properties
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// The push out property
-        /// </summary>
-        public static readonly DependencyProperty PushOutProperty = DependencyProperty.Register(
-            "PushOut", typeof (double), typeof (PieSeries), new PropertyMetadata(default(double), CallChartUpdater()));
-        /// <summary>
-        /// Gets or sets the slice push out, this property highlights the slice
-        /// </summary>
-        public double PushOut
-        {
-            get { return (double) GetValue(PushOutProperty); }
-            set { SetValue(PushOutProperty, value); }
-        }
-
-        /// <summary>
-        /// The label position property
-        /// </summary>
-        public static readonly DependencyProperty LabelPositionProperty = DependencyProperty.Register(
-            "LabelPosition", typeof(PieLabelPosition), typeof(PieSeries), 
-            new PropertyMetadata(PieLabelPosition.InsideSlice, CallChartUpdater()));
-        /// <summary>
-        /// Gets or sets the label position.
-        /// </summary>
-        /// <value>
-        /// The label position.
-        /// </value>
-        public PieLabelPosition LabelPosition
-        {
-            get { return (PieLabelPosition) GetValue(LabelPositionProperty); }
-            set { SetValue(LabelPositionProperty, value); }
-        }
-
-        #endregion
-
         #region Overridden Methods
 
         /// <summary>
-        /// Gets the view of a given point
+        ///     Gets the view of a given point
         /// </summary>
         /// <param name="point"></param>
         /// <param name="label"></param>
@@ -140,7 +85,7 @@ namespace FactoryWindowGUI.ChartUtil
             pbv.Slice.PushOut = PushOut;
             pbv.Slice.Visibility = Visibility;
             Panel.SetZIndex(pbv.Slice, Panel.GetZIndex(this));
-            
+
             if (Model.Chart.RequiresHoverShape && pbv.HoverShape == null)
             {
                 pbv.HoverShape = new PieSlice
@@ -151,7 +96,7 @@ namespace FactoryWindowGUI.ChartUtil
 
                 Panel.SetZIndex(pbv.HoverShape, int.MaxValue);
 
-                var wpfChart = (Chart)Model.Chart.View;
+                var wpfChart = (Chart) Model.Chart.View;
                 wpfChart.AttachHoverableEventTo(pbv.HoverShape);
 
                 Model.Chart.View.AddToDrawMargin(pbv.HoverShape);
@@ -160,13 +105,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (pbv.HoverShape != null) pbv.HoverShape.Visibility = Visibility;
 
             if (DataLabels)
-            {
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -174,10 +117,10 @@ namespace FactoryWindowGUI.ChartUtil
                 pbv.DataLabel = null;
             }
 
-            if (point.Stroke != null) pbv.Slice.Stroke = (Brush)point.Stroke;
-            if (point.Fill != null) pbv.Slice.Fill = (Brush)point.Fill;
+            if (point.Stroke != null) pbv.Slice.Stroke = (Brush) point.Stroke;
+            if (point.Fill != null) pbv.Slice.Fill = (Brush) point.Fill;
 
-            pbv.OriginalPushOut  = PushOut;
+            pbv.OriginalPushOut = PushOut;
 
             return pbv;
         }
@@ -197,6 +140,72 @@ namespace FactoryWindowGUI.ChartUtil
             SetCurrentValue(LabelPointProperty, defaultLabel);
 
             DefaultFillOpacity = 1;
+        }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of PieSeries class
+        /// </summary>
+        public PieSeries()
+        {
+            Model = new PieAlgorithm(this);
+            InitializeDefuaults();
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of PieSeries class with a given mapper.
+        /// </summary>
+        /// <param name="configuration"></param>
+        public PieSeries(object configuration)
+        {
+            Model = new PieAlgorithm(this);
+            Configuration = configuration;
+            InitializeDefuaults();
+        }
+
+        #endregion
+
+        #region Private Properties
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     The push out property
+        /// </summary>
+        public static readonly DependencyProperty PushOutProperty = DependencyProperty.Register(
+            "PushOut", typeof(double), typeof(PieSeries), new PropertyMetadata(default(double), CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets the slice push out, this property highlights the slice
+        /// </summary>
+        public double PushOut
+        {
+            get { return (double) GetValue(PushOutProperty); }
+            set { SetValue(PushOutProperty, value); }
+        }
+
+        /// <summary>
+        ///     The label position property
+        /// </summary>
+        public static readonly DependencyProperty LabelPositionProperty = DependencyProperty.Register(
+            "LabelPosition", typeof(PieLabelPosition), typeof(PieSeries),
+            new PropertyMetadata(PieLabelPosition.InsideSlice, CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets the label position.
+        /// </summary>
+        /// <value>
+        ///     The label position.
+        /// </value>
+        public PieLabelPosition LabelPosition
+        {
+            get { return (PieLabelPosition) GetValue(LabelPositionProperty); }
+            set { SetValue(LabelPositionProperty, value); }
         }
 
         #endregion

@@ -1,4 +1,12 @@
-﻿//copyright(c) 2016 Alberto Rodriguez
+﻿// ==================================================
+// 文件名：AxisSection.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -35,21 +43,21 @@ using LiveCharts.Helpers;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// An Axis section highlights values or ranges in a chart.
+    ///     An Axis section highlights values or ranges in a chart.
     /// </summary>
     public class AxisSection : FrameworkElement, IAxisSectionView
     {
+        internal static AxisSection Dragging;
         private readonly Rectangle _rectangle;
         private TextBlock _label;
-        internal static AxisSection Dragging;
 
         /// <summary>
-        /// Initializes a new instance of AxisSection class
+        ///     Initializes a new instance of AxisSection class
         /// </summary>
         public AxisSection()
         {
             _rectangle = new Rectangle();
-            
+
             _rectangle.MouseDown += (sender, args) =>
             {
                 if (!Draggable) return;
@@ -63,231 +71,8 @@ namespace FactoryWindowGUI.ChartUtil
             SetCurrentValue(StrokeThicknessProperty, 0d);
         }
 
-        #region Properties
         /// <summary>
-        /// Gets or sets the model.
-        /// </summary>
-        /// <value>
-        /// The model.
-        /// </value>
-        public AxisSectionCore Model { get; set; }
-
-        /// <summary>
-        /// The label property
-        /// </summary>
-        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(
-            "Label", typeof(string), typeof(AxisSection), new PropertyMetadata(default(string)));
-        /// <summary>
-        /// Gets or sets the name, the title of the section, a visual element will be added to the chart if this property is not null.
-        /// </summary>
-        [Obsolete("Use a VisualElement instead")]
-        public string Label
-        {
-            get { return (string)GetValue(LabelProperty); }
-            set { SetValue(LabelProperty, value); }
-        }
-
-        /// <summary>
-        /// From value property
-        /// </summary>
-        public static readonly DependencyProperty FromValueProperty = DependencyProperty.Register(
-            "FromValue", typeof(double), typeof(AxisSection),
-            new PropertyMetadata(double.NaN, UpdateSection));
-        /// <summary>
-        /// Gets or sets the value where the section starts
-        /// </summary>
-        [Obsolete("This property will be removed in future versions, instead use Value and SectionWidth properties")]
-        public double FromValue
-        {
-            get { return (double)GetValue(FromValueProperty); }
-            set { SetValue(FromValueProperty, value); }
-        }
-
-        /// <summary>
-        /// To value property
-        /// </summary>
-        public static readonly DependencyProperty ToValueProperty = DependencyProperty.Register(
-            "ToValue", typeof(double), typeof(AxisSection),
-            new PropertyMetadata(double.NaN, UpdateSection));
-        /// <summary>
-        /// Gets or sets the value where the section ends
-        /// </summary>
-        [Obsolete("This property will be removed in future versions, instead use Value and SectionWidth properties")]
-        public double ToValue
-        {
-            get { return (double)GetValue(ToValueProperty); }
-            set { SetValue(ToValueProperty, value); }
-        }
-
-        /// <summary>
-        /// The value property
-        /// </summary>
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value", typeof(double), typeof(AxisSection), new PropertyMetadata(default(double), UpdateSection));
-        /// <summary>
-        /// Gets or sets the value where the section is drawn
-        /// </summary>
-        public double Value
-        {
-            get { return (double) GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
-        }
-
-        /// <summary>
-        /// The section width property
-        /// </summary>
-        public static readonly DependencyProperty SectionWidthProperty = DependencyProperty.Register(
-            "SectionWidth", typeof(double), typeof(AxisSection), new PropertyMetadata(default(double), UpdateSection));
-        /// <summary>
-        /// Gets or sets the section width
-        /// </summary>
-        public double SectionWidth
-        {
-            get { return (double) GetValue(SectionWidthProperty); }
-            set { SetValue(SectionWidthProperty, value); }
-        }
-
-        /// <summary>
-        /// The section offset property
-        /// </summary>
-        public static readonly DependencyProperty SectionOffsetProperty = DependencyProperty.Register(
-            "SectionOffset", typeof(double), typeof(AxisSection), new PropertyMetadata(default(double)));
-        /// <summary>
-        /// Gets or sets the section offset.
-        /// </summary>
-        /// <value>
-        /// The section offset.
-        /// </value>
-        public double SectionOffset
-        {
-            get { return (double) GetValue(SectionOffsetProperty); }
-            set { SetValue(SectionOffsetProperty, value); }
-        }
-
-        /// <summary>
-        /// The stroke property
-        /// </summary>
-        public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register(
-            "Stroke", typeof(Brush), typeof(AxisSection), new PropertyMetadata(default(Brush)));
-        /// <summary>
-        /// Gets o sets the section stroke, the stroke brush will be used to draw the border of the section
-        /// </summary>
-        public Brush Stroke
-        {
-            get { return (Brush)GetValue(StrokeProperty); }
-            set { SetValue(StrokeProperty, value); }
-        }
-
-        /// <summary>
-        /// The fill property
-        /// </summary>
-        public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
-            "Fill", typeof(Brush), typeof(AxisSection), new PropertyMetadata(default(Brush)));
-        /// <summary>
-        /// Gets or sets the section fill brush.
-        /// </summary>
-        public Brush Fill
-        {
-            get { return (Brush)GetValue(FillProperty); }
-            set { SetValue(FillProperty, value); }
-        }
-
-        /// <summary>
-        /// The stroke thickness property
-        /// </summary>
-        public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register(
-            "StrokeThickness", typeof(double), typeof(AxisSection), new PropertyMetadata(default(double)));
-        /// <summary>
-        /// Gets or sets the stroke thickness.
-        /// </summary>
-        public double StrokeThickness
-        {
-            get { return (double)GetValue(StrokeThicknessProperty); }
-            set { SetValue(StrokeThicknessProperty, value); }
-        }
-
-        /// <summary>
-        /// The stroke dash array property
-        /// </summary>
-        public static readonly DependencyProperty StrokeDashArrayProperty = DependencyProperty.Register(
-            "StrokeDashArray", typeof(DoubleCollection), typeof(AxisSection), new PropertyMetadata(default(DoubleCollection)));
-        /// <summary>
-        /// Gets or sets the stroke dash array collection, use this property to create dashed stroke sections
-        /// </summary>
-        public DoubleCollection StrokeDashArray
-        {
-            get { return (DoubleCollection)GetValue(StrokeDashArrayProperty); }
-            set { SetValue(StrokeDashArrayProperty, value); }
-        }
-
-        /// <summary>
-        /// The draggable property
-        /// </summary>
-        public static readonly DependencyProperty DraggableProperty = DependencyProperty.Register(
-            "Draggable", typeof(bool), typeof(AxisSection), new PropertyMetadata(default(bool)));
-        /// <summary>
-        /// Gets or sets if a user can drag the section
-        /// </summary>
-        public bool Draggable
-        {
-            get { return (bool) GetValue(DraggableProperty); }
-            set { SetValue(DraggableProperty, value); }
-        }
-
-        /// <summary>
-        /// The disable animations property
-        /// </summary>
-        public static readonly DependencyProperty DisableAnimationsProperty = DependencyProperty.Register(
-            "DisableAnimations", typeof(bool), typeof(AxisSection), new PropertyMetadata(default(bool)));
-        /// <summary>
-        /// Gets or sets a value indicating whether the section is animated
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if [disable animations]; otherwise, <c>false</c>.
-        /// </value>
-        public bool DisableAnimations
-        {
-            get { return (bool) GetValue(DisableAnimationsProperty); }
-            set { SetValue(DisableAnimationsProperty, value); }
-        }
-
-        /// <summary>
-        /// The data label property
-        /// </summary>
-        public static readonly DependencyProperty DataLabelProperty = DependencyProperty.Register(
-            "DataLabel", typeof(bool), typeof(AxisSection), new PropertyMetadata(default(bool)));
-        /// <summary>
-        /// Gets or sets a value indicating whether the section should display a label that displays its current value.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if [data label]; otherwise, <c>false</c>.
-        /// </value>
-        public bool DataLabel
-        {
-            get { return (bool) GetValue(DataLabelProperty); }
-            set { SetValue(DataLabelProperty, value); }
-        }
-
-        /// <summary>
-        /// The data label brush property
-        /// </summary>
-        public static readonly DependencyProperty DataLabelForegroundProperty = DependencyProperty.Register(
-            "DataLabelForeground", typeof(Brush), typeof(AxisSection), new PropertyMetadata(default(Brush)));
-        /// <summary>
-        /// Gets or sets the data label brush.
-        /// </summary>
-        /// <value>
-        /// The label brush.
-        /// </value>
-        public Brush DataLabelForeground
-        {
-            get { return (Brush) GetValue(DataLabelForegroundProperty); }
-            set { SetValue(DataLabelForegroundProperty, value); }
-        }
-        #endregion
-
-        /// <summary>
-        /// Draws the or move.
+        ///     Draws the or move.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="axis">The axis.</param>
@@ -315,17 +100,22 @@ namespace FactoryWindowGUI.ChartUtil
                 _rectangle.Width = 0;
                 Canvas.SetLeft(_rectangle, 0d);
                 Canvas.SetTop(_rectangle, Model.Chart.DrawMargin.Height);
+
                 #region Obsolete
+
                 Canvas.SetTop(_label, Model.Chart.DrawMargin.Height);
                 Canvas.SetLeft(_label, 0d);
+
                 #endregion
             }
 
-            #pragma warning disable 618
-            var from = ChartFunctions.ToDrawMargin(double.IsNaN(FromValue) ? Value + SectionOffset : FromValue, source, Model.Chart, axis) + uw;
+#pragma warning disable 618
+            var from = ChartFunctions.ToDrawMargin(double.IsNaN(FromValue) ? Value + SectionOffset : FromValue, source,
+                Model.Chart, axis) + uw;
 #pragma warning restore 618
 #pragma warning disable 618
-            var to = ChartFunctions.ToDrawMargin(double.IsNaN(ToValue) ? Value  + SectionOffset + SectionWidth : ToValue, source, Model.Chart, axis) + uw;
+            var to = ChartFunctions.ToDrawMargin(double.IsNaN(ToValue) ? Value + SectionOffset + SectionWidth : ToValue,
+                source, Model.Chart, axis) + uw;
 #pragma warning restore 618
 
             if (from > to)
@@ -356,7 +146,7 @@ namespace FactoryWindowGUI.ChartUtil
                 if (Model.Chart.View.DisableAnimations || DisableAnimations)
                 {
                     _rectangle.Width = w > 0 ? w : 0;
-                    Canvas.SetLeft(_rectangle, from - StrokeThickness/2);
+                    Canvas.SetLeft(_rectangle, from - StrokeThickness / 2);
                 }
                 else
                 {
@@ -364,6 +154,7 @@ namespace FactoryWindowGUI.ChartUtil
                     _rectangle.BeginAnimation(Canvas.LeftProperty,
                         new DoubleAnimation(from - StrokeThickness / 2, anSpeed));
                 }
+
                 return;
             }
 
@@ -375,7 +166,7 @@ namespace FactoryWindowGUI.ChartUtil
 
             if (Model.Chart.View.DisableAnimations || DisableAnimations)
             {
-                Canvas.SetTop(_rectangle, from - StrokeThickness/2);
+                Canvas.SetTop(_rectangle, from - StrokeThickness / 2);
                 _rectangle.Height = h > 0 ? h : 0;
             }
             else
@@ -386,7 +177,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Removes this instance.
+        ///     Removes this instance.
         /// </summary>
         public void Remove()
         {
@@ -397,7 +188,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Ases the core element.
+        ///     Ases the core element.
         /// </summary>
         /// <param name="axis">The axis.</param>
         /// <param name="source">The source.</param>
@@ -409,7 +200,8 @@ namespace FactoryWindowGUI.ChartUtil
             return model;
         }
 
-        private static void UpdateSection(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void UpdateSection(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var section = (AxisSection) dependencyObject;
 
@@ -443,7 +235,9 @@ namespace FactoryWindowGUI.ChartUtil
 
             var direction = source == AxisOrientation.X ? 1 : -1;
 
-            toLine += axis.EvaluatesUnitWidth ? direction * ChartFunctions.GetUnitWidth(source, Model.Chart, axis) / 2 : 0;
+            toLine += axis.EvaluatesUnitWidth
+                ? direction * ChartFunctions.GetUnitWidth(source, Model.Chart, axis) / 2
+                : 0;
             var toLabel = toLine + transform.GetOffsetBySource(source);
 
             var chart = Model.Chart;
@@ -499,7 +293,247 @@ namespace FactoryWindowGUI.ChartUtil
                 _label.BeginAnimation(Canvas.TopProperty,
                     new DoubleAnimation(labelTab, chart.View.AnimationsSpeed));
             }
-
         }
+
+        #region Properties
+
+        /// <summary>
+        ///     Gets or sets the model.
+        /// </summary>
+        /// <value>
+        ///     The model.
+        /// </value>
+        public AxisSectionCore Model { get; set; }
+
+        /// <summary>
+        ///     The label property
+        /// </summary>
+        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(
+            "Label", typeof(string), typeof(AxisSection), new PropertyMetadata(default(string)));
+
+        /// <summary>
+        ///     Gets or sets the name, the title of the section, a visual element will be added to the chart if this property is
+        ///     not null.
+        /// </summary>
+        [Obsolete("Use a VisualElement instead")]
+        public string Label
+        {
+            get { return (string) GetValue(LabelProperty); }
+            set { SetValue(LabelProperty, value); }
+        }
+
+        /// <summary>
+        ///     From value property
+        /// </summary>
+        public static readonly DependencyProperty FromValueProperty = DependencyProperty.Register(
+            "FromValue", typeof(double), typeof(AxisSection),
+            new PropertyMetadata(double.NaN, UpdateSection));
+
+        /// <summary>
+        ///     Gets or sets the value where the section starts
+        /// </summary>
+        [Obsolete("This property will be removed in future versions, instead use Value and SectionWidth properties")]
+        public double FromValue
+        {
+            get { return (double) GetValue(FromValueProperty); }
+            set { SetValue(FromValueProperty, value); }
+        }
+
+        /// <summary>
+        ///     To value property
+        /// </summary>
+        public static readonly DependencyProperty ToValueProperty = DependencyProperty.Register(
+            "ToValue", typeof(double), typeof(AxisSection),
+            new PropertyMetadata(double.NaN, UpdateSection));
+
+        /// <summary>
+        ///     Gets or sets the value where the section ends
+        /// </summary>
+        [Obsolete("This property will be removed in future versions, instead use Value and SectionWidth properties")]
+        public double ToValue
+        {
+            get { return (double) GetValue(ToValueProperty); }
+            set { SetValue(ToValueProperty, value); }
+        }
+
+        /// <summary>
+        ///     The value property
+        /// </summary>
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
+            "Value", typeof(double), typeof(AxisSection), new PropertyMetadata(default(double), UpdateSection));
+
+        /// <summary>
+        ///     Gets or sets the value where the section is drawn
+        /// </summary>
+        public double Value
+        {
+            get { return (double) GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
+
+        /// <summary>
+        ///     The section width property
+        /// </summary>
+        public static readonly DependencyProperty SectionWidthProperty = DependencyProperty.Register(
+            "SectionWidth", typeof(double), typeof(AxisSection), new PropertyMetadata(default(double), UpdateSection));
+
+        /// <summary>
+        ///     Gets or sets the section width
+        /// </summary>
+        public double SectionWidth
+        {
+            get { return (double) GetValue(SectionWidthProperty); }
+            set { SetValue(SectionWidthProperty, value); }
+        }
+
+        /// <summary>
+        ///     The section offset property
+        /// </summary>
+        public static readonly DependencyProperty SectionOffsetProperty = DependencyProperty.Register(
+            "SectionOffset", typeof(double), typeof(AxisSection), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        ///     Gets or sets the section offset.
+        /// </summary>
+        /// <value>
+        ///     The section offset.
+        /// </value>
+        public double SectionOffset
+        {
+            get { return (double) GetValue(SectionOffsetProperty); }
+            set { SetValue(SectionOffsetProperty, value); }
+        }
+
+        /// <summary>
+        ///     The stroke property
+        /// </summary>
+        public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register(
+            "Stroke", typeof(Brush), typeof(AxisSection), new PropertyMetadata(default(Brush)));
+
+        /// <summary>
+        ///     Gets o sets the section stroke, the stroke brush will be used to draw the border of the section
+        /// </summary>
+        public Brush Stroke
+        {
+            get { return (Brush) GetValue(StrokeProperty); }
+            set { SetValue(StrokeProperty, value); }
+        }
+
+        /// <summary>
+        ///     The fill property
+        /// </summary>
+        public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
+            "Fill", typeof(Brush), typeof(AxisSection), new PropertyMetadata(default(Brush)));
+
+        /// <summary>
+        ///     Gets or sets the section fill brush.
+        /// </summary>
+        public Brush Fill
+        {
+            get { return (Brush) GetValue(FillProperty); }
+            set { SetValue(FillProperty, value); }
+        }
+
+        /// <summary>
+        ///     The stroke thickness property
+        /// </summary>
+        public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register(
+            "StrokeThickness", typeof(double), typeof(AxisSection), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        ///     Gets or sets the stroke thickness.
+        /// </summary>
+        public double StrokeThickness
+        {
+            get { return (double) GetValue(StrokeThicknessProperty); }
+            set { SetValue(StrokeThicknessProperty, value); }
+        }
+
+        /// <summary>
+        ///     The stroke dash array property
+        /// </summary>
+        public static readonly DependencyProperty StrokeDashArrayProperty = DependencyProperty.Register(
+            "StrokeDashArray", typeof(DoubleCollection), typeof(AxisSection),
+            new PropertyMetadata(default(DoubleCollection)));
+
+        /// <summary>
+        ///     Gets or sets the stroke dash array collection, use this property to create dashed stroke sections
+        /// </summary>
+        public DoubleCollection StrokeDashArray
+        {
+            get { return (DoubleCollection) GetValue(StrokeDashArrayProperty); }
+            set { SetValue(StrokeDashArrayProperty, value); }
+        }
+
+        /// <summary>
+        ///     The draggable property
+        /// </summary>
+        public static readonly DependencyProperty DraggableProperty = DependencyProperty.Register(
+            "Draggable", typeof(bool), typeof(AxisSection), new PropertyMetadata(default(bool)));
+
+        /// <summary>
+        ///     Gets or sets if a user can drag the section
+        /// </summary>
+        public bool Draggable
+        {
+            get { return (bool) GetValue(DraggableProperty); }
+            set { SetValue(DraggableProperty, value); }
+        }
+
+        /// <summary>
+        ///     The disable animations property
+        /// </summary>
+        public static readonly DependencyProperty DisableAnimationsProperty = DependencyProperty.Register(
+            "DisableAnimations", typeof(bool), typeof(AxisSection), new PropertyMetadata(default(bool)));
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the section is animated
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if [disable animations]; otherwise, <c>false</c>.
+        /// </value>
+        public bool DisableAnimations
+        {
+            get { return (bool) GetValue(DisableAnimationsProperty); }
+            set { SetValue(DisableAnimationsProperty, value); }
+        }
+
+        /// <summary>
+        ///     The data label property
+        /// </summary>
+        public static readonly DependencyProperty DataLabelProperty = DependencyProperty.Register(
+            "DataLabel", typeof(bool), typeof(AxisSection), new PropertyMetadata(default(bool)));
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the section should display a label that displays its current value.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if [data label]; otherwise, <c>false</c>.
+        /// </value>
+        public bool DataLabel
+        {
+            get { return (bool) GetValue(DataLabelProperty); }
+            set { SetValue(DataLabelProperty, value); }
+        }
+
+        /// <summary>
+        ///     The data label brush property
+        /// </summary>
+        public static readonly DependencyProperty DataLabelForegroundProperty = DependencyProperty.Register(
+            "DataLabelForeground", typeof(Brush), typeof(AxisSection), new PropertyMetadata(default(Brush)));
+
+        /// <summary>
+        ///     Gets or sets the data label brush.
+        /// </summary>
+        /// <value>
+        ///     The label brush.
+        /// </value>
+        public Brush DataLabelForeground
+        {
+            get { return (Brush) GetValue(DataLabelForegroundProperty); }
+            set { SetValue(DataLabelForegroundProperty, value); }
+        }
+
+        #endregion
     }
 }

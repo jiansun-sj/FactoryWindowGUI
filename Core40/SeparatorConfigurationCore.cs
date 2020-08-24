@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：SeparatorConfigurationCore.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,12 +31,11 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     public class SeparatorConfigurationCore
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SeparatorConfigurationCore"/> class.
+        ///     Initializes a new instance of the <see cref="SeparatorConfigurationCore" /> class.
         /// </summary>
         /// <param name="axis">The axis.</param>
         public SeparatorConfigurationCore(AxisCore axis)
@@ -37,27 +44,28 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Gets or sets the axis.
+        ///     Gets or sets the axis.
         /// </summary>
         /// <value>
-        /// The axis.
+        ///     The axis.
         /// </value>
         public AxisCore Axis { get; set; }
 
         /// <summary>
-        /// Gets or sets if separators are enabled (will be drawn)
+        ///     Gets or sets if separators are enabled (will be drawn)
         /// </summary>
         public bool IsEnabled { get; set; }
+
         /// <summary>
-        /// Gets or sets sepator step, this means the value between each line, use null for auto.
+        ///     Gets or sets sepator step, this means the value between each line, use null for auto.
         /// </summary>
         public double Step { get; set; }
 
         /// <summary>
-        /// Gets or sets the source.
+        ///     Gets or sets the source.
         /// </summary>
         /// <value>
-        /// The source.
+        ///     The source.
         /// </value>
         public AxisOrientation Source { get; set; }
     }

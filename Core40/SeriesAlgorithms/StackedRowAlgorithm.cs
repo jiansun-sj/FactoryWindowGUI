@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：StackedRowAlgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -21,24 +29,24 @@
 //SOFTWARE.
 
 using System;
+using System.Linq;
 using LiveCharts.Defaults;
 using LiveCharts.Definitions.Points;
 using LiveCharts.Definitions.Series;
 using LiveCharts.Dtos;
-using System.Linq;
 
 namespace LiveCharts.SeriesAlgorithms
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.SeriesAlgorithm" />
     /// <seealso cref="LiveCharts.Definitions.Series.ICartesianSeries" />
     public class StackedRowAlgorithm : SeriesAlgorithm, ICartesianSeries
     {
         private readonly IStackModelableSeriesView _stackModelable;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="StackedRowAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="StackedRowAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public StackedRowAlgorithm(ISeriesView view) : base(view)
@@ -48,8 +56,28 @@ namespace LiveCharts.SeriesAlgorithms
             PreferredSelectionMode = TooltipSelectionMode.SharedYValues;
         }
 
+        double ICartesianSeries.GetMinX(AxisCore axis)
+        {
+            return double.MaxValue;
+        }
+
+        double ICartesianSeries.GetMaxX(AxisCore axis)
+        {
+            return double.MinValue;
+        }
+
+        double ICartesianSeries.GetMinY(AxisCore axis)
+        {
+            return AxisLimits.StretchMin(axis);
+        }
+
+        double ICartesianSeries.GetMaxY(AxisCore axis)
+        {
+            return AxisLimits.UnitRight(axis);
+        }
+
         /// <summary>
-        /// Updates this instance.
+        ///     Updates this instance.
         /// </summary>
         public override void Update()
         {
@@ -58,7 +86,8 @@ namespace LiveCharts.SeriesAlgorithms
             var padding = castedSeries.RowPadding;
 
             var totalSpace = ChartFunctions.GetUnitWidth(AxisOrientation.Y, Chart, View.ScalesYAt) - padding;
-            var groups = Chart.View.ActualSeries.Select(s => (s as IGroupedStackedSeriesView)?.Grouping).Distinct().ToList();
+            var groups = Chart.View.ActualSeries.Select(s => (s as IGroupedStackedSeriesView)?.Grouping).Distinct()
+                .ToList();
             var singleColHeigth = totalSpace / groups.Count();
 
             double exceed = 0;
@@ -70,31 +99,34 @@ namespace LiveCharts.SeriesAlgorithms
                 singleColHeigth = castedSeries.MaxRowHeight;
             }
 
-            var relativeTop = padding + exceed + singleColHeigth * (seriesPosition);
+            var relativeTop = padding + exceed + singleColHeigth * seriesPosition;
 
             var startAt = CurrentXAxis.FirstSeparator >= 0 && CurrentXAxis.LastSeparator > 0
                 ? CurrentXAxis.FirstSeparator
-                : (CurrentXAxis.FirstSeparator < 0 && CurrentXAxis.LastSeparator <= 0
+                : CurrentXAxis.FirstSeparator < 0 && CurrentXAxis.LastSeparator <= 0
                     ? CurrentXAxis.LastSeparator
-                    : 0);
+                    : 0;
 
             var zero = ChartFunctions.ToDrawMargin(startAt, AxisOrientation.X, Chart, View.ScalesXAt);
 
             foreach (var chartPoint in View.ActualValues.GetPoints(View))
             {
-                var y = ChartFunctions.ToDrawMargin(chartPoint.Y, AxisOrientation.Y, Chart, View.ScalesYAt) - ChartFunctions.GetUnitWidth(AxisOrientation.Y, Chart, View.ScalesYAt);
+                var y = ChartFunctions.ToDrawMargin(chartPoint.Y, AxisOrientation.Y, Chart, View.ScalesYAt) -
+                        ChartFunctions.GetUnitWidth(AxisOrientation.Y, Chart, View.ScalesYAt);
                 var from = _stackModelable.StackMode == StackMode.Values
                     ? ChartFunctions.ToDrawMargin(chartPoint.From, AxisOrientation.X, Chart, View.ScalesXAt)
-                    : ChartFunctions.ToDrawMargin(chartPoint.From/chartPoint.Sum, AxisOrientation.X, Chart, View.ScalesXAt);
+                    : ChartFunctions.ToDrawMargin(chartPoint.From / chartPoint.Sum, AxisOrientation.X, Chart,
+                        View.ScalesXAt);
                 var to = _stackModelable.StackMode == StackMode.Values
                     ? ChartFunctions.ToDrawMargin(chartPoint.To, AxisOrientation.X, Chart, View.ScalesXAt)
-                    : ChartFunctions.ToDrawMargin(chartPoint.To/chartPoint.Sum, AxisOrientation.X, Chart, View.ScalesXAt);
+                    : ChartFunctions.ToDrawMargin(chartPoint.To / chartPoint.Sum, AxisOrientation.X, Chart,
+                        View.ScalesXAt);
 
                 chartPoint.View = View.GetPointView(chartPoint,
                     View.DataLabels
-                        ? (chartPoint.Participation > 0.05
+                        ? chartPoint.Participation > 0.05
                             ? View.GetLabelPointFormatter()(chartPoint)
-                            : string.Empty)
+                            : string.Empty
                         : null);
 
                 chartPoint.SeriesView = View;
@@ -119,26 +151,6 @@ namespace LiveCharts.SeriesAlgorithms
 
                 chartPoint.View.DrawOrMove(null, chartPoint, 0, Chart);
             }
-        }
-
-        double ICartesianSeries.GetMinX(AxisCore axis)
-        {
-            return double.MaxValue;
-        }
-
-        double ICartesianSeries.GetMaxX(AxisCore axis)
-        {
-            return double.MinValue;
-        }
-
-        double ICartesianSeries.GetMinY(AxisCore axis)
-        {
-            return AxisLimits.StretchMin(axis);
-        }
-
-        double ICartesianSeries.GetMaxY(AxisCore axis)
-        {
-            return AxisLimits.UnitRight(axis);
         }
     }
 }

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：Extentions.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -27,12 +35,12 @@ using LiveCharts.Definitions.Series;
 namespace LiveCharts.Helpers
 {
     /// <summary>
-    /// LiveCharts extensions methods
+    ///     LiveCharts extensions methods
     /// </summary>
     public static class Extentions
     {
         /// <summary>
-        /// Executes an Action in every item of a collection
+        ///     Executes an Action in every item of a collection
         /// </summary>
         /// <typeparam name="T">type to iterate with</typeparam>
         /// <param name="source">collection to iterate</param>
@@ -43,7 +51,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Splits a collection of points every double.Nan
+        ///     Splits a collection of points every double.Nan
         /// </summary>
         /// <param name="toSplit">collection to split</param>
         /// <returns>collection of collections</returns>
@@ -53,7 +61,6 @@ namespace LiveCharts.Helpers
             var acum = -1;
 
             foreach (var point in toSplit)
-            {
                 if (double.IsNaN(point.X) || double.IsNaN(point.Y))
                 {
                     yield return l;
@@ -64,13 +71,12 @@ namespace LiveCharts.Helpers
                 {
                     l.Add(point);
                 }
-            }
 
             yield return l;
         }
 
         /// <summary>
-        /// Return the inverse axis orientation
+        ///     Return the inverse axis orientation
         /// </summary>
         /// <param name="axis">current orientation</param>
         /// <returns>inverted axis orientation</returns>
@@ -82,7 +88,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Converts any collection to chart values
+        ///     Converts any collection to chart values
         /// </summary>
         /// <typeparam name="T">type to convert</typeparam>
         /// <param name="values">values to convert</param>
@@ -95,7 +101,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Converts an enumeration of series to a SeriesCollection instance.
+        ///     Converts an enumeration of series to a SeriesCollection instance.
         /// </summary>
         /// <param name="series">The series.</param>
         /// <returns></returns>
@@ -107,7 +113,7 @@ namespace LiveCharts.Helpers
         }
 
         /// <summary>
-        /// Gets the closest chart point with a given value.
+        ///     Gets the closest chart point with a given value.
         /// </summary>
         /// <param name="series">The target series.</param>
         /// <param name="value">The value.</param>

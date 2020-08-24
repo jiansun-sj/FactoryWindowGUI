@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：IPieChart.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,30 +31,31 @@
 namespace LiveCharts.Definitions.Charts
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Charts.IChartView" />
     public interface IPieChart : IChartView
     {
         /// <summary>
-        /// Gets or sets the inner radius.
+        ///     Gets or sets the inner radius.
         /// </summary>
         /// <value>
-        /// The inner radius.
+        ///     The inner radius.
         /// </value>
         double InnerRadius { get; set; }
+
         /// <summary>
-        /// Gets or sets the starting rotation angle.
+        ///     Gets or sets the starting rotation angle.
         /// </summary>
         /// <value>
-        /// The starting rotation angle.
+        ///     The starting rotation angle.
         /// </value>
         double StartingRotationAngle { get; set; }
+
         /// <summary>
-        /// Gets or sets the hover push out.
+        ///     Gets or sets the hover push out.
         /// </summary>
         /// <value>
-        /// The hover push out.
+        ///     The hover push out.
         /// </value>
         double HoverPushOut { get; set; }
     }

@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：IOhlcPointView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,58 +31,63 @@
 namespace LiveCharts.Definitions.Points
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Points.IChartPointView" />
     public interface IOhlcPointView : IChartPointView
     {
         /// <summary>
-        /// Gets or sets the open.
+        ///     Gets or sets the open.
         /// </summary>
         /// <value>
-        /// The open.
+        ///     The open.
         /// </value>
         double Open { get; set; }
+
         /// <summary>
-        /// Gets or sets the high.
+        ///     Gets or sets the high.
         /// </summary>
         /// <value>
-        /// The high.
+        ///     The high.
         /// </value>
         double High { get; set; }
+
         /// <summary>
-        /// Gets or sets the close.
+        ///     Gets or sets the close.
         /// </summary>
         /// <value>
-        /// The close.
+        ///     The close.
         /// </value>
         double Close { get; set; }
+
         /// <summary>
-        /// Gets or sets the low.
+        ///     Gets or sets the low.
         /// </summary>
         /// <value>
-        /// The low.
+        ///     The low.
         /// </value>
         double Low { get; set; }
+
         /// <summary>
-        /// Gets or sets the width.
+        ///     Gets or sets the width.
         /// </summary>
         /// <value>
-        /// The width.
+        ///     The width.
         /// </value>
         double Width { get; set; }
+
         /// <summary>
-        /// Gets or sets the left.
+        ///     Gets or sets the left.
         /// </summary>
         /// <value>
-        /// The left.
+        ///     The left.
         /// </value>
         double Left { get; set; }
+
         /// <summary>
-        /// Gets or sets the start reference.
+        ///     Gets or sets the start reference.
         /// </summary>
         /// <value>
-        /// The start reference.
+        ///     The start reference.
         /// </value>
         double StartReference { get; set; }
     }

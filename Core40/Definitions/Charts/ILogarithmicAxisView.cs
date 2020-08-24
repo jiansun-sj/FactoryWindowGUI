@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：ILogarithmicAxisView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,16 +31,15 @@
 namespace LiveCharts.Definitions.Charts
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Charts.IAxisView" />
     public interface ILogarithmicAxisView : IAxisView
     {
         /// <summary>
-        /// Gets or sets the base.
+        ///     Gets or sets the base.
         /// </summary>
         /// <value>
-        /// The base.
+        ///     The base.
         /// </value>
         double Base { get; set; }
     }

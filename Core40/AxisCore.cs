@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：AxisCore.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -32,16 +40,13 @@ using LiveCharts.Helpers;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     public class AxisCore
     {
-        private double _topLimit;
-
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AxisCore"/> class.
+        ///     Initializes a new instance of the <see cref="AxisCore" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public AxisCore(IAxisView view)
@@ -55,128 +60,159 @@ namespace LiveCharts
 
         #endregion
 
+        #region Protected Methods
+
+        /// <summary>
+        ///     Initializes the garbage collector.
+        /// </summary>
+        protected void InitializeGarbageCollector()
+        {
+            if (GarbageCollectorIndex == int.MaxValue)
+            {
+                foreach (var value in Cache.Values) value.GarbageCollectorIndex = 0;
+                GarbageCollectorIndex = 0;
+            }
+
+            GarbageCollectorIndex++;
+        }
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the chart.
+        ///     Gets or sets the chart.
         /// </summary>
         /// <value>
-        /// The chart.
+        ///     The chart.
         /// </value>
         public ChartCore Chart { get; set; }
+
         /// <summary>
-        /// Gets or sets the view.
+        ///     Gets or sets the view.
         /// </summary>
         /// <value>
-        /// The view.
+        ///     The view.
         /// </value>
         public IAxisView View { get; set; }
+
         /// <summary>
-        /// Gets or sets the labels.
+        ///     Gets or sets the labels.
         /// </summary>
         /// <value>
-        /// The labels.
+        ///     The labels.
         /// </value>
         public IList<string> Labels { get; set; }
+
         /// <summary>
-        /// Gets or sets the sections.
+        ///     Gets or sets the sections.
         /// </summary>
         /// <value>
-        /// The sections.
+        ///     The sections.
         /// </value>
         public List<AxisSectionCore> Sections { get; set; }
+
         /// <summary>
-        /// Gets or sets the label formatter.
+        ///     Gets or sets the label formatter.
         /// </summary>
         /// <value>
-        /// The label formatter.
+        ///     The label formatter.
         /// </value>
         public Func<double, string> LabelFormatter { get; set; }
+
         /// <summary>
-        /// Gets or sets the stroke thickness.
+        ///     Gets or sets the stroke thickness.
         /// </summary>
         /// <value>
-        /// The stroke thickness.
+        ///     The stroke thickness.
         /// </value>
         public double StrokeThickness { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether [show labels].
+        ///     Gets or sets a value indicating whether [show labels].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [show labels]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [show labels]; otherwise, <c>false</c>.
         /// </value>
         public bool ShowLabels { get; set; }
+
         /// <summary>
-        /// Gets or sets the maximum value.
+        ///     Gets or sets the maximum value.
         /// </summary>
         /// <value>
-        /// The maximum value.
+        ///     The maximum value.
         /// </value>
         public double MaxValue { get; set; }
+
         /// <summary>
-        /// Gets or sets the minimum value.
+        ///     Gets or sets the minimum value.
         /// </summary>
         /// <value>
-        /// The minimum value.
+        ///     The minimum value.
         /// </value>
         public double MinValue { get; set; }
+
         /// <summary>
-        /// Gets or sets the title.
+        ///     Gets or sets the title.
         /// </summary>
         /// <value>
-        /// The title.
+        ///     The title.
         /// </value>
         public string Title { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether [disable animations].
+        ///     Gets or sets a value indicating whether [disable animations].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [disable animations]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [disable animations]; otherwise, <c>false</c>.
         /// </value>
         public bool DisableAnimations { get; set; }
+
         /// <summary>
-        /// Gets or sets the position.
+        ///     Gets or sets the position.
         /// </summary>
         /// <value>
-        /// The position.
+        ///     The position.
         /// </value>
         public AxisPosition Position { get; set; }
+
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is merged.
+        ///     Gets or sets a value indicating whether this instance is merged.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this instance is merged; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is merged; otherwise, <c>false</c>.
         /// </value>
         public bool IsMerged { get; set; }
+
         /// <summary>
-        /// Gets a value indicating whether [evaluates unit width].
+        ///     Gets a value indicating whether [evaluates unit width].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [evaluates unit width]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [evaluates unit width]; otherwise, <c>false</c>.
         /// </value>
         public bool EvaluatesUnitWidth { get; internal set; }
+
         /// <summary>
-        /// Gets the current separators.
+        ///     Gets the current separators.
         /// </summary>
         /// <value>
-        /// The current separators.
+        ///     The current separators.
         /// </value>
-        public IEnumerable<SeparatorElementCore> CurrentSeparators
-        {
-            get { return Cache.Values; }
-        }
+        public IEnumerable<SeparatorElementCore> CurrentSeparators => Cache.Values;
+
         /// <summary>
-        /// Gets or sets the separator.
+        ///     Gets or sets the separator.
         /// </summary>
         /// <value>
-        /// The separator.
+        ///     The separator.
         /// </value>
         public SeparatorConfigurationCore Separator { get; set; }
+
         /// <summary>
-        /// Gets the s.
+        ///     Gets the s.
         /// </summary>
         /// <value>
-        /// The s.
+        ///     The s.
         /// </value>
         public double S { get; internal set; }
 
@@ -186,14 +222,7 @@ namespace LiveCharts
 
         public double Tab { get; set; }
 
-        public double TopLimit
-        {
-            get { return _topLimit; }
-            set
-            {
-                _topLimit = value;
-            }
-        }
+        public double TopLimit { get; set; }
 
         public double BotLimit { get; set; }
         internal double TopSeriesLimit { get; set; }
@@ -214,8 +243,9 @@ namespace LiveCharts
         #endregion
 
         #region Public Methods
+
         /// <summary>
-        /// Gets the formatter.
+        ///     Gets the formatter.
         /// </summary>
         /// <returns></returns>
         public virtual Func<double, string> GetFormatter()
@@ -224,14 +254,11 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Clears the separators.
+        ///     Clears the separators.
         /// </summary>
         public void ClearSeparators()
         {
-            foreach (var separator in Cache)
-            {
-                separator.Value.View.Clear(Chart.View);
-            }
+            foreach (var separator in Cache) separator.Value.View.Clear(Chart.View);
             Cache = new Dictionary<double, SeparatorElementCore>();
         }
 
@@ -246,7 +273,8 @@ namespace LiveCharts
 
             //ToDO: Improve this according to current labels!
             var separations = source == AxisOrientation.Y
-                ? Math.Round(chart.ControlSize.Height / ((12) * CleanFactor), 0) // at least 3 font 12 labels per separator.
+                ? Math.Round(chart.ControlSize.Height / (12 * CleanFactor),
+                    0) // at least 3 font 12 labels per separator.
                 : Math.Round(chart.ControlSize.Width / (50 * CleanFactor), 0); // at least 150 pixels per separator.
 
             separations = separations < 2 ? 2 : separations;
@@ -291,15 +319,15 @@ namespace LiveCharts
 
             var m = !double.IsNaN(View.BarUnit)
                 ? View.BarUnit
-                : (!double.IsNaN(View.Unit)
+                : !double.IsNaN(View.Unit)
                     ? View.Unit
-                    : Magnitude);
+                    : Magnitude;
 
             var u = !double.IsNaN(View.BarUnit)
                 ? View.BarUnit
-                : (!double.IsNaN(View.Unit)
+                : !double.IsNaN(View.Unit)
                     ? View.Unit
-                    : 1);
+                    : 1;
 
             if (TopLimit <= 0 && BotLimit < 0)
             {
@@ -317,7 +345,7 @@ namespace LiveCharts
                 FirstSeparator = l;
                 for (var i = l; i <= TopLimit - (EvaluatesUnitWidth ? u : 0); i += S)
                 {
-                     LastSeparator = i;
+                    LastSeparator = i;
                     DrawSeparator(i, tolerance, currentMargin, f, source);
                 }
             }
@@ -375,6 +403,7 @@ namespace LiveCharts
                         {
                             element.View.Remove(chart);
                         }
+
                         break;
                     case SeparationState.Keep:
                         if (!chart.View.DisableAnimations && !View.DisableAnimations)
@@ -382,18 +411,23 @@ namespace LiveCharts
                             if (element.IsNew)
                             {
                                 var toLinePrevious = FromPreviousState(element.Value, source, chart);
-                                toLinePrevious += EvaluatesUnitWidth ? ChartFunctions.GetUnitWidth(source, chart, this) / 2 : 0;
-                                var toLabelPrevious = toLinePrevious + element.View.LabelModel.GetOffsetBySource(source);
+                                toLinePrevious += EvaluatesUnitWidth
+                                    ? ChartFunctions.GetUnitWidth(source, chart, this) / 2
+                                    : 0;
+                                var toLabelPrevious =
+                                    toLinePrevious + element.View.LabelModel.GetOffsetBySource(source);
                                 element.View.Place(chart, this, source, axisIndex, toLabelPrevious,
                                     toLinePrevious, labelTab);
                                 element.View.FadeIn(this, chart);
                             }
+
                             element.View.Move(chart, this, source, axisIndex, toLabel, toLine, labelTab);
                         }
                         else
                         {
                             element.View.Place(chart, this, source, axisIndex, toLabel, toLine, labelTab);
                         }
+
                         break;
                     case SeparationState.InitialAdd:
                         element.View.Place(chart, this, source, axisIndex, toLabel, toLine, labelTab);
@@ -443,38 +477,19 @@ namespace LiveCharts
 
         #endregion
 
-        #region Protected Methods
-
-        /// <summary>
-        /// Initializes the garbage collector.
-        /// </summary>
-        protected void InitializeGarbageCollector()
-        {
-            if (GarbageCollectorIndex == int.MaxValue)
-            {
-                foreach (var value in Cache.Values)
-                {
-                    value.GarbageCollectorIndex = 0;
-                }
-                GarbageCollectorIndex = 0;
-            }
-
-            GarbageCollectorIndex++;
-        }
-        #endregion
-
         #region Private Methods
 
-        private void DrawSeparator(double i, double tolerance, CoreMargin currentMargin, Func<double, string> f, AxisOrientation source)
+        private void DrawSeparator(double i, double tolerance, CoreMargin currentMargin, Func<double, string> f,
+            AxisOrientation source)
         {
             if (i < BotLimit) return;
-           
+
             SeparatorElementCore asc;
 
             var key = Math.Round(i / tolerance) * tolerance;
             if (!Cache.TryGetValue(key, out asc))
             {
-                asc = new SeparatorElementCore { IsNew = true };
+                asc = new SeparatorElementCore {IsNew = true};
                 Cache[key] = asc;
             }
             else
@@ -523,15 +538,13 @@ namespace LiveCharts
         private string Formatter(double x)
         {
             if (Labels == null)
-            {
                 return LabelFormatter == null
                     ? x.ToString(CultureInfo.InvariantCulture)
                     : LabelFormatter(x);
-            }
 
             if (x < 0) x *= -1;
             return Labels.Count > x && x >= 0
-                ? Labels[(int)x]
+                ? Labels[(int) x]
                 : "";
         }
 

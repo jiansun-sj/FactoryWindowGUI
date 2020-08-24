@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：PreviewRangeChangedEventArgs.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,23 +31,21 @@
 namespace LiveCharts.Events
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Events.RangeChangedEventArgs" />
     public class PreviewRangeChangedEventArgs : RangeChangedEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PreviewRangeChangedEventArgs"/> class.
+        ///     Initializes a new instance of the <see cref="PreviewRangeChangedEventArgs" /> class.
         /// </summary>
         public PreviewRangeChangedEventArgs()
         {
-            
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PreviewRangeChangedEventArgs"/> class.
+        ///     Initializes a new instance of the <see cref="PreviewRangeChangedEventArgs" /> class.
         /// </summary>
-        /// <param name="args">The <see cref="RangeChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="args">The <see cref="RangeChangedEventArgs" /> instance containing the event data.</param>
         public PreviewRangeChangedEventArgs(RangeChangedEventArgs args)
         {
             LeftLimitChange = args.LeftLimitChange;
@@ -49,24 +55,26 @@ namespace LiveCharts.Events
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the axis change was canceled by the user.
+        ///     Gets or sets a value indicating whether the axis change was canceled by the user.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if cancel; otherwise, <c>false</c>.
+        ///     <c>true</c> if cancel; otherwise, <c>false</c>.
         /// </value>
         public bool Cancel { get; set; }
+
         /// <summary>
-        /// Gets the preview minimum value.
+        ///     Gets the preview minimum value.
         /// </summary>
         /// <value>
-        /// The preview minimum value.
+        ///     The preview minimum value.
         /// </value>
         public double PreviewMinValue { get; set; }
+
         /// <summary>
-        /// Gets the preview maximum value.
+        ///     Gets the preview maximum value.
         /// </summary>
         /// <value>
-        /// The preview maximum value.
+        ///     The preview maximum value.
         /// </value>
         public double PreviewMaxValue { get; set; }
     }

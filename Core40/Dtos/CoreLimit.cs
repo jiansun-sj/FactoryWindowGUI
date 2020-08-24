@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：CoreLimit.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,12 +31,12 @@
 namespace LiveCharts.Dtos
 {
     /// <summary>
-    /// Defines a portable limit
+    ///     Defines a portable limit
     /// </summary>
     public struct CoreLimit
     {
         /// <summary>
-        /// Initializes a new instance of CoreLimit
+        ///     Initializes a new instance of CoreLimit
         /// </summary>
         /// <param name="min">minimum value</param>
         /// <param name="max">maximum value</param>
@@ -39,16 +47,18 @@ namespace LiveCharts.Dtos
         }
 
         /// <summary>
-        /// Gets or sets the maximum value
+        ///     Gets or sets the maximum value
         /// </summary>
         public double Max { get; set; }
+
         /// <summary>
-        /// Gets or sets the minimum value
+        ///     Gets or sets the minimum value
         /// </summary>
         public double Min { get; set; }
+
         /// <summary>
-        /// Gets the range between max and min values
+        ///     Gets the range between max and min values
         /// </summary>
-        public double Range { get { return Max - Min; } }
+        public double Range => Max - Min;
     }
 }

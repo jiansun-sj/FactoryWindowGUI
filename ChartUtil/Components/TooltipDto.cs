@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：TooltipDto.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,51 +34,55 @@ using LiveCharts;
 namespace FactoryWindowGUI.ChartUtil.Components
 {
     /// <summary>
-    /// A tooltip element data transfer object
+    ///     A tooltip element data transfer object
     /// </summary>
     public class TooltipDto
     {
         /// <summary>
-        /// Gets or sets the series.
+        ///     Gets or sets the series.
         /// </summary>
         /// <value>
-        /// The series.
+        ///     The series.
         /// </value>
         public Series Series { get; set; }
 
         /// <summary>
-        /// Gets or sets the index.
+        ///     Gets or sets the index.
         /// </summary>
         /// <value>
-        /// The index.
+        ///     The index.
         /// </value>
         public int Index { get; set; }
+
         /// <summary>
-        /// Gets or sets the stroke.
+        ///     Gets or sets the stroke.
         /// </summary>
         /// <value>
-        /// The stroke.
+        ///     The stroke.
         /// </value>
         public Brush Stroke { get; set; }
+
         /// <summary>
-        /// Gets or sets the fill.
+        ///     Gets or sets the fill.
         /// </summary>
         /// <value>
-        /// The fill.
+        ///     The fill.
         /// </value>
         public Brush Fill { get; set; }
+
         /// <summary>
-        /// Gets or sets the point.
+        ///     Gets or sets the point.
         /// </summary>
         /// <value>
-        /// The point.
+        ///     The point.
         /// </value>
         public ChartPoint Point { get; set; }
+
         /// <summary>
-        /// Gets or sets the value.
+        ///     Gets or sets the value.
         /// </summary>
         /// <value>
-        /// The value.
+        ///     The value.
         /// </value>
         public string Value { get; set; }
     }

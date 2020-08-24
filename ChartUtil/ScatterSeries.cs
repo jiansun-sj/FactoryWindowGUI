@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ScatterSeries.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -35,86 +43,28 @@ using LiveCharts.SeriesAlgorithms;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The Bubble series, draws scatter series, only using X and Y properties or bubble series, if you also use the weight property, this series should be used in a cartesian chart.
+    ///     The Bubble series, draws scatter series, only using X and Y properties or bubble series, if you also use the weight
+    ///     property, this series should be used in a cartesian chart.
     /// </summary>
     public class ScatterSeries : Series, IScatterSeriesView, IAreaPoint
     {
-        #region Constructors
-        /// <summary>
-        /// Initializes a new instance of BubbleSeries class
-        /// </summary>
-        public ScatterSeries()
-        {
-            Model = new ScatterAlgorithm(this);
-            InitializeDefuaults();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of BubbleSeries class using a given mapper
-        /// </summary>
-        /// <param name="configuration"></param>
-        public ScatterSeries(object configuration)
-        {
-            Model = new ScatterAlgorithm(this);
-            Configuration = configuration;
-            InitializeDefuaults();
-        }
-
-        #endregion
-
-        #region Private Properties
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// The maximum point shape diameter property
-        /// </summary>
-        public static readonly DependencyProperty MaxPointShapeDiameterProperty = DependencyProperty.Register(
-            "MaxPointShapeDiameter", typeof (double), typeof (ScatterSeries), 
-            new PropertyMetadata(default(double), CallChartUpdater()));
-        /// <summary>
-        /// Gets or sets the max shape diameter, the points using the max weight in the series will have this radius.
-        /// </summary>
-        public double MaxPointShapeDiameter
-        {
-            get { return (double) GetValue(MaxPointShapeDiameterProperty); }
-            set { SetValue(MaxPointShapeDiameterProperty, value); }
-        }
-
-        /// <summary>
-        /// The minimum point shape diameter property
-        /// </summary>
-        public static readonly DependencyProperty MinPointShapeDiameterProperty = DependencyProperty.Register(
-            "MinPointShapeDiameter", typeof (double), typeof (ScatterSeries), 
-            new PropertyMetadata(default(double), CallChartUpdater()));
-        /// <summary>
-        /// Gets or sets the min shape diameter, the points using the min weight in the series will have this radius.
-        /// </summary>
-        public double MinPointShapeDiameter
-        {
-            get { return (double) GetValue(MinPointShapeDiameterProperty); }
-            set { SetValue(MinPointShapeDiameterProperty, value); }
-        }
-
-        #endregion
-
         #region Public Methods
+
         /// <summary>
-        /// Gets the point diameter.
+        ///     Gets the point diameter.
         /// </summary>
         /// <returns></returns>
         public double GetPointDiameter()
         {
-            return MaxPointShapeDiameter/2;
+            return MaxPointShapeDiameter / 2;
         }
+
         #endregion
 
         #region Overridden Methods
 
         /// <summary>
-        /// Gets the view of a given point
+        ///     Gets the view of a given point
         /// </summary>
         /// <param name="point"></param>
         /// <param name="label"></param>
@@ -167,7 +117,7 @@ namespace FactoryWindowGUI.ChartUtil
 
                 Panel.SetZIndex(pbv.HoverShape, int.MaxValue);
 
-                var wpfChart = (Chart)Model.Chart.View;
+                var wpfChart = (Chart) Model.Chart.View;
                 wpfChart.AttachHoverableEventTo(pbv.HoverShape);
 
                 Model.Chart.View.AddToDrawMargin(pbv.HoverShape);
@@ -176,13 +126,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (pbv.HoverShape != null) pbv.HoverShape.Visibility = Visibility;
 
             if (DataLabels)
-            {
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -190,8 +138,8 @@ namespace FactoryWindowGUI.ChartUtil
                 pbv.DataLabel = null;
             }
 
-            if (point.Stroke != null) pbv.Shape.Stroke = (Brush)point.Stroke;
-            if (point.Fill != null) pbv.Shape.Fill = (Brush)point.Fill;
+            if (point.Stroke != null) pbv.Shape.Stroke = (Brush) point.Stroke;
+            if (point.Fill != null) pbv.Shape.Fill = (Brush) point.Fill;
 
             return pbv;
         }
@@ -207,10 +155,76 @@ namespace FactoryWindowGUI.ChartUtil
             SetCurrentValue(MinPointShapeDiameterProperty, 10d);
 
             Func<ChartPoint, string> defaultLabel = x => Model.CurrentXAxis.GetFormatter()(x.X) + ", "
-                                                         + Model.CurrentYAxis.GetFormatter()(x.Y);
+                                                                                                + Model.CurrentYAxis
+                                                                                                    .GetFormatter()(
+                                                                                                        x.Y);
             SetCurrentValue(LabelPointProperty, defaultLabel);
 
             DefaultFillOpacity = 0.7;
+        }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of BubbleSeries class
+        /// </summary>
+        public ScatterSeries()
+        {
+            Model = new ScatterAlgorithm(this);
+            InitializeDefuaults();
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of BubbleSeries class using a given mapper
+        /// </summary>
+        /// <param name="configuration"></param>
+        public ScatterSeries(object configuration)
+        {
+            Model = new ScatterAlgorithm(this);
+            Configuration = configuration;
+            InitializeDefuaults();
+        }
+
+        #endregion
+
+        #region Private Properties
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     The maximum point shape diameter property
+        /// </summary>
+        public static readonly DependencyProperty MaxPointShapeDiameterProperty = DependencyProperty.Register(
+            "MaxPointShapeDiameter", typeof(double), typeof(ScatterSeries),
+            new PropertyMetadata(default(double), CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets the max shape diameter, the points using the max weight in the series will have this radius.
+        /// </summary>
+        public double MaxPointShapeDiameter
+        {
+            get { return (double) GetValue(MaxPointShapeDiameterProperty); }
+            set { SetValue(MaxPointShapeDiameterProperty, value); }
+        }
+
+        /// <summary>
+        ///     The minimum point shape diameter property
+        /// </summary>
+        public static readonly DependencyProperty MinPointShapeDiameterProperty = DependencyProperty.Register(
+            "MinPointShapeDiameter", typeof(double), typeof(ScatterSeries),
+            new PropertyMetadata(default(double), CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets the min shape diameter, the points using the min weight in the series will have this radius.
+        /// </summary>
+        public double MinPointShapeDiameter
+        {
+            get { return (double) GetValue(MinPointShapeDiameterProperty); }
+            set { SetValue(MinPointShapeDiameterProperty, value); }
         }
 
         #endregion

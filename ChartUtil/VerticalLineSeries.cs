@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：VerticalLineSeries.cs
+// 创建时间：2020/05/25 13:39
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:39
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -37,13 +45,33 @@ using LiveCharts.SeriesAlgorithms;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The vertical line series is useful to compare trends, this is the inverted version of the LineSeries, this series must be added in a cartesian chart.
+    ///     The vertical line series is useful to compare trends, this is the inverted version of the LineSeries, this series
+    ///     must be added in a cartesian chart.
     /// </summary>
     public class VerticalLineSeries : LineSeries
     {
+        #region Private Methods
+
+        private void InitializeDefuaults()
+        {
+            SetCurrentValue(LineSmoothnessProperty, .7d);
+            SetCurrentValue(PointGeometrySizeProperty, 8d);
+            SetCurrentValue(PointForegroundProperty, Brushes.White);
+            SetCurrentValue(StrokeThicknessProperty, 2d);
+
+            Func<ChartPoint, string> defaultLabel = x => Model.CurrentXAxis.GetFormatter()(x.X);
+            SetCurrentValue(LabelPointProperty, defaultLabel);
+
+            DefaultFillOpacity = 0.15;
+            Splitters = new List<LineSegmentSplitter>();
+        }
+
+        #endregion
+
         #region Constructors
+
         /// <summary>
-        /// Initializes an new instance of VerticalLineSeries class
+        ///     Initializes an new instance of VerticalLineSeries class
         /// </summary>
         public VerticalLineSeries()
         {
@@ -52,7 +80,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Initializes an new instance of VerticalLineSeries class, with a given mapper
+        ///     Initializes an new instance of VerticalLineSeries class, with a given mapper
         /// </summary>
         public VerticalLineSeries(object configuration)
         {
@@ -66,7 +94,7 @@ namespace FactoryWindowGUI.ChartUtil
         #region Overridden Methods
 
         /// <summary>
-        /// This method runs when the update starts
+        ///     This method runs when the update starts
         /// </summary>
         public override void OnSeriesUpdateStart()
         {
@@ -115,7 +143,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets the view of a given point
+        ///     Gets the view of a given point
         /// </summary>
         /// <param name="point"></param>
         /// <param name="label"></param>
@@ -158,7 +186,7 @@ namespace FactoryWindowGUI.ChartUtil
 
                 Panel.SetZIndex(pbv.HoverShape, int.MaxValue);
 
-                var wpfChart = (Chart)Model.Chart.View;
+                var wpfChart = (Chart) Model.Chart.View;
                 wpfChart.AttachHoverableEventTo(pbv.HoverShape);
 
                 Model.Chart.View.AddToDrawMargin(pbv.HoverShape);
@@ -169,13 +197,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (PointGeometry != null && Math.Abs(PointGeometrySize) > 0.1 && pbv.Shape == null)
             {
                 if (PointGeometry != null)
-                {
                     pbv.Shape = new Path
                     {
                         Stretch = Stretch.Fill,
                         StrokeThickness = StrokeThickness
                     };
-                }
 
                 Model.Chart.View.AddToDrawMargin(pbv.Shape);
             }
@@ -191,18 +217,16 @@ namespace FactoryWindowGUI.ChartUtil
                 pbv.Shape.Visibility = Visibility;
                 Panel.SetZIndex(pbv.Shape, Panel.GetZIndex(this) + 1);
 
-                if (point.Stroke != null) pbv.Shape.Stroke = (Brush)point.Stroke;
-                if (point.Fill != null) pbv.Shape.Fill = (Brush)point.Fill;
+                if (point.Stroke != null) pbv.Shape.Stroke = (Brush) point.Stroke;
+                if (point.Fill != null) pbv.Shape.Fill = (Brush) point.Fill;
             }
 
-            if (DataLabels )
-            {
+            if (DataLabels)
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -212,19 +236,20 @@ namespace FactoryWindowGUI.ChartUtil
 
             return pbv;
         }
+
         #endregion
 
-        #region Public Methods 
+        #region Public Methods
 
         /// <summary>
-        /// Starts the segment.
+        ///     Starts the segment.
         /// </summary>
         /// <param name="atIndex">At index.</param>
         /// <param name="location">The location.</param>
         public override void StartSegment(int atIndex, CorePoint location)
         {
             if (Splitters.Count <= ActiveSplitters)
-                Splitters.Add(new LineSegmentSplitter { IsNew = true });
+                Splitters.Add(new LineSegmentSplitter {IsNew = true});
 
             var splitter = Splitters[ActiveSplitters];
             splitter.SplitterCollectorIndex = SplittersCollector;
@@ -292,7 +317,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Ends the segment.
+        ///     Ends the segment.
         /// </summary>
         /// <param name="atIndex">At index.</param>
         /// <param name="location">The location.</param>
@@ -304,18 +329,15 @@ namespace FactoryWindowGUI.ChartUtil
             var noAnim = Model.Chart.View.DisableAnimations;
 
             var areaLimit = ChartFunctions.ToDrawMargin(double.IsNaN(AreaLimit)
-                 ? Model.Chart.AxisX[ScalesXAt].FirstSeparator
-                 : AreaLimit, AxisOrientation.X, Model.Chart, ScalesXAt);
+                ? Model.Chart.AxisX[ScalesXAt].FirstSeparator
+                : AreaLimit, AxisOrientation.X, Model.Chart, ScalesXAt);
 
             var uw = Model.Chart.AxisY[ScalesYAt].EvaluatesUnitWidth
                 ? ChartFunctions.GetUnitWidth(AxisOrientation.Y, Model.Chart, ScalesYAt) / 2
                 : 0;
             location.Y += uw;
 
-            if (splitter.IsNew)
-            {
-                splitter.Right.Point = new Point(0, location.Y);
-            }
+            if (splitter.IsNew) splitter.Right.Point = new Point(0, location.Y);
 
             Figure.Segments.Remove(splitter.Right);
             if (noAnim)
@@ -326,24 +348,6 @@ namespace FactoryWindowGUI.ChartUtil
             Figure.Segments.Insert(atIndex, splitter.Right);
 
             splitter.IsNew = false;
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private void InitializeDefuaults()
-        {
-            SetCurrentValue(LineSmoothnessProperty, .7d);
-            SetCurrentValue(PointGeometrySizeProperty, 8d);
-            SetCurrentValue(PointForegroundProperty, Brushes.White);
-            SetCurrentValue(StrokeThicknessProperty, 2d);
-
-            Func<ChartPoint, string> defaultLabel = x => Model.CurrentXAxis.GetFormatter()(x.X);
-            SetCurrentValue(LabelPointProperty, defaultLabel);
-
-            DefaultFillOpacity = 0.15;
-            Splitters = new List<LineSegmentSplitter>();
         }
 
         #endregion

@@ -9,13 +9,14 @@
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxdiag="http://schemas.devexpress.com/winfx/2008/xaml/diagram"
              xmlns:valueConverters="clr-namespace:FactoryWindowGUI.ValueConverters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DesignHeight="1080" d:DesignWidth="1800"
+             d:DesignHeight="800" d:DesignWidth="1800"
              DataContext="{Binding ProcessControlVm,RelativeSource={RelativeSource Self}}">
-    
-     <UserControl.Resources>
-        <valueConverters:TickStringToDateTimeConverter x:Key="TickStringToDateTimeConverter" />
-     </UserControl.Resources>
+
+    <UserControl.Resources>
+        <valueConverters:DateTimeFormatConverter x:Key="TickStringToDateTimeConverter" />
+    </UserControl.Resources>
 
     <UserControl.Triggers>
         <EventTrigger SourceName="BackToProcessQueryViewButton" RoutedEvent="dx:SimpleButton.Click">
@@ -32,8 +33,9 @@
 
     <metro:MetroTabControl>
         <!--标签1-->
-        <metro:MetroTabItem Header="过程监控" IsSelected="{Binding ProcessTabIsSelected}" Width="120" Icon="../Resources/tabIcon.png" Margin="15,0,0,0">
-            <Grid>
+        <metro:MetroTabItem Header="过程监控" IsSelected="{Binding ProcessTabIsSelected}" Width="120"
+                            Icon="../Resources/tabIcon.png" Margin="15,0,0,0">
+            <Grid MaxHeight="800">
 
                 <!--Process查询界面-->
                 <Grid Name="ProcessQueryGrid" Opacity="1">
@@ -127,8 +129,10 @@
                                 <dxg:GridColumn.CellTemplate>
                                     <DataTemplate>
                                         <dx:SimpleButton Padding="0" Height="30"
-                                                HorizontalAlignment="Center" Command="{Binding DataContext.ShowFlowChartCommand,RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}}}" CommandParameter="{Binding ElementName=ProcessWorkFlowControl}" 
-                                                Tag="{Binding Data.ProcessName}" >
+                                                         HorizontalAlignment="Center"
+                                                         Command="{Binding DataContext.ShowFlowChartCommand,RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}}}"
+                                                         CommandParameter="{Binding ElementName=ProcessWorkFlowControl}"
+                                                         Tag="{Binding Data.ProcessName}">
                                             <Image Source="{dx:DXImage 'SvgImages/XAF/Action_Printing_Preview.svg'}"
                                                    HorizontalAlignment="Center" />
                                         </dx:SimpleButton>
@@ -283,22 +287,67 @@
                                              DockPanel.Dock="Left"
                                              Margin="10,0,50,0" FontWeight="Black"
                                              Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Reset.svg'}" />
+                            <!--
                             <metro:MetroTextBlock Text="查询数量：" VerticalAlignment="Center" FontSize="15"
                                                   FontWeight="Bold" />
+                                                  -->
 
+                            <!--
                             <ComboBox Width="100" HorizontalContentAlignment="Center"
                                       VerticalContentAlignment="Center" SelectedValue="{Binding RecordCounts}"
                                       ItemsSource="{Binding RecordCountSelection}" />
+                                      -->
 
+                            <!--
                             <ComboBox Width="100" HorizontalContentAlignment="Center"
                                       VerticalContentAlignment="Center" SelectedValue="{Binding SearchDate}"
                                       ItemsSource="{Binding SearDateTimes}" />
+                                 -->
 
-                            <metro:MetroButton MetroButtonState="None" Content="查询" Height="20" Width="90"
-                                               FontSize="15"
-                                               Margin="33,0,0,0" MinHeight="35" VerticalAlignment="Center"
-                                               FontWeight="Black"
-                                               Command="{Binding QueryProcessRecordCommand}" />
+                            <Label Content="StartTime:" VerticalAlignment="Center" />
+
+                            <DatePicker Margin="10 0"
+                                        Width="100"
+                                        materialDesign:HintAssist.Hint="Pick Date"
+                                        SelectedDate="{Binding SearchStartDateDay}" />
+
+                            <materialDesign:TimePicker
+                                Is24Hours="True"
+                                Width="100" Margin="10 0" SelectedTime="{Binding SearchStartDateHour}" />
+
+                            <Label Content="EndTime:" VerticalAlignment="Center" Margin="10 0"/>
+
+                            <DatePicker Margin="10 0"
+                                        Width="100"
+                                        materialDesign:HintAssist.Hint="Pick Date"
+                                        SelectedDate="{Binding SearchEndDateDay}" />
+                            <materialDesign:TimePicker Margin="10 0"
+                                                       Is24Hours="True"
+                                                       Width="100" SelectedTime="{Binding SearchEndDateHour}" />
+
+                            <Button Style="{StaticResource MaterialDesignFlatButton}" Height="20" Width="30"
+                                    FontSize="15" Padding="5"
+                                    Margin="5,0,0,0" MinHeight="35" VerticalAlignment="Center"
+                                    FontWeight="Black" materialDesign:HintAssist.Hint="上一页"
+                                    Command="{Binding QueryProcessRecordLastPageCommand}">
+                                <Image Source="{dx:DXImage 'SvgImages/Arrows/Prev.svg'}"/>
+                            </Button>
+
+                            <Button Style="{StaticResource MaterialDesignFlatButton}" Height="20" Width="30"
+                                    FontSize="15" Padding="5" materialDesign:HintAssist.Hint="下一页"
+                                    Margin="5,0,0,0" MinHeight="35" VerticalAlignment="Center"
+                                    FontWeight="Black"
+                                    Command="{Binding QueryProcessRecordNextPageCommand}">
+                                <Image Source="{dx:DXImage 'SvgImages/Arrows/Next.svg'}"/>
+                            </Button>
+
+                            <Button Style="{StaticResource MaterialDesignFlatButton}" Height="20" Width="40"
+                                               FontSize="15" Padding="5"
+                                               Margin="20,0,0,0" MinHeight="35" VerticalAlignment="Center"
+                                               FontWeight="Black" materialDesign:HintAssist.Hint="查询"
+                                               Command="{Binding QueryProcessRecordCommand}">
+                                <Image Source="{dx:DXImage 'SvgImages/Dashboards/EnableSearch.svg'}"/>
+                            </Button>
                         </DockPanel>
                     </dxlc:GroupBox>
                     <!--查询结果-->
@@ -322,11 +371,13 @@
 
 
                             <dxg:GridColumn Header="  开始时间" AllowMoving="Default" MinWidth="25"
-                                            AllowEditing="false" Width="3*" Binding="{Binding StartTime,Converter={StaticResource TickStringToDateTimeConverter}}"
+                                            AllowEditing="false" Width="3*"
+                                            Binding="{Binding StartTime,Converter={StaticResource TickStringToDateTimeConverter}}"
                                             Image="{dx:DXImage 'SvgImages/Business Objects/BO_KPI_Scorecard.svg'}" />
 
                             <dxg:GridColumn Header="  结束时间" AllowMoving="Default" MinWidth="25"
-                                            AllowEditing="false" Width="3*" Binding="{Binding EndTime,Converter={StaticResource TickStringToDateTimeConverter}}"
+                                            AllowEditing="false" Width="3*"
+                                            Binding="{Binding EndTime,Converter={StaticResource TickStringToDateTimeConverter}}"
                                             Image="{dx:DXImage 'SvgImages/Business Objects/BO_Appointment.svg'}" />
 
                             <dxg:GridColumn Header="  执行状态" AllowMoving="Default" MinWidth="25"

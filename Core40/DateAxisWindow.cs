@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：DateAxisWindow.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -52,30 +60,34 @@ namespace LiveCharts
         {
             return x.Millisecond == 0;
         }
+
         protected bool IsMinute(DateTime x)
         {
             return x.Second == 0 && IsSecond(x);
         }
+
         protected bool IsHour(DateTime x)
         {
             return x.Minute == 0 && IsMinute(x);
         }
+
         protected bool IsDay(DateTime x)
         {
             return x.Hour == 0 && IsHour(x);
-        }    
+        }
+
         protected bool IsYear(DateTime x)
         {
             return x.DayOfYear == 1 && IsDay(x);
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="indices"></param>
         /// <param name="separators"></param>
         /// <returns></returns>
-        public override bool TryGetSeparatorIndices(IEnumerable<double> indices, int maximumSeparatorCount, out IEnumerable<double> separators)
+        public override bool TryGetSeparatorIndices(IEnumerable<double> indices, int maximumSeparatorCount,
+            out IEnumerable<double> separators)
         {
             // First validate the interval between the indices
             // We expect always at least 2 indices to exist.
@@ -96,7 +108,6 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="seperatorDistance"></param>
         /// <returns></returns>
@@ -106,19 +117,18 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Determines whether a dateTime is a header
+        ///     Determines whether a dateTime is a header
         /// </summary>
         public abstract bool IsHeader(DateTime x);
 
         /// <summary>
-        /// Gets or sets a function to determine whether a dateTime is a separator
+        ///     Gets or sets a function to determine whether a dateTime is a separator
         /// </summary>
         public abstract bool IsSeparator(DateTime x);
 
         /// <summary>
-        /// Gets or sets a function to format the label for the axis
+        ///     Gets or sets a function to format the label for the axis
         /// </summary>
         public abstract string FormatAxisLabel(DateTime x);
-
     }
 }

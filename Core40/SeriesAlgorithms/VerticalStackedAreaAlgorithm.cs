@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：VerticalStackedAreaAlgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,7 +34,6 @@ using LiveCharts.Dtos;
 namespace LiveCharts.SeriesAlgorithms
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.SeriesAlgorithms.StackedAreaAlgorithm" />
     public class VerticalStackedAreaAlgorithm : StackedAreaAlgorithm
@@ -34,7 +41,7 @@ namespace LiveCharts.SeriesAlgorithms
         private readonly IStackModelableSeriesView _stackModelable;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="VerticalStackedAreaAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="VerticalStackedAreaAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public VerticalStackedAreaAlgorithm(ISeriesView view) : base(view)
@@ -45,7 +52,7 @@ namespace LiveCharts.SeriesAlgorithms
         }
 
         /// <summary>
-        /// Gets the stacked point.
+        ///     Gets the stacked point.
         /// </summary>
         /// <param name="chartPoint">The chart point.</param>
         /// <returns></returns>

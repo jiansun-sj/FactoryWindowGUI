@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：GanttPoint.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,36 +33,35 @@ using System.ComponentModel;
 namespace LiveCharts.Defaults
 {
     /// <summary>
-    /// Defines a Gantt point in a cartesian chart
+    ///     Defines a Gantt point in a cartesian chart
     /// </summary>
     public class GanttPoint : INotifyPropertyChanged
     {
-        private double _startPoint;
         private double _endPoint;
+        private double _startPoint;
 
         /// <summary>
-        /// Initializes a new instance of GanttPoint class.
+        ///     Initializes a new instance of GanttPoint class.
         /// </summary>
         public GanttPoint()
         {
-            
         }
 
         /// <summary>
-        /// Initializes a new instance of GanttPoint class with given start and end points.
+        ///     Initializes a new instance of GanttPoint class with given start and end points.
         /// </summary>
         public GanttPoint(double startPoint, double endPoint)
         {
             StartPoint = startPoint;
             EndPoint = endPoint;
         }
-         
+
         /// <summary>
-        /// Gets or sets point start
+        ///     Gets or sets point start
         /// </summary>
         public double StartPoint
         {
-            get { return _startPoint; }
+            get => _startPoint;
             set
             {
                 _startPoint = value;
@@ -63,11 +70,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// Gets or sets point end
+        ///     Gets or sets point end
         /// </summary>
         public double EndPoint
         {
-            get { return _endPoint; }
+            get => _endPoint;
             set
             {
                 _endPoint = value;
@@ -78,12 +85,12 @@ namespace LiveCharts.Defaults
         #region INotifyPropertyChangedImplementation
 
         /// <summary>
-        /// Occurs when a property value changes.
+        ///     Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Called when [property changed].
+        ///     Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         protected virtual void OnPropertyChanged(string propertyName = null)

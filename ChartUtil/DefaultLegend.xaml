@@ -27,14 +27,14 @@
 <UserControl x:Class="LiveCharts.Wpf.DefaultLegend"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:LiveCharts.Wpf"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance local:DefaultLegend}"
              Name="This">
     <UserControl.Resources>
-            <local:OrientationConverter x:Key="OrientationConverter"></local:OrientationConverter>
+        <local:OrientationConverter x:Key="OrientationConverter" />
     </UserControl.Resources>
     <UserControl.Template>
         <ControlTemplate>
@@ -46,8 +46,8 @@
                                        MaxHeight="{Binding MaxHeight, ElementName=This}">
                                 <WrapPanel.Orientation>
                                     <MultiBinding Converter="{StaticResource OrientationConverter}">
-                                        <Binding Path="Orientation"/>
-                                        <Binding Path="InternalOrientation"/>
+                                        <Binding Path="Orientation" />
+                                        <Binding Path="InternalOrientation" />
                                     </MultiBinding>
                                 </WrapPanel.Orientation>
                             </WrapPanel>
@@ -57,15 +57,17 @@
                         <DataTemplate DataType="{x:Type local:SeriesViewModel}">
                             <Grid Margin="2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <Path Width="{Binding BulletSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type UserControl}}}" 
-                                         Height="{Binding BulletSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type UserControl}}}" 
-                                         StrokeThickness="{Binding StrokeThickness}" 
-                                         Stroke="{Binding Stroke}" Fill="{Binding Fill}"
-                                         Stretch="Fill" Data="{Binding PointGeometry}"/>
-                                <TextBlock Grid.Column="1" Margin="4 0" Text="{Binding Title}" VerticalAlignment="Center" />
+                                <Path
+                                    Width="{Binding BulletSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type UserControl}}}"
+                                    Height="{Binding BulletSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=1, AncestorType={x:Type UserControl}}}"
+                                    StrokeThickness="{Binding StrokeThickness}"
+                                    Stroke="{Binding Stroke}" Fill="{Binding Fill}"
+                                    Stretch="Fill" Data="{Binding PointGeometry}" />
+                                <TextBlock Grid.Column="1" Margin="4 0" Text="{Binding Title}"
+                                           VerticalAlignment="Center" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：PieChart.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -32,12 +40,30 @@ using ChartUpdater = FactoryWindowGUI.ChartUtil.Components.ChartUpdater;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The pie chart compares mainly the distribution of the data according to different series.
+    ///     The pie chart compares mainly the distribution of the data according to different series.
     /// </summary>
     public class PieChart : Chart, IPieChart
     {
         /// <summary>
-        /// Initializes a new instance of PieChart class
+        ///     The inner radius property
+        /// </summary>
+        public static readonly DependencyProperty InnerRadiusProperty = DependencyProperty.Register(
+            "InnerRadius", typeof(double), typeof(PieChart), new PropertyMetadata(0d, CallChartUpdater()));
+
+        /// <summary>
+        ///     The starting rotation angle property
+        /// </summary>
+        public static readonly DependencyProperty StartingRotationAngleProperty = DependencyProperty.Register(
+            "StartingRotationAngle", typeof(double), typeof(PieChart), new PropertyMetadata(45d, CallChartUpdater()));
+
+        /// <summary>
+        ///     The hover push out property
+        /// </summary>
+        public static readonly DependencyProperty HoverPushOutProperty = DependencyProperty.Register(
+            "HoverPushOut", typeof(double), typeof(PieChart), new PropertyMetadata(5d));
+
+        /// <summary>
+        ///     Initializes a new instance of PieChart class
         /// </summary>
         public PieChart()
         {
@@ -49,12 +75,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The inner radius property
-        /// </summary>
-        public static readonly DependencyProperty InnerRadiusProperty = DependencyProperty.Register(
-            "InnerRadius", typeof (double), typeof (PieChart), new PropertyMetadata(0d, CallChartUpdater()));
-        /// <summary>
-        /// Gets or sets the pie inner radius, increasing this property will result in a doughnut chart.
+        ///     Gets or sets the pie inner radius, increasing this property will result in a doughnut chart.
         /// </summary>
         public double InnerRadius
         {
@@ -63,12 +84,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The starting rotation angle property
-        /// </summary>
-        public static readonly DependencyProperty StartingRotationAngleProperty = DependencyProperty.Register(
-            "StartingRotationAngle", typeof (double), typeof (PieChart), new PropertyMetadata(45d, CallChartUpdater()));
-        /// <summary>
-        /// Gets or sets the starting rotation angle in degrees.
+        ///     Gets or sets the starting rotation angle in degrees.
         /// </summary>
         public double StartingRotationAngle
         {
@@ -77,12 +93,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The hover push out property
-        /// </summary>
-        public static readonly DependencyProperty HoverPushOutProperty = DependencyProperty.Register(
-            "HoverPushOut", typeof (double), typeof (PieChart), new PropertyMetadata(5d));
-        /// <summary>
-        /// Gets or sets the units that a slice is pushed out when a user moves the mouse over data point.
+        ///     Gets or sets the units that a slice is pushed out when a user moves the mouse over data point.
         /// </summary>
         public double HoverPushOut
         {
@@ -91,7 +102,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets the tooltip position.
+        ///     Gets the tooltip position.
         /// </summary>
         /// <param name="senderPoint">The sender point.</param>
         /// <returns></returns>
@@ -105,12 +116,12 @@ namespace FactoryWindowGUI.ChartUtil
 
             DataTooltip.UpdateLayout();
 
-            var y = DrawMargin.ActualHeight*.5 +
-                    (sliceMidAngle > 90 && sliceMidAngle < 270 ? -1 : 0)*DataTooltip.ActualHeight -
-                    Math.Cos(alphaRad)*15;
-            var x = DrawMargin.ActualWidth*.5 +
-                    (sliceMidAngle > 0 && sliceMidAngle < 180 ? -1 : 0)*DataTooltip.ActualWidth +
-                    Math.Sin(alphaRad)*15;
+            var y = DrawMargin.ActualHeight * .5 +
+                    (sliceMidAngle > 90 && sliceMidAngle < 270 ? -1 : 0) * DataTooltip.ActualHeight -
+                    Math.Cos(alphaRad) * 15;
+            var x = DrawMargin.ActualWidth * .5 +
+                    (sliceMidAngle > 0 && sliceMidAngle < 180 ? -1 : 0) * DataTooltip.ActualWidth +
+                    Math.Sin(alphaRad) * 15;
 
             return new Point(x, y);
         }

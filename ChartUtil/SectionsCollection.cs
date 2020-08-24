@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：SectionsCollection.cs
+// 创建时间：2020/05/25 13:39
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:39
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,26 +34,24 @@ using LiveCharts.Helpers;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The SectionsCollection class holds a collection of Axis.Sections
+    ///     The SectionsCollection class holds a collection of Axis.Sections
     /// </summary>
     public class SectionsCollection : NoisyCollection<AxisSection>
     {
         /// <summary>
-        /// Initializes a new instance of SectionsCollection instance
+        ///     Initializes a new instance of SectionsCollection instance
         /// </summary>
         public SectionsCollection()
         {
             NoisyCollectionChanged += OnNoisyCollectionChanged;
         }
 
-        private static void OnNoisyCollectionChanged(IEnumerable<AxisSection> oldItems, IEnumerable<AxisSection> newItems)
+        private static void OnNoisyCollectionChanged(IEnumerable<AxisSection> oldItems,
+            IEnumerable<AxisSection> newItems)
         {
             if (oldItems == null) return;
 
-            foreach (var oldSection in oldItems)
-            {
-                oldSection.Remove();
-            }
+            foreach (var oldSection in oldItems) oldSection.Remove();
         }
     }
 }

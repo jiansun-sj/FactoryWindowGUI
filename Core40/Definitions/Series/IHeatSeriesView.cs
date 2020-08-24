@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：IHeatSeriesView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,23 +34,23 @@ using LiveCharts.Dtos;
 namespace LiveCharts.Definitions.Series
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Series.ISeriesView" />
     public interface IHeatSeriesView : ISeriesView
     {
         /// <summary>
-        /// Gets the stops.
+        ///     Gets the stops.
         /// </summary>
         /// <value>
-        /// The stops.
+        ///     The stops.
         /// </value>
         IList<CoreGradientStop> Stops { get; }
+
         /// <summary>
-        /// Gets a value indicating whether [draws heat range].
+        ///     Gets a value indicating whether [draws heat range].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [draws heat range]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [draws heat range]; otherwise, <c>false</c>.
         /// </value>
         bool DrawsHeatRange { get; }
     }

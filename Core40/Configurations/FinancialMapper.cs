@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：FinancialMapper.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,20 +33,20 @@ using System;
 namespace LiveCharts.Configurations
 {
     /// <summary>
-    /// Mapper to configure financial points
+    ///     Mapper to configure financial points
     /// </summary>
     /// <typeparam name="T">type to configure</typeparam>
     public class FinancialMapper<T> : IPointEvaluator<T>
     {
-        private Func<T, int, double> _x = (v, i) => i;
-        private Func<T, int, double> _y = (v, i) => 0;
-        private Func<T, int, double> _open;
+        private Func<T, int, double> _close;
         private Func<T, int, double> _high;
         private Func<T, int, double> _low;
-        private Func<T, int, double> _close;
+        private Func<T, int, double> _open;
+        private Func<T, int, double> _x = (v, i) => i;
+        private Func<T, int, double> _y = (v, i) => 0;
 
         /// <summary>
-        /// Sets values for a specific point
+        ///     Sets values for a specific point
         /// </summary>
         /// <param name="point">Point to set</param>
         /// <param name="value"></param>
@@ -54,7 +62,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Maps X value
+        ///     Maps X value
         /// </summary>
         /// <param name="predicate">function that pulls X coordinate</param>
         /// <returns>current mapper instance</returns>
@@ -62,8 +70,9 @@ namespace LiveCharts.Configurations
         {
             return X((t, i) => predicate(t));
         }
+
         /// <summary>
-        /// Maps X value
+        ///     Maps X value
         /// </summary>
         /// <param name="predicate">function that pulls X coordinate, with value and index as parameters</param>
         /// <returns>current mapper instance</returns>
@@ -74,7 +83,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Maps Y value
+        ///     Maps Y value
         /// </summary>
         /// <param name="predicate">function that pulls Y coordinate</param>
         /// <returns>current mapper instance</returns>
@@ -82,8 +91,9 @@ namespace LiveCharts.Configurations
         {
             return Y((t, i) => predicate(t));
         }
+
         /// <summary>
-        /// Maps Y value
+        ///     Maps Y value
         /// </summary>
         /// <param name="predicate">function that pulls Y coordinate, with value and index as parameters</param>
         /// <returns>current mapper instance</returns>
@@ -94,7 +104,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Maps Open value
+        ///     Maps Open value
         /// </summary>
         /// <param name="predicate">function that pulls open value</param>
         /// <returns>current mapper instance</returns>
@@ -102,8 +112,9 @@ namespace LiveCharts.Configurations
         {
             return Open((t, i) => predicate(t));
         }
+
         /// <summary>
-        /// Maps Open value
+        ///     Maps Open value
         /// </summary>
         /// <param name="predicate">function that pulls open value, value and index as parameters</param>
         /// <returns>current mapper instance</returns>
@@ -114,7 +125,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Maps High value
+        ///     Maps High value
         /// </summary>
         /// <param name="predicate">function that pulls High value</param>
         /// <returns>current mapper instance</returns>
@@ -122,8 +133,9 @@ namespace LiveCharts.Configurations
         {
             return High((t, i) => predicate(t));
         }
+
         /// <summary>
-        /// Maps High value
+        ///     Maps High value
         /// </summary>
         /// <param name="predicate">function that pulls High value</param>
         /// <returns>current mapper instance</returns>
@@ -134,7 +146,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Maps Close value
+        ///     Maps Close value
         /// </summary>
         /// <param name="predicate">function that pulls close value</param>
         /// <returns>current mapper instance</returns>
@@ -142,8 +154,9 @@ namespace LiveCharts.Configurations
         {
             return Close((t, i) => predicate(t));
         }
+
         /// <summary>
-        /// Maps Close value
+        ///     Maps Close value
         /// </summary>
         /// <param name="predicate">function that pulls close value, value and index as parameters</param>
         /// <returns>current mapper instance</returns>
@@ -154,7 +167,7 @@ namespace LiveCharts.Configurations
         }
 
         /// <summary>
-        /// Maps Low value
+        ///     Maps Low value
         /// </summary>
         /// <param name="predicate">function that pulls low value</param>
         /// <returns>current mapper instance</returns>
@@ -162,8 +175,9 @@ namespace LiveCharts.Configurations
         {
             return Low((t, i) => predicate(t));
         }
+
         /// <summary>
-        /// Maps Low value
+        ///     Maps Low value
         /// </summary>
         /// <param name="predicate">function that pulls low value, index and value as parameters</param>
         /// <returns>current mapper instance</returns>

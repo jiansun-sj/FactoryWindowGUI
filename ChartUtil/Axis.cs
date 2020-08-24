@@ -1,4 +1,12 @@
-﻿//copyright(c) 2016 Alberto Rodriguez
+﻿// ==================================================
+// 文件名：Axis.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -40,14 +48,14 @@ using LiveCharts.Events;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// An Axis of a chart
+    ///     An Axis of a chart
     /// </summary>
     public class Axis : FrameworkElement, IAxisView
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of Axis class
+        ///     Initializes a new instance of Axis class
         /// </summary>
         public Axis()
         {
@@ -60,24 +68,125 @@ namespace FactoryWindowGUI.ChartUtil
             TitleBlock.SetBinding(TextBlock.TextProperty,
                 new Binding {Path = new PropertyPath(TitleProperty), Source = this});
         }
+
         #endregion
 
-        #region Events
+        internal TextBlock BindATextBlock()
+        {
+            var tb = new TextBlock();
+
+            tb.SetBinding(TextBlock.FontFamilyProperty,
+                new Binding {Path = new PropertyPath(FontFamilyProperty), Source = this});
+            tb.SetBinding(TextBlock.FontSizeProperty,
+                new Binding {Path = new PropertyPath(FontSizeProperty), Source = this});
+            tb.SetBinding(TextBlock.FontStretchProperty,
+                new Binding {Path = new PropertyPath(FontStretchProperty), Source = this});
+            tb.SetBinding(TextBlock.FontStyleProperty,
+                new Binding {Path = new PropertyPath(FontStyleProperty), Source = this});
+            tb.SetBinding(TextBlock.FontWeightProperty,
+                new Binding {Path = new PropertyPath(FontWeightProperty), Source = this});
+            tb.SetBinding(TextBlock.ForegroundProperty,
+                new Binding {Path = new PropertyPath(ForegroundProperty), Source = this});
+
+            return tb;
+        }
+
+        internal Line BindALine()
+        {
+            var l = new Line();
+
+            var s = Separator;
+            if (s == null) return l;
+
+            l.SetBinding(Shape.StrokeProperty,
+                new Binding {Path = new PropertyPath(Separator.StrokeProperty), Source = s});
+            l.SetBinding(Shape.StrokeDashArrayProperty,
+                new Binding {Path = new PropertyPath(Separator.StrokeDashArrayProperty), Source = s});
+            l.SetBinding(Shape.StrokeThicknessProperty,
+                new Binding {Path = new PropertyPath(Separator.StrokeThicknessProperty), Source = s});
+            l.SetBinding(VisibilityProperty,
+                new Binding {Path = new PropertyPath(VisibilityProperty), Source = s});
+
+            return l;
+        }
+
         /// <summary>
-        /// Occurs when an axis range changes by an user action (zooming or panning)
+        ///     Updates the chart.
+        /// </summary>
+        /// <param name="animate">if set to <c>true</c> [animate].</param>
+        /// <param name="updateNow">if set to <c>true</c> [update now].</param>
+        /// <returns></returns>
+        protected static PropertyChangedCallback UpdateChart(bool animate = false, bool updateNow = false)
+        {
+            return (o, args) =>
+            {
+                var wpfAxis = o as Axis;
+                if (wpfAxis == null) return;
+
+                if (wpfAxis.Model != null)
+                    wpfAxis.Model.Chart.Updater.Run(animate, updateNow);
+            };
+        }
+
+        private static void LabelsVisibilityChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var axis = (Axis) dependencyObject;
+            if (axis.Model == null) return;
+
+            foreach (var separator in axis.Model.CurrentSeparators)
+            {
+                var s = (AxisSeparatorElement) separator.View;
+                s.TextBlock.Visibility = axis.ShowLabels
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+            }
+
+            UpdateChart()(dependencyObject, dependencyPropertyChangedEventArgs);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="E:RangeChanged" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="RangeChangedEventArgs" /> instance containing the event data.</param>
+        protected void OnRangeChanged(RangeChangedEventArgs e)
+        {
+            if (RangeChanged != null)
+                RangeChanged.Invoke(e);
+            if (RangeChangedCommand != null && RangeChangedCommand.CanExecute(e))
+                RangeChangedCommand.Execute(e);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="E:PreviewRangeChanged" /> event.
+        /// </summary>
+        /// <param name="e">The <see cref="PreviewRangeChangedEventArgs" /> instance containing the event data.</param>
+        protected void OnPreviewRangeChanged(PreviewRangeChangedEventArgs e)
+        {
+            if (PreviewRangeChanged != null)
+                PreviewRangeChanged.Invoke(e);
+            if (PreviewRangeChangedCommand != null && PreviewRangeChangedCommand.CanExecute(e))
+                PreviewRangeChangedCommand.Execute(e);
+        }
+
+        #region Events
+
+        /// <summary>
+        ///     Occurs when an axis range changes by an user action (zooming or panning)
         /// </summary>
         public event RangeChangedHandler RangeChanged;
 
         /// <summary>
-        /// The range changed command property
+        ///     The range changed command property
         /// </summary>
         public static readonly DependencyProperty RangeChangedCommandProperty = DependencyProperty.Register(
             "RangeChangedCommand", typeof(ICommand), typeof(Axis), new PropertyMetadata(default(ICommand)));
+
         /// <summary>
-        /// Gets or sets the command to execute when an axis range changes by an user action (zooming or panning)
+        ///     Gets or sets the command to execute when an axis range changes by an user action (zooming or panning)
         /// </summary>
         /// <value>
-        /// The range changed command.
+        ///     The range changed command.
         /// </value>
         public ICommand RangeChangedCommand
         {
@@ -86,20 +195,21 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Occurs before an axis range changes by an user action (zooming or panning)
+        ///     Occurs before an axis range changes by an user action (zooming or panning)
         /// </summary>
         public event PreviewRangeChangedHandler PreviewRangeChanged;
 
         /// <summary>
-        /// The preview range changed command property
+        ///     The preview range changed command property
         /// </summary>
         public static readonly DependencyProperty PreviewRangeChangedCommandProperty = DependencyProperty.Register(
             "PreviewRangeChangedCommand", typeof(ICommand), typeof(Axis), new PropertyMetadata(default(ICommand)));
+
         /// <summary>
-        /// Gets or sets the command to execute before an axis range changes by an user action (zooming or panning)
+        ///     Gets or sets the command to execute before an axis range changes by an user action (zooming or panning)
         /// </summary>
         /// <value>
-        /// The preview range changed command.
+        ///     The preview range changed command.
         /// </value>
         public ICommand PreviewRangeChangedCommand
         {
@@ -110,32 +220,41 @@ namespace FactoryWindowGUI.ChartUtil
         #endregion
 
         #region properties
+
         private TextBlock TitleBlock { get; set; }
         private FormattedText FormattedTitle { get; set; }
+
         /// <summary>
-        /// Gets the Model of the axis, the model is used a DTO to communicate with the core of the library.
+        ///     Gets the Model of the axis, the model is used a DTO to communicate with the core of the library.
         /// </summary>
         public AxisCore Model { get; set; }
+
         /// <summary>
-        /// Gets previous Min Value
+        ///     Gets previous Min Value
         /// </summary>
         public double PreviousMinValue { get; internal set; }
+
         /// <summary>
-        /// Gets previous Max Value
+        ///     Gets previous Max Value
         /// </summary>
         public double PreviousMaxValue { get; internal set; }
+
         #endregion
 
         #region Dependency Properties
 
         /// <summary>
-        /// The labels property
+        ///     The labels property
         /// </summary>
         public static readonly DependencyProperty LabelsProperty = DependencyProperty.Register(
-            "Labels", typeof (IList<string>), typeof (Axis), 
+            "Labels", typeof(IList<string>), typeof(Axis),
             new PropertyMetadata(default(IList<string>), UpdateChart()));
+
         /// <summary>
-        /// Gets or sets axis labels, labels property stores the array to map for each index and value, for example if axis value is 0 then label will be labels[0], when value 1 then labels[1], value 2 then labels[2], ..., value n labels[n], use this property instead of a formatter when there is no conversion between value and label for example names, if you are plotting sales vs salesman name.
+        ///     Gets or sets axis labels, labels property stores the array to map for each index and value, for example if axis
+        ///     value is 0 then label will be labels[0], when value 1 then labels[1], value 2 then labels[2], ..., value n
+        ///     labels[n], use this property instead of a formatter when there is no conversion between value and label for example
+        ///     names, if you are plotting sales vs salesman name.
         /// </summary>
         [TypeConverter(typeof(StringCollectionConverter))]
         public IList<string> Labels
@@ -145,12 +264,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The sections property
+        ///     The sections property
         /// </summary>
         public static readonly DependencyProperty SectionsProperty = DependencyProperty.Register(
-            "Sections", typeof (SectionsCollection), typeof (Axis), new PropertyMetadata(default(SectionsCollection)));
+            "Sections", typeof(SectionsCollection), typeof(Axis), new PropertyMetadata(default(SectionsCollection)));
+
         /// <summary>
-        /// Gets or sets the axis sectionsCollection, a section is useful to highlight ranges or values in a chart.
+        ///     Gets or sets the axis sectionsCollection, a section is useful to highlight ranges or values in a chart.
         /// </summary>
         public SectionsCollection Sections
         {
@@ -159,13 +279,16 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The label formatter property
+        ///     The label formatter property
         /// </summary>
         public static readonly DependencyProperty LabelFormatterProperty = DependencyProperty.Register(
-            "LabelFormatter", typeof (Func<double, string>), typeof (Axis),
+            "LabelFormatter", typeof(Func<double, string>), typeof(Axis),
             new PropertyMetadata(default(Func<double, string>), UpdateChart()));
+
         /// <summary>
-        /// Gets or sets the function to convert a value to label, for example when you need to display your chart as currency ($1.00) or as degrees (10°), if Labels property is not null then formatter is ignored, and label will be pulled from Labels prop.
+        ///     Gets or sets the function to convert a value to label, for example when you need to display your chart as currency
+        ///     ($1.00) or as degrees (10°), if Labels property is not null then formatter is ignored, and label will be pulled
+        ///     from Labels prop.
         /// </summary>
         public Func<double, string> LabelFormatter
         {
@@ -174,27 +297,30 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The separator property
+        ///     The separator property
         /// </summary>
         public static readonly DependencyProperty SeparatorProperty = DependencyProperty.Register(
-            "Separator", typeof (Separator), typeof (Axis),
+            "Separator", typeof(Separator), typeof(Axis),
             new PropertyMetadata(default(Separator), UpdateChart()));
+
         /// <summary>
-        /// Get or sets configuration for parallel lines to axis.
+        ///     Get or sets configuration for parallel lines to axis.
         /// </summary>
         public Separator Separator
         {
             get { return (Separator) GetValue(SeparatorProperty); }
             set { SetValue(SeparatorProperty, value); }
         }
+
         /// <summary>
-        /// The show labels property
+        ///     The show labels property
         /// </summary>
         public static readonly DependencyProperty ShowLabelsProperty = DependencyProperty.Register(
-            "ShowLabels", typeof (bool), typeof (Axis), 
+            "ShowLabels", typeof(bool), typeof(Axis),
             new PropertyMetadata(default(bool), LabelsVisibilityChanged));
+
         /// <summary>
-        /// Gets or sets if labels are shown in the axis.
+        ///     Gets or sets if labels are shown in the axis.
         /// </summary>
         public bool ShowLabels
         {
@@ -203,13 +329,14 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The maximum value property
+        ///     The maximum value property
         /// </summary>
         public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register(
-            "MaxValue", typeof (double), typeof (Axis), 
+            "MaxValue", typeof(double), typeof(Axis),
             new PropertyMetadata(double.NaN, UpdateChart()));
+
         /// <summary>
-        /// Gets or sets axis max value, set it to double.NaN to make this property Auto, default value is double.NaN
+        ///     Gets or sets axis max value, set it to double.NaN to make this property Auto, default value is double.NaN
         /// </summary>
         public double MaxValue
         {
@@ -218,25 +345,26 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The minimum value property
+        ///     The minimum value property
         /// </summary>
         public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register(
-            "MinValue", typeof (double), typeof (Axis),
+            "MinValue", typeof(double), typeof(Axis),
             new PropertyMetadata(double.NaN, UpdateChart()));
+
         /// <summary>
-        /// Gets or sets axis min value, set it to double.NaN to make this property Auto, default value is double.NaN
+        ///     Gets or sets axis min value, set it to double.NaN to make this property Auto, default value is double.NaN
         /// </summary>
         public double MinValue
         {
-            get { return (double)GetValue(MinValueProperty); }
+            get { return (double) GetValue(MinValueProperty); }
             set { SetValue(MinValueProperty, value); }
         }
 
         /// <summary>
-        /// Gets the actual minimum value.
+        ///     Gets the actual minimum value.
         /// </summary>
         /// <value>
-        /// The actual minimum value.
+        ///     The actual minimum value.
         /// </value>
         public double ActualMinValue
         {
@@ -244,10 +372,10 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets the actual maximum value.
+        ///     Gets the actual maximum value.
         /// </summary>
         /// <value>
-        /// The actual maximum value.
+        ///     The actual maximum value.
         /// </value>
         public double ActualMaxValue
         {
@@ -255,12 +383,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The maximum range property
+        ///     The maximum range property
         /// </summary>
         public static readonly DependencyProperty MaxRangeProperty = DependencyProperty.Register(
             "MaxRange", typeof(double), typeof(Axis), new PropertyMetadata(double.MaxValue));
+
         /// <summary>
-        /// Gets or sets the max range this axis can display, useful to limit user zooming.
+        ///     Gets or sets the max range this axis can display, useful to limit user zooming.
         /// </summary>
         public double MaxRange
         {
@@ -269,12 +398,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The minimum range property
+        ///     The minimum range property
         /// </summary>
         public static readonly DependencyProperty MinRangeProperty = DependencyProperty.Register(
             "MinRange", typeof(double), typeof(Axis), new PropertyMetadata(double.MinValue));
+
         /// <summary>
-        /// Gets or sets the min range this axis can display, useful to limit user zooming.
+        ///     Gets or sets the min range this axis can display, useful to limit user zooming.
         /// </summary>
         public double MinRange
         {
@@ -283,28 +413,32 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The title property
+        ///     The title property
         /// </summary>
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
-            "Title", typeof(string), typeof(Axis), 
+            "Title", typeof(string), typeof(Axis),
             new PropertyMetadata(null, UpdateChart()));
+
         /// <summary>
-        /// Gets or sets axis title, the title will be displayed only if this property is not null, default is null.
+        ///     Gets or sets axis title, the title will be displayed only if this property is not null, default is null.
         /// </summary>
         public string Title
         {
-            get { return (string)GetValue(TitleProperty); }
+            get { return (string) GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
         }
 
         /// <summary>
-        /// The position property
+        ///     The position property
         /// </summary>
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register(
-            "Position", typeof (AxisPosition), typeof (Axis), 
+            "Position", typeof(AxisPosition), typeof(Axis),
             new PropertyMetadata(default(AxisPosition), UpdateChart()));
+
         /// <summary>
-        /// Gets or sets the axis position, default is Axis.Position.LeftBottom, when the axis is at Y and Position is LeftBottom, then axis will be placed at left, RightTop position will place it at Right, when the axis is at X and position LeftBottom, the axis will be placed at bottom, if position is RightTop then it will be placed at top.
+        ///     Gets or sets the axis position, default is Axis.Position.LeftBottom, when the axis is at Y and Position is
+        ///     LeftBottom, then axis will be placed at left, RightTop position will place it at Right, when the axis is at X and
+        ///     position LeftBottom, the axis will be placed at bottom, if position is RightTop then it will be placed at top.
         /// </summary>
         public AxisPosition Position
         {
@@ -313,13 +447,14 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The is merged property
+        ///     The is merged property
         /// </summary>
         public static readonly DependencyProperty IsMergedProperty = DependencyProperty.Register(
-            "IsMerged", typeof (bool), typeof (Axis), 
+            "IsMerged", typeof(bool), typeof(Axis),
             new PropertyMetadata(default(bool), UpdateChart()));
+
         /// <summary>
-        /// Gets or sets if the axis labels should me placed inside the chart, this is useful to save some space.
+        ///     Gets or sets if the axis labels should me placed inside the chart, this is useful to save some space.
         /// </summary>
         public bool IsMerged
         {
@@ -328,12 +463,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The disable animations property
+        ///     The disable animations property
         /// </summary>
         public static readonly DependencyProperty DisableAnimationsProperty = DependencyProperty.Register(
-            "DisableAnimations", typeof (bool), typeof (Axis), new PropertyMetadata(default(bool), UpdateChart(true)));
+            "DisableAnimations", typeof(bool), typeof(Axis), new PropertyMetadata(default(bool), UpdateChart(true)));
+
         /// <summary>
-        /// Gets or sets if the axis is animated.
+        ///     Gets or sets if the axis is animated.
         /// </summary>
         public bool DisableAnimations
         {
@@ -342,105 +478,109 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The font family property
+        ///     The font family property
         /// </summary>
         public static readonly DependencyProperty FontFamilyProperty =
             DependencyProperty.Register("FontFamily", typeof(FontFamily), typeof(Axis),
                 new PropertyMetadata(new FontFamily("Calibri")));
 
         /// <summary>
-        /// Gets or sets labels font family, font to use for any label in this axis
+        ///     Gets or sets labels font family, font to use for any label in this axis
         /// </summary>
         public FontFamily FontFamily
         {
-            get { return (FontFamily)GetValue(FontFamilyProperty); }
+            get { return (FontFamily) GetValue(FontFamilyProperty); }
             set { SetValue(FontFamilyProperty, value); }
         }
 
         /// <summary>
-        /// The font size property
+        ///     The font size property
         /// </summary>
         public static readonly DependencyProperty FontSizeProperty =
             DependencyProperty.Register("FontSize", typeof(double), typeof(Axis), new PropertyMetadata(11.0));
+
         /// <summary>
-        /// Gets or sets labels font size
+        ///     Gets or sets labels font size
         /// </summary>
         public double FontSize
         {
-            get { return (double)GetValue(FontSizeProperty); }
+            get { return (double) GetValue(FontSizeProperty); }
             set { SetValue(FontSizeProperty, value); }
         }
 
         /// <summary>
-        /// The font weight property
+        ///     The font weight property
         /// </summary>
         public static readonly DependencyProperty FontWeightProperty =
             DependencyProperty.Register("FontWeight", typeof(FontWeight), typeof(Axis),
                 new PropertyMetadata(FontWeights.Normal));
+
         /// <summary>
-        /// Gets or sets labels font weight
+        ///     Gets or sets labels font weight
         /// </summary>
         public FontWeight FontWeight
         {
-            get { return (FontWeight)GetValue(FontWeightProperty); }
+            get { return (FontWeight) GetValue(FontWeightProperty); }
             set { SetValue(FontWeightProperty, value); }
         }
 
         /// <summary>
-        /// The font style property
+        ///     The font style property
         /// </summary>
         public static readonly DependencyProperty FontStyleProperty =
             DependencyProperty.Register("FontStyle", typeof(FontStyle), typeof(Axis),
                 new PropertyMetadata(FontStyles.Normal));
 
         /// <summary>
-        /// Gets or sets labels font style
+        ///     Gets or sets labels font style
         /// </summary>
         public FontStyle FontStyle
         {
-            get { return (FontStyle)GetValue(FontStyleProperty); }
+            get { return (FontStyle) GetValue(FontStyleProperty); }
             set { SetValue(FontStyleProperty, value); }
         }
 
         /// <summary>
-        /// The font stretch property
+        ///     The font stretch property
         /// </summary>
         public static readonly DependencyProperty FontStretchProperty =
             DependencyProperty.Register("FontStretch", typeof(FontStretch), typeof(Axis),
                 new PropertyMetadata(FontStretches.Normal));
 
         /// <summary>
-        /// Gets or sets labels font stretch
+        ///     Gets or sets labels font stretch
         /// </summary>
         public FontStretch FontStretch
         {
-            get { return (FontStretch)GetValue(FontStretchProperty); }
+            get { return (FontStretch) GetValue(FontStretchProperty); }
             set { SetValue(FontStretchProperty, value); }
         }
 
         /// <summary>
-        /// The foreground property
+        ///     The foreground property
         /// </summary>
         public static readonly DependencyProperty ForegroundProperty =
             DependencyProperty.Register("Foreground", typeof(Brush), typeof(Axis),
                 new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets labels text color.
+        ///     Gets or sets labels text color.
         /// </summary>
         public Brush Foreground
         {
-            get { return (Brush)GetValue(ForegroundProperty); }
+            get { return (Brush) GetValue(ForegroundProperty); }
             set { SetValue(ForegroundProperty, value); }
         }
 
         /// <summary>
-        /// The labels rotation property
+        ///     The labels rotation property
         /// </summary>
         public static readonly DependencyProperty LabelsRotationProperty = DependencyProperty.Register(
-            "LabelsRotation", typeof (double), typeof (Axis), new PropertyMetadata(default(double), UpdateChart()));
+            "LabelsRotation", typeof(double), typeof(Axis), new PropertyMetadata(default(double), UpdateChart()));
+
         /// <summary>
-        /// Gets or sets the labels rotation in the axis, the angle starts as a horizontal line, you can use any angle in degrees, even negatives.
+        ///     Gets or sets the labels rotation in the axis, the angle starts as a horizontal line, you can use any angle in
+        ///     degrees, even negatives.
         /// </summary>
         public double LabelsRotation
         {
@@ -449,12 +589,14 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The bar unit property
+        ///     The bar unit property
         /// </summary>
         public static readonly DependencyProperty BarUnitProperty = DependencyProperty.Register(
             "BarUnit", typeof(double), typeof(Axis), new PropertyMetadata(double.NaN));
+
         /// <summary>
-        /// Gets or sets the bar's series unit width (rows and columns), this property specifies the value in the chart that any bar should take as width.
+        ///     Gets or sets the bar's series unit width (rows and columns), this property specifies the value in the chart that
+        ///     any bar should take as width.
         /// </summary>
         [Obsolete("PThis property was renamed, please use Unit property instead.")]
         public double BarUnit
@@ -464,15 +606,17 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The unit property
+        ///     The unit property
         /// </summary>
         public static readonly DependencyProperty UnitProperty = DependencyProperty.Register(
             "Unit", typeof(double), typeof(Axis), new PropertyMetadata(double.NaN));
+
         /// <summary>
-        /// Gets or sets the axis unit, setting this property to your actual scale unit (seconds, minutes or any other scale) helps you to fix possible visual issues.
+        ///     Gets or sets the axis unit, setting this property to your actual scale unit (seconds, minutes or any other scale)
+        ///     helps you to fix possible visual issues.
         /// </summary>
         /// <value>
-        /// The unit.
+        ///     The unit.
         /// </value>
         public double Unit
         {
@@ -481,12 +625,13 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The axis orientation property
+        ///     The axis orientation property
         /// </summary>
         public static readonly DependencyProperty AxisOrientationProperty = DependencyProperty.Register(
             "AxisOrientation", typeof(AxisOrientation), typeof(Axis), new PropertyMetadata(default(AxisOrientation)));
+
         /// <summary>
-        /// Gets or sets the element orientation ind the axis
+        ///     Gets or sets the element orientation ind the axis
         /// </summary>
         public AxisOrientation AxisOrientation
         {
@@ -497,8 +642,9 @@ namespace FactoryWindowGUI.ChartUtil
         #endregion
 
         #region Public Methods
-        ///<summary>
-        /// Cleans this instance.
+
+        /// <summary>
+        ///     Cleans this instance.
         /// </summary>
         public void Clean()
         {
@@ -510,7 +656,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Renders the separator.
+        ///     Renders the separator.
         /// </summary>
         /// <param name="model">The model.</param>
         /// <param name="chart">The chart.</param>
@@ -541,7 +687,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Updates the title.
+        ///     Updates the title.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <param name="rotationAngle">The rotation angle.</param>
@@ -557,11 +703,12 @@ namespace FactoryWindowGUI.ChartUtil
             }
 
             FormattedTitle = new FormattedText(
-                 TitleBlock.Text,
-                 CultureInfo.CurrentUICulture,
-                 FlowDirection.LeftToRight,
-                 new Typeface(TitleBlock.FontFamily, TitleBlock.FontStyle, TitleBlock.FontWeight, TitleBlock.FontStretch),
-                 TitleBlock.FontSize, Brushes.Black);
+                TitleBlock.Text,
+                CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight,
+                new Typeface(TitleBlock.FontFamily, TitleBlock.FontStyle, TitleBlock.FontWeight,
+                    TitleBlock.FontStretch),
+                TitleBlock.FontSize, Brushes.Black);
 
             return string.IsNullOrWhiteSpace(Title)
                 ? new CoreSize()
@@ -569,7 +716,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Sets the title top.
+        ///     Sets the title top.
         /// </summary>
         /// <param name="value">The value.</param>
         public void SetTitleTop(double value)
@@ -578,7 +725,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Sets the title left.
+        ///     Sets the title left.
         /// </summary>
         /// <param name="value">The value.</param>
         public void SetTitleLeft(double value)
@@ -587,7 +734,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets the title left.
+        ///     Gets the title left.
         /// </summary>
         /// <returns></returns>
         public double GetTitleLeft()
@@ -596,7 +743,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets the tile top.
+        ///     Gets the tile top.
         /// </summary>
         /// <returns></returns>
         public double GetTileTop()
@@ -605,7 +752,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets the size of the label.
+        ///     Gets the size of the label.
         /// </summary>
         /// <returns></returns>
         public CoreSize GetLabelSize()
@@ -614,7 +761,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Ases the core element.
+        ///     Ases the core element.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <param name="source">The source.</param>
@@ -640,7 +787,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Sets the range.
+        ///     Sets the range.
         /// </summary>
         /// <param name="min">The minimum.</param>
         /// <param name="max">The maximum.</param>
@@ -678,102 +825,5 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         #endregion
-
-        internal TextBlock BindATextBlock()
-        {
-            var tb = new TextBlock();
-
-            tb.SetBinding(TextBlock.FontFamilyProperty,
-                new Binding { Path = new PropertyPath(FontFamilyProperty), Source = this });
-            tb.SetBinding(TextBlock.FontSizeProperty,
-                new Binding { Path = new PropertyPath(FontSizeProperty), Source = this });
-            tb.SetBinding(TextBlock.FontStretchProperty,
-                new Binding { Path = new PropertyPath(FontStretchProperty), Source = this });
-            tb.SetBinding(TextBlock.FontStyleProperty,
-                new Binding { Path = new PropertyPath(FontStyleProperty), Source = this });
-            tb.SetBinding(TextBlock.FontWeightProperty,
-                new Binding { Path = new PropertyPath(FontWeightProperty), Source = this });
-            tb.SetBinding(TextBlock.ForegroundProperty,
-                 new Binding { Path = new PropertyPath(ForegroundProperty), Source = this });
-
-            return tb;
-        }
-
-        internal Line BindALine()
-        {
-            var l = new Line();
-
-            var s = Separator as Separator;
-            if (s == null) return l;
-
-            l.SetBinding(Shape.StrokeProperty,
-                new Binding {Path = new PropertyPath(Separator.StrokeProperty), Source = s});
-            l.SetBinding(Shape.StrokeDashArrayProperty,
-                new Binding {Path = new PropertyPath(Separator.StrokeDashArrayProperty), Source = s});
-            l.SetBinding(Shape.StrokeThicknessProperty,
-                new Binding {Path = new PropertyPath(Separator.StrokeThicknessProperty), Source = s});
-            l.SetBinding(VisibilityProperty,
-                new Binding {Path = new PropertyPath(VisibilityProperty), Source = s});
-
-            return l;
-        }
-
-        /// <summary>
-        /// Updates the chart.
-        /// </summary>
-        /// <param name="animate">if set to <c>true</c> [animate].</param>
-        /// <param name="updateNow">if set to <c>true</c> [update now].</param>
-        /// <returns></returns>
-        protected static PropertyChangedCallback UpdateChart(bool animate = false, bool updateNow = false)
-        {
-            return (o, args) =>
-            {
-                var wpfAxis = o as Axis;
-                if (wpfAxis == null) return;
-
-                if (wpfAxis.Model != null)
-                    wpfAxis.Model.Chart.Updater.Run(animate, updateNow);
-            };
-        }
-
-        private static void LabelsVisibilityChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            var axis = (Axis) dependencyObject;
-            if (axis.Model == null) return;
-            
-            foreach (var separator in axis.Model.CurrentSeparators)
-            {
-                var s = (AxisSeparatorElement) separator.View;
-                s.TextBlock.Visibility = axis.ShowLabels
-                    ? Visibility.Visible
-                    : Visibility.Collapsed;
-            }
-
-            UpdateChart()(dependencyObject, dependencyPropertyChangedEventArgs);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:RangeChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="RangeChangedEventArgs"/> instance containing the event data.</param>
-        protected void OnRangeChanged(RangeChangedEventArgs e)
-        {
-            if (RangeChanged != null)
-                RangeChanged.Invoke(e);
-            if (RangeChangedCommand != null && RangeChangedCommand.CanExecute(e))
-                RangeChangedCommand.Execute(e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="E:PreviewRangeChanged" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="PreviewRangeChangedEventArgs"/> instance containing the event data.</param>
-        protected void OnPreviewRangeChanged(PreviewRangeChangedEventArgs e)
-        {
-            if (PreviewRangeChanged != null)
-                PreviewRangeChanged.Invoke(e);
-            if (PreviewRangeChangedCommand != null && PreviewRangeChangedCommand.CanExecute(e))
-                PreviewRangeChangedCommand.Execute(e);
-        }
     }
 }

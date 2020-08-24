@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：HeatPoint.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -46,10 +54,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
             Rectangle.Width = Width;
             Rectangle.Height = Height;
 
-            if (IsNew)
-            {
-                Rectangle.Fill = new SolidColorBrush(Colors.Transparent);
-            }
+            if (IsNew) Rectangle.Fill = new SolidColorBrush(Colors.Transparent);
 
             if (HoverShape != null)
             {
@@ -62,8 +67,8 @@ namespace FactoryWindowGUI.ChartUtil.Points
             if (DataLabel != null)
             {
                 DataLabel.UpdateLayout();
-                Canvas.SetTop(DataLabel, current.ChartLocation.Y + (Height/2) - DataLabel.ActualHeight*.5);
-                Canvas.SetLeft(DataLabel, current.ChartLocation.X + (Width/2) - DataLabel.ActualWidth*.5);
+                Canvas.SetTop(DataLabel, current.ChartLocation.Y + Height / 2 - DataLabel.ActualHeight * .5);
+                Canvas.SetLeft(DataLabel, current.ChartLocation.X + Width / 2 - DataLabel.ActualWidth * .5);
             }
 
             var targetColor = new Color

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：VerticalStackedAreaSeries.cs
+// 创建时间：2020/05/25 13:39
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:39
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -34,53 +42,14 @@ using LiveCharts.SeriesAlgorithms;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// Compares trend and proportion, this series must be added in a cartesian chart.
+    ///     Compares trend and proportion, this series must be added in a cartesian chart.
     /// </summary>
     public class VerticalStackedAreaSeries : VerticalLineSeries, IVerticalStackedAreaSeriesView
     {
-        #region Constructors
-        /// <summary>
-        /// Initializes a new instance of VerticalStackedAreaSeries class
-        /// </summary>
-        public VerticalStackedAreaSeries()
-        {
-            Model = new VerticalStackedAreaAlgorithm(this);
-            InitializeDefuaults();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of VerticalStackedAreaSeries class, with a given mapper
-        /// </summary>
-        public VerticalStackedAreaSeries(object configuration)
-        {
-            Model = new VerticalStackedAreaAlgorithm(this);
-            Configuration = configuration;
-            InitializeDefuaults();
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// The stack mode property
-        /// </summary>
-        public static readonly DependencyProperty StackModeProperty = DependencyProperty.Register(
-            "StackMode", typeof (StackMode), typeof (VerticalStackedAreaSeries), new PropertyMetadata(default(StackMode)));
-        /// <summary>
-        /// Gets or sets the series stack mode, values or percentage
-        /// </summary>
-        public StackMode StackMode
-        {
-            get { return (StackMode) GetValue(StackModeProperty); }
-            set { SetValue(StackModeProperty, value); }
-        }
-        #endregion
-
         #region Overridden Methods
 
         /// <summary>
-        /// This method runs when the update starts
+        ///     This method runs when the update starts
         /// </summary>
         public override void OnSeriesUpdateStart()
         {
@@ -97,7 +66,8 @@ namespace FactoryWindowGUI.ChartUtil
 
             if (Figure != null && Values != null)
             {
-                var yIni = ChartFunctions.ToDrawMargin(Values.GetTracker(this).YLimit.Min, AxisOrientation.Y, Model.Chart, ScalesYAt);
+                var yIni = ChartFunctions.ToDrawMargin(Values.GetTracker(this).YLimit.Min, AxisOrientation.Y,
+                    Model.Chart, ScalesYAt);
 
                 if (Model.Chart.View.DisableAnimations)
                     Figure.StartPoint = new Point(0, yIni);
@@ -137,17 +107,13 @@ namespace FactoryWindowGUI.ChartUtil
             Path.Data = geometry;
             Model.Chart.View.AddToDrawMargin(Path);
 
-            var y = ChartFunctions.ToDrawMargin(ActualValues.GetTracker(this).YLimit.Min, AxisOrientation.Y, Model.Chart, ScalesYAt);
+            var y = ChartFunctions.ToDrawMargin(ActualValues.GetTracker(this).YLimit.Min, AxisOrientation.Y,
+                Model.Chart, ScalesYAt);
             Figure.StartPoint = new Point(0, y);
 
             var i = Model.Chart.View.Series.IndexOf(this);
             Panel.SetZIndex(Path, Model.Chart.View.Series.Count - i);
         }
-
-        #endregion
-
-        #region Public Methods 
-
 
         #endregion
 
@@ -168,6 +134,53 @@ namespace FactoryWindowGUI.ChartUtil
             DefaultFillOpacity = 1;
             Splitters = new List<LineSegmentSplitter>();
         }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of VerticalStackedAreaSeries class
+        /// </summary>
+        public VerticalStackedAreaSeries()
+        {
+            Model = new VerticalStackedAreaAlgorithm(this);
+            InitializeDefuaults();
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of VerticalStackedAreaSeries class, with a given mapper
+        /// </summary>
+        public VerticalStackedAreaSeries(object configuration)
+        {
+            Model = new VerticalStackedAreaAlgorithm(this);
+            Configuration = configuration;
+            InitializeDefuaults();
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     The stack mode property
+        /// </summary>
+        public static readonly DependencyProperty StackModeProperty = DependencyProperty.Register(
+            "StackMode", typeof(StackMode), typeof(VerticalStackedAreaSeries),
+            new PropertyMetadata(default(StackMode)));
+
+        /// <summary>
+        ///     Gets or sets the series stack mode, values or percentage
+        /// </summary>
+        public StackMode StackMode
+        {
+            get { return (StackMode) GetValue(StackModeProperty); }
+            set { SetValue(StackModeProperty, value); }
+        }
+
+        #endregion
+
+        #region Public Methods
 
         #endregion
     }

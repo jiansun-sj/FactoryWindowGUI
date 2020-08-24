@@ -1,10 +1,10 @@
 ﻿// ==================================================
 // 文件名：ProcessInstanceModel.cs
-// 创建时间：2020/03/09 16:25
+// 创建时间：2020/03/09 13:39
 // 上海芸浦信息技术有限公司
 // copyright@yumpoo
 // ==================================================
-// 最后修改于：2020/05/11 16:25
+// 最后修改于：2020/07/29 13:39
 // 修改人：jians
 // ==================================================
 
@@ -21,12 +21,12 @@ namespace FactoryWindowGUI.Model
     {
         private string _container;
         private string _currentStep;
+        private short _currentStepId;
 
         private ObservableCollection<InstanceParameterModel> _instanceParameterModels =
             new ObservableCollection<InstanceParameterModel>();
 
         private string _pid;
-        private short _currentStepId;
 
         public string Pid
         {
@@ -57,10 +57,10 @@ namespace FactoryWindowGUI.Model
             get => _currentStepId;
             set
             {
-                if (_currentStepId==value)
+                if (_currentStepId == value)
                     return;
                 _currentStepId = value;
-                
+
                 OnPropertyChanged(nameof(_currentStepId));
             }
         }
@@ -77,8 +77,7 @@ namespace FactoryWindowGUI.Model
             }
         }
 
-        
-        
+
         public ObservableCollection<InstanceParameterModel> InstanceParameterModels
         {
             get => _instanceParameterModels;

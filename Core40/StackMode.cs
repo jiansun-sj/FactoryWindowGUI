@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：StackMode.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,16 +31,17 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// Stacked mode, for stacked series
+    ///     Stacked mode, for stacked series
     /// </summary>
     public enum StackMode
     {
         /// <summary>
-        /// Stacks the values, eg: if values are 1,2,3 the stacked total is 6
+        ///     Stacks the values, eg: if values are 1,2,3 the stacked total is 6
         /// </summary>
         Values,
+
         /// <summary>
-        /// Stacks percentage, eg: if values are 1,2,3, they are actually being stacked as (1/6), (2/6), (3/6) [value/totalSum]
+        ///     Stacks percentage, eg: if values are 1,2,3, they are actually being stacked as (1/6), (2/6), (3/6) [value/totalSum]
         /// </summary>
         Percentage
     }

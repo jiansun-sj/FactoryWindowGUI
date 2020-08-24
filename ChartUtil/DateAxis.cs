@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：DateAxis.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -27,12 +35,10 @@ using LiveCharts;
 using LiveCharts.Charts;
 using LiveCharts.Definitions.Charts;
 using LiveCharts.Helpers;
-using LiveCharts.Wpf;
 
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="WindowAxis" />
     /// <seealso cref="LiveCharts.Definitions.Charts.IDateAxisView" />
@@ -41,7 +47,7 @@ namespace FactoryWindowGUI.ChartUtil
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DateAxis"/> class.
+        ///     Initializes a new instance of the <see cref="DateAxis" /> class.
         /// </summary>
         public DateAxis()
         {
@@ -53,40 +59,8 @@ namespace FactoryWindowGUI.ChartUtil
 
         #endregion
 
-        #region Properties
-
         /// <summary>
-        /// The initial date time property
-        /// </summary>
-        public static readonly DependencyProperty InitialDateTimeProperty = DependencyProperty.Register(
-            "InitialDateTime", typeof(DateTime), typeof(DateAxis), new PropertyMetadata(DateTime.UtcNow, UpdateChart()));
-        /// <summary>
-        /// Gets or sets the Initial Date Time.
-        /// </summary>
-        public DateTime InitialDateTime
-        {
-            get { return (DateTime)GetValue(InitialDateTimeProperty); }
-            set { SetValue(InitialDateTimeProperty, value); }
-        }
-
-        /// <summary>
-        /// The period property
-        /// </summary>
-        public static readonly DependencyProperty PeriodProperty = DependencyProperty.Register(
-            "Period", typeof(PeriodUnits), typeof(DateAxis), new PropertyMetadata(PeriodUnits.Milliseconds, UpdateChart()));
-        /// <summary>
-        /// Gets or sets the period that represents every unit in the axis.
-        /// </summary>
-        public PeriodUnits Period
-        {
-            get { return (PeriodUnits)GetValue(PeriodProperty); }
-            set { SetValue(PeriodProperty, value); }
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Maps as core element.
+        ///     Maps as core element.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <param name="source">The source.</param>
@@ -105,11 +79,47 @@ namespace FactoryWindowGUI.ChartUtil
             Model.Position = Position;
             Model.Separator = Separator.AsCoreElement(Model, source);
             Model.DisableAnimations = DisableAnimations;
-            Model.Sections = Sections.Select(x => x.AsCoreElement(Model, source)).ToList();            
+            Model.Sections = Sections.Select(x => x.AsCoreElement(Model, source)).ToList();
 
-            ((DateAxisCore)Model).Windows = Windows.ToList();
-            ((DateAxisCore)Model).Windows.ForEach(w => ((DateAxisWindow)w).DateAxisCore = (DateAxisCore)Model);
+            ((DateAxisCore) Model).Windows = Windows.ToList();
+            ((DateAxisCore) Model).Windows.ForEach(w => ((DateAxisWindow) w).DateAxisCore = (DateAxisCore) Model);
             return Model;
         }
+
+        #region Properties
+
+        /// <summary>
+        ///     The initial date time property
+        /// </summary>
+        public static readonly DependencyProperty InitialDateTimeProperty = DependencyProperty.Register(
+            "InitialDateTime", typeof(DateTime), typeof(DateAxis),
+            new PropertyMetadata(DateTime.UtcNow, UpdateChart()));
+
+        /// <summary>
+        ///     Gets or sets the Initial Date Time.
+        /// </summary>
+        public DateTime InitialDateTime
+        {
+            get { return (DateTime) GetValue(InitialDateTimeProperty); }
+            set { SetValue(InitialDateTimeProperty, value); }
+        }
+
+        /// <summary>
+        ///     The period property
+        /// </summary>
+        public static readonly DependencyProperty PeriodProperty = DependencyProperty.Register(
+            "Period", typeof(PeriodUnits), typeof(DateAxis),
+            new PropertyMetadata(PeriodUnits.Milliseconds, UpdateChart()));
+
+        /// <summary>
+        ///     Gets or sets the period that represents every unit in the axis.
+        /// </summary>
+        public PeriodUnits Period
+        {
+            get { return (PeriodUnits) GetValue(PeriodProperty); }
+            set { SetValue(PeriodProperty, value); }
+        }
+
+        #endregion
     }
 }

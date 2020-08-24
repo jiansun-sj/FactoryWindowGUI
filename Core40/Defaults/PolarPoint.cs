@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：PolarPoint.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -20,29 +28,27 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-using System;
 using System.ComponentModel;
 
 namespace LiveCharts.Defaults
 {
     /// <summary>
-    /// An already configured chart point, this class notifies the chart to update every time a property changes
+    ///     An already configured chart point, this class notifies the chart to update every time a property changes
     /// </summary>
     public class PolarPoint : INotifyPropertyChanged
     {
-        private double _radius;
         private double _angle;
+        private double _radius;
 
         /// <summary>
-        /// Initializes a new instance of PolarPoint class
+        ///     Initializes a new instance of PolarPoint class
         /// </summary>
         public PolarPoint()
         {
-            
         }
 
         /// <summary>
-        /// Initializes a new instance of PolarPoint class, giving angle and radius
+        ///     Initializes a new instance of PolarPoint class, giving angle and radius
         /// </summary>
         /// <param name="radius"></param>
         /// <param name="angle"></param>
@@ -53,11 +59,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// The radius of the point
+        ///     The radius of the point
         /// </summary>
         public double Radius
         {
-            get { return _radius; }
+            get => _radius;
             set
             {
                 _radius = value;
@@ -66,11 +72,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// The angle of the point
+        ///     The angle of the point
         /// </summary>
         public double Angle
         {
-            get { return _angle; }
+            get => _angle;
             set
             {
                 _angle = value;
@@ -81,12 +87,12 @@ namespace LiveCharts.Defaults
         #region INotifyPropertyChangedImplementation
 
         /// <summary>
-        /// Occurs when a property value changes.
+        ///     Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Called when [property changed].
+        ///     Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         protected virtual void OnPropertyChanged(string propertyName = null)

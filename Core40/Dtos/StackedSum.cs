@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：StackedSum.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -27,13 +35,9 @@ namespace LiveCharts.Dtos
         public StackedSum(double value) : this()
         {
             if (value < 0)
-            {
                 Left = value;
-            }
             else
-            {
                 Right = value;
-            }
         }
 
         public double Left { get; set; }

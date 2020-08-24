@@ -1,55 +1,55 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:lvc="clr-namespace:LiveCharts.Wpf" 
+                    xmlns:lvc="clr-namespace:LiveCharts.Wpf"
                     xmlns:chartUtil="clr-namespace:FactoryWindowGUI.ChartUtil">
 
     <Style TargetType="chartUtil:CartesianChart">
-        <Setter Property="AnimationsSpeed" Value="0:0:0.420"></Setter>
-        <Setter Property="SeriesColors" Value="{StaticResource ColorsCollection}"/>
+        <Setter Property="AnimationsSpeed" Value="0:0:0.420" />
+        <Setter Property="SeriesColors" Value="{StaticResource ColorsCollection}" />
     </Style>
 
     <Style TargetType="chartUtil:Axis">
-        <Setter Property="FontSize" Value="{StaticResource Size}"></Setter>
-        <Setter Property="FontFamily" Value="Calibri"></Setter>
-        <Setter Property="Foreground" Value="#99303030"></Setter>
+        <Setter Property="FontSize" Value="{StaticResource Size}" />
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="Foreground" Value="#99303030" />
     </Style>
 
     <Style TargetType="chartUtil:Separator">
-        <Setter Property="StrokeThickness" Value="{StaticResource SeparatorStrokeThickness}"></Setter>
-        <Setter Property="StrokeDashArray" Value="{StaticResource SeparatorStrokeDashArray}"></Setter>
-        <Setter Property="Stroke" Value="#1A303030"></Setter>
+        <Setter Property="StrokeThickness" Value="{StaticResource SeparatorStrokeThickness}" />
+        <Setter Property="StrokeDashArray" Value="{StaticResource SeparatorStrokeDashArray}" />
+        <Setter Property="Stroke" Value="#1A303030" />
         <Style.Triggers>
             <Trigger Property="AxisOrientation" Value="X">
-                <Setter Property="IsEnabled" Value="False"></Setter>
+                <Setter Property="IsEnabled" Value="False" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style TargetType="chartUtil:Series" x:Key="SeriesStyle">
-        <Setter Property="FontFamily" Value="Calibri"></Setter>
-        <Setter Property="FontSize" Value="{StaticResource Size}"></Setter>
-        <Setter Property="StrokeThickness" Value="{StaticResource SeriesStrokeThickness}"></Setter>
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="FontSize" Value="{StaticResource Size}" />
+        <Setter Property="StrokeThickness" Value="{StaticResource SeriesStrokeThickness}" />
     </Style>
 
-    <Style TargetType="chartUtil:CandleSeries" BasedOn="{StaticResource SeriesStyle}"/>
-    <Style TargetType="chartUtil:ColumnSeries" BasedOn="{StaticResource SeriesStyle}"/>
-    <Style TargetType="chartUtil:HeatSeries" BasedOn="{StaticResource SeriesStyle}"/>
+    <Style TargetType="chartUtil:CandleSeries" BasedOn="{StaticResource SeriesStyle}" />
+    <Style TargetType="chartUtil:ColumnSeries" BasedOn="{StaticResource SeriesStyle}" />
+    <Style TargetType="chartUtil:HeatSeries" BasedOn="{StaticResource SeriesStyle}" />
     <Style TargetType="chartUtil:LineSeries" BasedOn="{StaticResource SeriesStyle}">
-        <Setter Property="PointGeometrySize" Value="{StaticResource Size}"></Setter>
+        <Setter Property="PointGeometrySize" Value="{StaticResource Size}" />
     </Style>
     <Style TargetType="chartUtil:StepLineSeries" BasedOn="{StaticResource SeriesStyle}">
-        <Setter Property="PointGeometrySize" Value="{StaticResource Size}"></Setter>
+        <Setter Property="PointGeometrySize" Value="{StaticResource Size}" />
     </Style>
     <Style TargetType="chartUtil:VerticalLineSeries" BasedOn="{StaticResource SeriesStyle}">
-        <Setter Property="PointGeometrySize" Value="{StaticResource Size}"></Setter>
+        <Setter Property="PointGeometrySize" Value="{StaticResource Size}" />
     </Style>
-    <Style TargetType="chartUtil:OhlcSeries" BasedOn="{StaticResource SeriesStyle}"/>
-    <Style TargetType="chartUtil:RowSeries" BasedOn="{StaticResource SeriesStyle}"/>
-    <Style TargetType="chartUtil:ScatterSeries" BasedOn="{StaticResource SeriesStyle}"/>
-    <Style TargetType="chartUtil:StackedAreaSeries" BasedOn="{StaticResource SeriesStyle}"/>
-    <Style TargetType="chartUtil:StackedColumnSeries" BasedOn="{StaticResource SeriesStyle}"/>
-    <Style TargetType="chartUtil:StackedRowSeries" BasedOn="{StaticResource SeriesStyle}"/>
-    <Style TargetType="chartUtil:VerticalStackedAreaSeries" BasedOn="{StaticResource SeriesStyle}"/>
-    <Style TargetType="chartUtil:PieSeries" BasedOn="{StaticResource SeriesStyle}"></Style>
+    <Style TargetType="chartUtil:OhlcSeries" BasedOn="{StaticResource SeriesStyle}" />
+    <Style TargetType="chartUtil:RowSeries" BasedOn="{StaticResource SeriesStyle}" />
+    <Style TargetType="chartUtil:ScatterSeries" BasedOn="{StaticResource SeriesStyle}" />
+    <Style TargetType="chartUtil:StackedAreaSeries" BasedOn="{StaticResource SeriesStyle}" />
+    <Style TargetType="chartUtil:StackedColumnSeries" BasedOn="{StaticResource SeriesStyle}" />
+    <Style TargetType="chartUtil:StackedRowSeries" BasedOn="{StaticResource SeriesStyle}" />
+    <Style TargetType="chartUtil:VerticalStackedAreaSeries" BasedOn="{StaticResource SeriesStyle}" />
+    <Style TargetType="chartUtil:PieSeries" BasedOn="{StaticResource SeriesStyle}" />
 
 </ResourceDictionary>

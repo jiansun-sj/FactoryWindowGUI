@@ -70,7 +70,9 @@
     <Reference Include="DevExpress.Data.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Diagram.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Images.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Mvvm.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Mvvm.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DevExpress.Office.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Pdf.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v19.2.Core, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -87,9 +89,11 @@
     <Reference Include="DevExpress.Xpf.PropertyGrid.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Ribbon.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Themes.Office2016White.v19.2, Version=19.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="FreeSql, Version=1.7.0.0, Culture=neutral, PublicKeyToken=a33928e5d4a4b39c">
-      <HintPath>..\packages\FreeSql.1.7.0-preview0716\lib\net45\FreeSql.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="FreeSql, Version=1.7.0.0, Culture=neutral, PublicKeyToken=a33928e5d4a4b39c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSql.1.7.0\lib\net45\FreeSql.dll</HintPath>
+    </Reference>
+    <Reference Include="FreeSql.Extensions.JsonMap, Version=1.7.0.0, Culture=neutral, PublicKeyToken=8f76fea04f9e526d, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSql.Extensions.JsonMap.1.7.0\lib\net45\FreeSql.Extensions.JsonMap.dll</HintPath>
     </Reference>
     <Reference Include="FreeSql.Provider.Sqlite, Version=1.7.0.0, Culture=neutral, PublicKeyToken=5800863e689c9dd8">
       <HintPath>..\packages\FreeSql.Provider.Sqlite.1.7.0-preview0716\lib\net45\FreeSql.Provider.Sqlite.dll</HintPath>
@@ -109,32 +113,21 @@
     </Reference>
     <Reference Include="ProcessControlService.Contracts, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\ProcessControlService.Contracts.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\ResourceLibrary\ProcessControlService.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="ProcessControlService.ResourceLibrary">
+      <HintPath>..\packages\ResourceLibrary\ProcessControlService.ResourceLibrary.dll</HintPath>
     </Reference>
     <Reference Include="ProcessControlService.WCFClients, Version=2.1.4.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\ProcessControlService.WCFClients.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\ResourceLibrary\ProcessControlService.WCFClients.dll</HintPath>
     </Reference>
     <Reference Include="ReachFramework" />
+    <Reference Include="RosemaryThemes.Wpf">
+      <HintPath>..\packages\Rosemary\RosemaryThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="SQLite-net, Version=1.6.292.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\sqlite-net-pcl.1.6.292\lib\netstandard1.1\SQLite-net.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLiteNetExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLiteNetExtensions.2.1.0\lib\netstandard1.1\SQLiteNetExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_green, Version=1.1.13.388, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.13\lib\net45\SQLitePCLRaw.batteries_green.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.1.13.388, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.13\lib\net45\SQLitePCLRaw.batteries_v2.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.core, Version=1.1.13.388, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.core.1.1.13\lib\net45\SQLitePCLRaw.core.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLitePCLRaw.provider.e_sqlite3, Version=1.1.13.388, Culture=neutral, PublicKeyToken=9c301db686d0bd12, processorArchitecture=MSIL">
-      <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.net45.1.1.13\lib\net45\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -166,6 +159,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\AviDemoModel\BasicValue.cs" />
+    <Compile Include="Model\AviDemoModel\LineQueue.cs" />
+    <Compile Include="Model\AviDemoModel\ProductModel.cs" />
+    <Compile Include="Model\AviDemoModel\ProductSpec.cs" />
+    <Compile Include="Model\AviDemoModel\ProductType.cs" />
+    <Compile Include="Model\AviDemoModel\WorkStation.cs" />
     <Compile Include="Model\MachineDataSourceModel.cs" />
     <Compile Include="Model\ConnectionNameModel.cs" />
     <Compile Include="Model\ProcessException.cs" />
@@ -187,14 +186,15 @@
     <Compile Include="Util\AdminUtil.cs" />
     <Compile Include="Util\MachineUtil.cs" />
     <Compile Include="Util\ProcessUtil.cs" />
-    <Compile Include="ICommandImpl\RelayCommandImplementation.cs" />
     <Compile Include="ValueConverters\ComplexPropertyMethodToValueConverter.cs" />
     <Compile Include="ValueConverters\JArrayLengthConverter.cs" />
     <Compile Include="ValueConverters\JPropertyTypeToColorConverter.cs" />
     <Compile Include="ValueConverters\JValueConverter.cs" />
     <Compile Include="ValueConverters\JValueTypeToColorConverter.cs" />
+    <Compile Include="ValueConverters\Last5CharConvertor.cs" />
     <Compile Include="ValueConverters\MethodToValueConverter.cs" />
-    <Compile Include="ValueConverters\TickStringToDateTimeConverter.cs" />
+    <Compile Include="ValueConverters\DateTimeFormatConverter.cs" />
+    <Compile Include="ViewModel\AviDemo\AviDemoViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Util\WorkFlowChartXmlConfigUtil.cs" />
     <Compile Include="ViewModel\MeasureModel.cs" />
@@ -203,6 +203,18 @@
     <Compile Include="ViewModel\StartProcessWindowViewModel.cs" />
     <Compile Include="ViewModel\SystemControlViewModel.cs" />
     <Compile Include="ViewModel\TagControlViewModel.cs" />
+    <Compile Include="View\AviDemo\AviDemoContainer.xaml.cs">
+      <DependentUpon>AviDemoContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AviDemo\AviDemoContent.xaml.cs">
+      <DependentUpon>AviDemoContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AviDemo\ProductDisplayWindow.xaml.cs">
+      <DependentUpon>ProductDisplayWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindowTabControl.xaml.cs">
+      <DependentUpon>MainWindowTabControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ProcessControlView.xaml.cs">
       <DependentUpon>ProcessControlView.xaml</DependentUpon>
     </Compile>
@@ -218,6 +230,21 @@
     <Compile Include="View\TagControlView.xaml.cs">
       <DependentUpon>TagControlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\WorkStation.xaml.cs">
+      <DependentUpon>WorkStation.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\AviDemo\AviDemoContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AviDemo\AviDemoContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AviDemo\ProductDisplayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -230,6 +257,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\MainWindowTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ProcessControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -247,6 +278,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TagControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\WorkStation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -363,6 +398,7 @@
     <Resource Include="Resources\Type.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\car.png" />
     <Resource Include="Resources\Redundancy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -387,11 +423,11 @@
     <Resource Include="Resources\sn %282%29.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\git_Project\Live-Charts-master\Live-Charts-master\Core40\LiveCharts.csproj">
+    <ProjectReference Include="..\Core40\LiveCharts.csproj">
       <Project>{f261c3d7-6194-4625-9516-044081b06028}</Project>
       <Name>LiveCharts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\git_Project\Live-Charts-master\Live-Charts-master\WpfView\FactoryWindowGUI.ChartUtil.csproj">
+    <ProjectReference Include="..\ChartUtil\FactoryWindowGUI.ChartUtil.csproj">
       <Project>{4d253423-ae05-47f6-a59d-9162ec0bb1f2}</Project>
       <Name>FactoryWindowGUI.ChartUtil</Name>
     </ProjectReference>
@@ -408,6 +444,7 @@
       <Name>FactoryWindowGUI.ChartUtil</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.13\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.13\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

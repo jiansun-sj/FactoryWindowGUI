@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：AxisSeparatorElement.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -36,7 +44,6 @@ using LiveCharts.Dtos;
 namespace FactoryWindowGUI.ChartUtil.Components
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Charts.ISeparatorElementView" />
     public class AxisSeparatorElement : ISeparatorElementView
@@ -44,7 +51,7 @@ namespace FactoryWindowGUI.ChartUtil.Components
         private readonly SeparatorElementCore _model;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AxisSeparatorElement"/> class.
+        ///     Initializes a new instance of the <see cref="AxisSeparatorElement" /> class.
         /// </summary>
         /// <param name="model">The model.</param>
         public AxisSeparatorElement(SeparatorElementCore model)
@@ -54,19 +61,20 @@ namespace FactoryWindowGUI.ChartUtil.Components
 
         internal TextBlock TextBlock { get; set; }
         internal Line Line { get; set; }
+
         /// <summary>
-        /// Gets the label model.
+        ///     Gets the label model.
         /// </summary>
         /// <value>
-        /// The label model.
+        ///     The label model.
         /// </value>
         public LabelEvaluation LabelModel { get; private set; }
 
         /// <summary>
-        /// Gets the model.
+        ///     Gets the model.
         /// </summary>
         /// <value>
-        /// The model.
+        ///     The model.
         /// </value>
         public SeparatorElementCore Model
         {
@@ -74,7 +82,7 @@ namespace FactoryWindowGUI.ChartUtil.Components
         }
 
         /// <summary>
-        /// Updates the label.
+        ///     Updates the label.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="axis">The axis.</param>
@@ -85,11 +93,11 @@ namespace FactoryWindowGUI.ChartUtil.Components
             TextBlock.Text = text;
 
             var formattedText = new FormattedText(
-                  TextBlock.Text,
-                  CultureInfo.CurrentUICulture,
-                  FlowDirection.LeftToRight,
-                  new Typeface(TextBlock.FontFamily, TextBlock.FontStyle, TextBlock.FontWeight, TextBlock.FontStretch),
-                  TextBlock.FontSize, Brushes.Black);
+                TextBlock.Text,
+                CultureInfo.CurrentUICulture,
+                FlowDirection.LeftToRight,
+                new Typeface(TextBlock.FontFamily, TextBlock.FontStyle, TextBlock.FontWeight, TextBlock.FontStretch),
+                TextBlock.FontSize, Brushes.Black);
 
             var transform = new LabelEvaluation(axis.View.LabelsRotation,
                 formattedText.Width, formattedText.Height, axis, source);
@@ -104,7 +112,7 @@ namespace FactoryWindowGUI.ChartUtil.Components
         }
 
         /// <summary>
-        /// Clears the specified chart.
+        ///     Clears the specified chart.
         /// </summary>
         /// <param name="chart">The chart.</param>
         public void Clear(IChartView chart)
@@ -116,7 +124,7 @@ namespace FactoryWindowGUI.ChartUtil.Components
         }
 
         /// <summary>
-        /// Places the specified chart.
+        ///     Places the specified chart.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <param name="axis">The axis.</param>
@@ -125,7 +133,7 @@ namespace FactoryWindowGUI.ChartUtil.Components
         /// <param name="toLabel">To label.</param>
         /// <param name="toLine">To line.</param>
         /// <param name="tab">The tab.</param>
-        public void Place(ChartCore chart, AxisCore axis, AxisOrientation direction, int axisIndex, 
+        public void Place(ChartCore chart, AxisCore axis, AxisOrientation direction, int axisIndex,
             double toLabel, double toLine, double tab)
         {
             if (direction == AxisOrientation.Y)
@@ -151,7 +159,7 @@ namespace FactoryWindowGUI.ChartUtil.Components
         }
 
         /// <summary>
-        /// Removes the specified chart.
+        ///     Removes the specified chart.
         /// </summary>
         /// <param name="chart">The chart.</param>
         public void Remove(ChartCore chart)
@@ -163,7 +171,7 @@ namespace FactoryWindowGUI.ChartUtil.Components
         }
 
         /// <summary>
-        /// Moves the specified chart.
+        ///     Moves the specified chart.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <param name="axis">The axis.</param>
@@ -172,7 +180,8 @@ namespace FactoryWindowGUI.ChartUtil.Components
         /// <param name="toLabel">To label.</param>
         /// <param name="toLine">To line.</param>
         /// <param name="tab">The tab.</param>
-        public void Move(ChartCore chart, AxisCore axis, AxisOrientation direction, int axisIndex, double toLabel, double toLine, double tab)
+        public void Move(ChartCore chart, AxisCore axis, AxisOrientation direction, int axisIndex, double toLabel,
+            double toLine, double tab)
         {
             if (direction == AxisOrientation.Y)
             {
@@ -206,11 +215,10 @@ namespace FactoryWindowGUI.ChartUtil.Components
                 TextBlock.BeginAnimation(Canvas.TopProperty,
                     new DoubleAnimation(tab, chart.View.AnimationsSpeed));
             }
-
         }
 
         /// <summary>
-        /// Fades the in.
+        ///     Fades the in.
         /// </summary>
         /// <param name="axis">The axis.</param>
         /// <param name="chart">The chart.</param>
@@ -226,7 +234,7 @@ namespace FactoryWindowGUI.ChartUtil.Components
         }
 
         /// <summary>
-        /// Fades the out and remove.
+        ///     Fades the out and remove.
         /// </summary>
         /// <param name="chart">The chart.</param>
         public void FadeOutAndRemove(ChartCore chart)
@@ -244,11 +252,11 @@ namespace FactoryWindowGUI.ChartUtil.Components
             var dispatcher = ((Chart) chart.View).Dispatcher;
             anim.Completed += (sender, args) =>
             {
-                dispatcher.Invoke(new Action(() =>
+                dispatcher.Invoke(() =>
                 {
                     chart.View.RemoveFromView(TextBlock);
                     chart.View.RemoveFromView(Line);
-                }));
+                });
             };
 
             TextBlock.BeginAnimation(UIElement.OpacityProperty, anim);

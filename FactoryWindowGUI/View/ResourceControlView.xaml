@@ -10,7 +10,7 @@
              xmlns:jLinq="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json"
              xmlns:valueConverters="clr-namespace:FactoryWindowGUI.ValueConverters"
              xmlns:templateSelectors="clr-namespace:FactoryWindowGUI.TemplateSelectors"
-             mc:Ignorable="d" d:DesignHeight="1080" d:DesignWidth="1980"
+             mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="1900"
              DataContext="{Binding ResourceControlVm,RelativeSource={RelativeSource Self}}">
     <UserControl.Resources>
         <valueConverters:MethodToValueConverter x:Key="MethodToValueConverter" />
@@ -90,7 +90,7 @@
     </UserControl.Resources>
 
 
-    <Grid Background="#f3f3f3">
+    <Grid Background="#f3f3f3" MaxHeight="800">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="1.5*" />
@@ -183,7 +183,8 @@
                     </Button>
                 </StackPanel>
 
-                <TreeView Background="White" Grid.Row="1" Padding="20" Margin="3" Name="JsonTreeView" IsTextSearchEnabled="True"
+                <TreeView Background="White" Grid.Row="1" Padding="20" Margin="3" Name="JsonTreeView"
+                          IsTextSearchEnabled="True"
                           ItemTemplateSelector="{StaticResource JPropertyDataTemplateSelector}" DockPanel.Dock="Bottom"
                           BorderThickness="0" FontSize="18">
                     <TreeView.ItemContainerStyle>
@@ -193,7 +194,8 @@
                     </TreeView.ItemContainerStyle>
                 </TreeView>
                 <metro:MetroTextBlock Grid.Row="2" Text="返回值字符串:" FontWeight="Bold" VerticalAlignment="Center" />
-                <TextBox Background="White" Grid.Row="3" Text="{Binding ResourceServiceResult}" TextWrapping="Wrap" FontSize="14"
+                <TextBox Background="White" Grid.Row="3" Text="{Binding ResourceServiceResult}" TextWrapping="Wrap"
+                         FontSize="14"
                          VerticalScrollBarVisibility="Visible" />
             </Grid>
         </dxlc:GroupBox>

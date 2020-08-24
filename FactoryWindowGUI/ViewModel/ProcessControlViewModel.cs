@@ -1,10 +1,10 @@
 ﻿// ==================================================
 // 文件名：ProcessControlViewModel.cs
-// 创建时间：2020/04/30 16:26
+// 创建时间：2020/04/30 13:39
 // 上海芸浦信息技术有限公司
 // copyright@yumpoo
 // ==================================================
-// 最后修改于：2020/05/11 16:26
+// 最后修改于：2020/07/29 13:39
 // 修改人：jians
 // ==================================================
 
@@ -23,12 +23,12 @@ using System.Windows.Threading;
 using Arthas.Controls.Metro;
 using DevExpress.Xpf.Diagram;
 using FactoryWindowGUI.Annotations;
-using FactoryWindowGUI.ICommandImpl;
 using FactoryWindowGUI.Model;
 using FactoryWindowGUI.Util;
 using FactoryWindowGUI.View;
 using log4net;
 using ProcessControlService.Contracts.ProcessData;
+using RosemaryThemes.Wpf.BaseClass;
 
 namespace FactoryWindowGUI.ViewModel
 {
@@ -36,29 +36,16 @@ namespace FactoryWindowGUI.ViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(ProcessControlViewModel));
 
-        private bool _processTabIsSelected;
+        private static readonly WorkFlowChartXmlConfigUtil XmlUtil = new WorkFlowChartXmlConfigUtil();
 
-        public bool ProcessTabIsSelected
-        {
-            get => _processTabIsSelected;
-            set
-            {
-                _processTabIsSelected = value;
-
-                _flowChartShown = value != true;
-            }
-        }
-        
         private readonly DispatcherTimer _autoRefreshProcessTimer =
-            new DispatcherTimer {Interval = new TimeSpan(0, 0, 0, 0,400)};
+            new DispatcherTimer {Interval = new TimeSpan(0, 0, 0, 0, 400)};
 
         private readonly object _processLocker = new object();
 
-        private bool _flowChartShown;
-        
         private readonly ProcessUtil _processUtil = new ProcessUtil();
 
-        public DiagramControl WorkFlowChartControl { get; set; }
+        private bool _flowChartShown;
 
         //process的属性
 
@@ -71,12 +58,13 @@ namespace FactoryWindowGUI.ViewModel
         private ObservableCollection<ProcessInstanceRecord> _processInstanceRecords =
             new ObservableCollection<ProcessInstanceRecord>();
 
-        private int _recordCounts = 10;
+        private bool _processTabIsSelected;
 
         //Process combobox item source
         private ProcessInstanceModel _selectedInstanceModel = new ProcessInstanceModel();
 
         private ProcessSearchResultModel _selectedProcess;
+        private string _selectedProcessName;
 
         private ProcessInstanceRecord _selectedProcessRecord = new ProcessInstanceRecord();
 
@@ -84,31 +72,63 @@ namespace FactoryWindowGUI.ViewModel
 
         private List<string> _staticResources = new List<string>();
 
+        private Dictionary<short, List<string>> _stepInfo = new Dictionary<short, List<string>>();
+
         public ProcessControlViewModel()
         {
             _autoRefreshProcessTimer.Tick += AutoFreshProcess;
         }
 
-        public List<int> RecordCountSelection { get; set; } = new List<int> {10, 20, 50, 100};
-
-        public int RecordCounts
+        public bool ProcessTabIsSelected
         {
-            get => _recordCounts;
+            get => _processTabIsSelected;
             set
             {
-                _recordCounts = value;
-                OnPropertyChanged(nameof(RecordCounts));
+                _processTabIsSelected = value;
+
+                _flowChartShown = value != true;
             }
         }
 
+        public DiagramControl WorkFlowChartControl { get; set; }
+
+        public List<int> RecordCountSelection { get; set; } = new List<int> {10, 20, 50, 100};
+
+        public int RecordCounts { get; set; } = 100;
+
         public ICommand AutoRefreshProcessCommand =>
-            new RelayCommandImplementation(AutoFreshChecked, AutoRefreshProcessCanExecute);
+            new RelayCommand(AutoFreshChecked, AutoRefreshProcessCanExecute);
 
         public ICommand RefreshProcessCommand =>
-            new RelayCommandImplementation(RefreshProcess);
+            new RelayCommand(RefreshProcess);
 
         public ICommand QueryProcessRecordCommand =>
-            new RelayCommandImplementation(QueryProcessRecord);
+            new RelayCommand(QueryProcessRecord);
+
+        private int _searchPage = 1;
+        
+        public ICommand QueryProcessRecordNextPageCommand =>
+            new RelayCommand(QueryProcessRecordNextPage);
+
+        private void QueryProcessRecordNextPage(object obj)
+        {
+            _searchPage += 1;
+            QueryProcessRecord(null);
+        }
+
+        public ICommand QueryProcessRecordLastPageCommand =>
+            new RelayCommand(QueryProcessRecordLastPage,CanQueryProcessRecordLastPageExe);
+
+        private bool CanQueryProcessRecordLastPageExe(object arg)
+        {
+            return _searchPage > 1;
+        }
+
+        private void QueryProcessRecordLastPage(object obj)
+        {
+            _searchPage -= 1;
+            QueryProcessRecord(null);
+        }
 
         public ObservableCollection<ProcessInstanceRecord> ProcessInstanceRecords
         {
@@ -172,12 +192,10 @@ namespace FactoryWindowGUI.ViewModel
 
         // Process 停止
         public ICommand StopProcessInstanceCommand =>
-            new RelayCommandImplementation(StopProcessInstance, StopProcessInstanceCanExecute);
-        
-        public ICommand ShowFlowChartCommand =>
-            new RelayCommandImplementation(ShowFlowChart);
+            new RelayCommand(StopProcessInstance, StopProcessInstanceCanExecute);
 
-        private static readonly WorkFlowChartXmlConfigUtil XmlUtil = new WorkFlowChartXmlConfigUtil();
+        public ICommand ShowFlowChartCommand =>
+            new RelayCommand(ShowFlowChart);
 
         public string SelectedProcessName
         {
@@ -189,40 +207,74 @@ namespace FactoryWindowGUI.ViewModel
             }
         }
 
-        private Dictionary<short, List<string>> _stepInfo = new Dictionary<short, List<string>>();
-        private string _selectedProcessName;
+        public ICommand StartProcessCommand => new RelayCommand(StartProcess);
+
+        public ObservableCollection<ProcessSearchResultModel> ProcessInfoModels { get; set; } =
+            new ObservableCollection<ProcessSearchResultModel>();
+
+        public ProcessSearchResultModel SelectedProcess
+        {
+            get => _selectedProcess;
+            set
+            {
+                _selectedProcess = value;
+                OnPropertyChanged(nameof(SelectedProcess));
+            }
+        }
+
+        public ObservableCollection<ProcessInstanceModel> ProcessInstanceModels
+        {
+            get => _processInstanceModels;
+            set
+            {
+                _processInstanceModels = value;
+                OnPropertyChanged(nameof(ProcessInstanceModels));
+            }
+        }
+
+        /*public List<string> SearDateTimes { get; set; } = new List<string>
+        {
+            DateTime.Today.ToString("yyyy-M-d"),
+            DateTime.Today.AddDays(-1).ToString("yyyy-M-d"),
+            DateTime.Today.AddDays(-2).ToString("yyyy-M-d")
+        };*/
+
+        public DateTime SearchStartDateDay { get; set; } = DateTime.Today;
+
+        public DateTime SearchStartDateHour { get; set; } =new DateTime(1,1,1,0,0,0);
+
+        public DateTime SearchEndDateDay { get; set; } = DateTime.Today.AddDays(1);
+
+        public DateTime SearchEndDateHour { get; set; } = new DateTime(1, 1, 1, 0, 0, 0);
+
+
+        public string SearchDate { get; set; } = DateTime.Today.ToString("yyyy-M-d");
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// 当前步骤与上次系统刷新不一致时，高亮当前步骤。
+        ///     当前步骤与上次系统刷新不一致时，高亮当前步骤。
         /// </summary>
         /// <param name="currentStepId"></param>
         private void VaryFlowChartCurrentStep(short currentStepId)
         {
-            if (!_flowChartShown)
-            {
-                return;
-            }
+            if (!_flowChartShown) return;
 
             var diagramItemCollection = WorkFlowChartControl.Items;
 
             foreach (var diagramItem in diagramItemCollection)
-            {
                 if (diagramItem is DiagramShape)
-                {
-                    diagramItem.Background = diagramItem.Tag.ToString()==currentStepId.ToString() ? new SolidColorBrush(Color.FromArgb(0xFF,0x44,0xEB,0x44)) : new SolidColorBrush(Color.FromArgb(0xFF,0x5B,0x9B,0xD5));
-                }
-            }
+                    diagramItem.Background = diagramItem.Tag.ToString() == currentStepId.ToString()
+                        ? new SolidColorBrush(Color.FromArgb(0xFF, 0x44, 0xEB, 0x44))
+                        : new SolidColorBrush(Color.FromArgb(0xFF, 0x5B, 0x9B, 0xD5));
         }
-        
+
         private void ShowFlowChart(object obj)
-        { 
+        {
             try
             {
-                if (!(obj is MetroTabItem processWorkFlowControl))
-                {
-                    return;
-                }
-                
+                if (!(obj is MetroTabItem processWorkFlowControl)) return;
+
                 processWorkFlowControl.IsSelected = true;
 
                 _flowChartShown = true;
@@ -230,7 +282,7 @@ namespace FactoryWindowGUI.ViewModel
                 SelectedProcessName = SelectedProcess.ProcessName;
 
                 _stepInfo = _processUtil.GetWorkFlowChartInfo(SelectedProcessName);
-                
+
                 XmlUtil.DeleteAllItem();
 
                 //var currentStep = _processUtil.GetCurrentStep(_processName);
@@ -244,7 +296,7 @@ namespace FactoryWindowGUI.ViewModel
                     //添加Step
                     stepIndex.Add(item.Key, index); //ItemID从1开始,但是线连接的Item从0开始算
                     index += 1;
-                    XmlUtil.AddNewStepNode(item.Key,index.ToString(), XmlUtil.GetStepPosition(index),
+                    XmlUtil.AddNewStepNode(item.Key, index.ToString(), XmlUtil.GetStepPosition(index),
                         /*item.Key == currentStep ? "#FF44EB44" :*/ "#FF5B9BD5",
                         "BasicShapes.RoundedRectangle", item.Value[0], "DiagramShape");
                     for (var i = 1; i < item.Value.Count; i++)
@@ -256,7 +308,7 @@ namespace FactoryWindowGUI.ViewModel
                 {
                     stepIndex.Add(-1, index);
                     index += 1;
-                    XmlUtil.AddNewStepNode(-1,index.ToString(), XmlUtil.GetStepPosition(index),
+                    XmlUtil.AddNewStepNode(-1, index.ToString(), XmlUtil.GetStepPosition(index),
                         /*-1 == currentStep ? "#FF44EB44" :*/ "#FF5B9BD5", "BasicShapes.RoundedRectangle", "结束",
                         "DiagramShape");
                 }
@@ -292,71 +344,40 @@ namespace FactoryWindowGUI.ViewModel
             {
                 MessageBox.Show("打开流程图异常：" + ex.Message);
             }
-
         }
-
-        public ICommand StartProcessCommand => new RelayCommandImplementation(StartProcess);
-
-        public ObservableCollection<ProcessSearchResultModel> ProcessInfoModels { get; set; } =
-            new ObservableCollection<ProcessSearchResultModel>();
-
-        public ProcessSearchResultModel SelectedProcess
-        {
-            get => _selectedProcess;
-            set
-            {
-                _selectedProcess = value;
-                OnPropertyChanged(nameof(SelectedProcess));
-            }
-        }
-
-        public ObservableCollection<ProcessInstanceModel> ProcessInstanceModels
-        {
-            get => _processInstanceModels;
-            set
-            {
-                _processInstanceModels = value;
-                OnPropertyChanged(nameof(ProcessInstanceModels));
-            }
-        }
-
-        public List<string> SearDateTimes { get; set; } = new List<string>
-        {
-            DateTime.Today.ToString("yyyy-M-d"),
-            DateTime.Today.AddDays(-1).ToString("yyyy-M-d"),
-            DateTime.Today.AddDays(-2).ToString("yyyy-M-d")
-        };
-
-        public string SearchDate { get; set; } = DateTime.Today.ToString("yyyy-M-d");
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void StartProcess(object obj)
         {
             if (SelectedProcess == null) return;
 
             if (_selectedProcess.ContainerNames.Count <= 0)
-            {
                 Task.Run(() =>
                 {
                     _processUtil.StartProcess(_selectedProcess.ProcessName, new Dictionary<string, string>(),
                         new Dictionary<string, string>());
                 });
-            }
 
             /*_startProcessWindow = new StartProcessWindow();
             _startProcessWindow.InitializeProcessAttribute(_selectedProcess, _staticResources, _processUtil);
             _startProcessWindow.Show();*/
         }
 
+
+
         private void QueryProcessRecord(object obj)
         {
             ProcessInstanceRecords.Clear();
 
+            var startDate = new DateTime(SearchStartDateDay.Year, SearchStartDateDay.Month, SearchStartDateDay.Day,
+                SearchEndDateHour.Hour, SearchStartDateHour.Minute, 0);
+            
+            var endDate = new DateTime(SearchEndDateDay.Year, SearchEndDateDay.Month, SearchEndDateDay.Day,
+                SearchEndDateHour.Hour, SearchEndDateHour.Minute, 0);
+
             ProcessInstanceRecords =
                 new ObservableCollection<ProcessInstanceRecord>(
                     _processUtil.ReadProcessRecords(SelectedProcess?.ProcessName, RecordCounts,
-                        Convert.ToDateTime(SearchDate)));
+                        startDate,endDate,_searchPage));
         }
 
         private void AutoFreshChecked(object obj)
@@ -374,12 +395,12 @@ namespace FactoryWindowGUI.ViewModel
                 Log.Error("ProcessAutoRefreshButton_Click-Execute异常：" + ex.Message);
             }
         }
-        
+
         private void StopAutoFreshProcess()
         {
             try
             {
-                ProcessAutoRefresh = false; 
+                ProcessAutoRefresh = false;
                 _autoRefreshProcessTimer.Stop();
             }
             catch (Exception ex)
@@ -388,7 +409,7 @@ namespace FactoryWindowGUI.ViewModel
                 Log.Error("ProcessAutoRefreshButton_Click-Execute异常：" + ex.Message);
             }
         }
-        
+
         private void AutoFreshProcess(object sender, EventArgs eventArgs)
         {
             QueryProcess();
@@ -427,10 +448,10 @@ namespace FactoryWindowGUI.ViewModel
                         ProcessInfoModels.Clear();
                         ProcessInstanceModels.Clear();
                         WorkFlowChartControl.DeleteItems(WorkFlowChartControl.Items);
-                        
+
                         StopAutoFreshProcess();
 
-                        MessageBox.Show($"从服务器获取Process信息出错或超时，已中止实时刷新Process信息。");
+                        MessageBox.Show("从服务器获取Process信息出错或超时，已中止实时刷新Process信息。");
                         return;
                     }
 
@@ -488,7 +509,7 @@ namespace FactoryWindowGUI.ViewModel
                     return;
                 }
 
-                if (processInstanceInfoModels.Count==0)
+                if (processInstanceInfoModels.Count == 0)
                 {
                     ProcessInstanceModels.Clear();
                     VaryFlowChartCurrentStep(-99);
@@ -524,11 +545,10 @@ namespace FactoryWindowGUI.ViewModel
                     var processInstanceModel =
                         ProcessInstanceModels.FirstOrDefault(a => a.Pid == processInstanceInfoModel.Index);
 
-                    if (_selectedInstanceModel!=null&&_flowChartShown&&processInstanceInfoModel.Index==_selectedInstanceModel.Pid)
-                    {
+                    if (_selectedInstanceModel != null && _flowChartShown &&
+                        processInstanceInfoModel.Index == _selectedInstanceModel.Pid)
                         VaryFlowChartCurrentStep(processInstanceInfoModel.CurrentStepId);
-                    }
-                    
+
                     if (processInstanceModel != null)
                     {
                         processInstanceModel.CurrentStep = processInstanceInfoModel.CurrentStep;
@@ -547,18 +567,14 @@ namespace FactoryWindowGUI.ViewModel
                         CurrentStepId = processInstanceInfoModel.CurrentStepId,
                         Container = processInstanceInfoModel.Container
                     };
-                    
+
                     instanceModel.InitParameters(instanceParameterModels);
 
                     ProcessInstanceModels.Add(instanceModel);
                 }
 
-                if (_selectedInstanceModel==null&&ProcessInstanceModels!=null&&ProcessInstanceModels.Count>0)
-                {
+                if (_selectedInstanceModel == null && ProcessInstanceModels != null && ProcessInstanceModels.Count > 0)
                     SelectedInstanceModel = ProcessInstanceModels[0];
-                }
-
-                
             }
             catch (Exception e)
             {

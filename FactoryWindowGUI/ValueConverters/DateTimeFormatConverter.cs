@@ -1,10 +1,10 @@
 ﻿// ==================================================
 // 文件名：TickStringToDateTimeConverter.cs
-// 创建时间：2020/06/11 11:09
+// 创建时间：2020/06/11 13:39
 // 上海芸浦信息技术有限公司
 // copyright@yumpoo
 // ==================================================
-// 最后修改于：2020/06/11 11:09
+// 最后修改于：2020/07/29 13:39
 // 修改人：jians
 // ==================================================
 
@@ -14,14 +14,14 @@ using System.Windows.Data;
 
 namespace FactoryWindowGUI.ValueConverters
 {
-    internal class TickStringToDateTimeConverter : IValueConverter
+    internal class DateTimeFormatConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                if (value is string ticks)
-                    return new DateTime(long.Parse(ticks)).ToString("G");
+                if (value is DateTime dateTime)
+                    return dateTime.ToString("G");
 
                 return value;
             }

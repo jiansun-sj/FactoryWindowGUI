@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：BarLabelPosition.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,25 +33,28 @@ using System;
 namespace LiveCharts
 {
     /// <summary>
-    /// Describes where a label should be placed
+    ///     Describes where a label should be placed
     /// </summary>
     public enum BarLabelPosition
     {
         /// <summary>
-        /// Places a label at the top of a bar
+        ///     Places a label at the top of a bar
         /// </summary>
         Top,
+
         /// <summary>
-        /// Places a labels inside the bar
+        ///     Places a labels inside the bar
         /// </summary>
         [Obsolete("Instead use BarLabelPosition.Parallel")]
         Merged,
+
         /// <summary>
-        /// Places a labels in a parallel orientation to the bar height.
+        ///     Places a labels in a parallel orientation to the bar height.
         /// </summary>
         Parallel,
+
         /// <summary>
-        /// Places a labels in a perpendicular orientation to the bar height.
+        ///     Places a labels in a perpendicular orientation to the bar height.
         /// </summary>
         Perpendicular
     }

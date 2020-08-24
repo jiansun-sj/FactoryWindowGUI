@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：DefaultAxes.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,12 +33,12 @@ using System.Windows;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// Contains a collection of already defined axes.
+    ///     Contains a collection of already defined axes.
     /// </summary>
     public static class DefaultAxes
     {
         /// <summary>
-        /// Returns default axis
+        ///     Returns default axis
         /// </summary>
         public static AxesCollection DefaultAxis
         {
@@ -38,7 +46,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Return an axis without separators at all
+        ///     Return an axis without separators at all
         /// </summary>
         public static AxesCollection CleanAxis
         {
@@ -56,7 +64,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Returns an axis that only displays a line for zero
+        ///     Returns an axis that only displays a line for zero
         /// </summary>
         public static AxesCollection OnlyZerosAxis
         {
@@ -76,10 +84,10 @@ namespace FactoryWindowGUI.ChartUtil
 
         //Returns a clean separator
         /// <summary>
-        /// Gets the clean separator.
+        ///     Gets the clean separator.
         /// </summary>
         /// <value>
-        /// The clean separator.
+        ///     The clean separator.
         /// </value>
         public static Separator CleanSeparator
         {
@@ -91,6 +99,5 @@ namespace FactoryWindowGUI.ChartUtil
                 };
             }
         }
-
     }
 }

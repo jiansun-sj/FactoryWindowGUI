@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：PieChartCore.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -30,14 +38,14 @@ using LiveCharts.Helpers;
 namespace LiveCharts.Charts
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Charts.ChartCore" />
     public class PieChartCore : ChartCore
     {
         #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="PieChartCore"/> class.
+        ///     Initializes a new instance of the <see cref="PieChartCore" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="updater">The updater.</param>
@@ -51,10 +59,12 @@ namespace LiveCharts.Charts
         #region Publics
 
         /// <summary>
-        /// Prepares the axes.
+        ///     Prepares the axes.
         /// </summary>
-        /// <exception cref="LiveChartsException">There is a invalid series in the series collection, " +
-        ///                     "verify that all the series implement IPieSeries.</exception>
+        /// <exception cref="LiveChartsException">
+        ///     There is a invalid series in the series collection, " +
+        ///     "verify that all the series implement IPieSeries.
+        /// </exception>
         public override void PrepareAxes()
         {
             View.Zoom = ZoomingOptions.None;
@@ -107,6 +117,5 @@ namespace LiveCharts.Charts
         }
 
         #endregion
-
     }
 }

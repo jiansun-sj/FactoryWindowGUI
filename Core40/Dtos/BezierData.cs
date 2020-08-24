@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：BezierData.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -22,21 +30,19 @@
 
 namespace LiveCharts.Dtos
 {
-
     /// <summary>
-    /// 
     /// </summary>
     public class BezierData
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BezierData"/> class.
+        ///     Initializes a new instance of the <see cref="BezierData" /> class.
         /// </summary>
         public BezierData()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BezierData"/> class.
+        ///     Initializes a new instance of the <see cref="BezierData" /> class.
         /// </summary>
         /// <param name="point">The point.</param>
         public BezierData(CorePoint point)
@@ -47,32 +53,34 @@ namespace LiveCharts.Dtos
         }
 
         /// <summary>
-        /// Gets or sets the point1.
+        ///     Gets or sets the point1.
         /// </summary>
         /// <value>
-        /// The point1.
+        ///     The point1.
         /// </value>
         public CorePoint Point1 { get; set; }
 
         /// <summary>
-        /// Gets or sets the point2.
+        ///     Gets or sets the point2.
         /// </summary>
         /// <value>
-        /// The point2.
+        ///     The point2.
         /// </value>
         public CorePoint Point2 { get; set; }
+
         /// <summary>
-        /// Gets or sets the point3.
+        ///     Gets or sets the point3.
         /// </summary>
         /// <value>
-        /// The point3.
+        ///     The point3.
         /// </value>
         public CorePoint Point3 { get; set; }
+
         /// <summary>
-        /// Gets or sets the start point.
+        ///     Gets or sets the start point.
         /// </summary>
         /// <value>
-        /// The start point.
+        ///     The start point.
         /// </value>
         public CorePoint StartPoint { get; set; }
     }

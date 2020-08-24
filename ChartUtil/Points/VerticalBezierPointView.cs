@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：VerticalBezierPointView.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -74,6 +82,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
                             Canvas.SetTop(Shape, current.ChartLocation.Y - Shape.Height * .5);
                             Canvas.SetLeft(Shape, 0);
                         }
+
                         if (DataLabel != null)
                         {
                             Canvas.SetTop(DataLabel, current.ChartLocation.Y - DataLabel.ActualHeight * .5);
@@ -90,8 +99,9 @@ namespace FactoryWindowGUI.ChartUtil.Points
                         if (Shape != null)
                         {
                             Canvas.SetTop(Shape, startPoint.Y - Shape.Height * .5);
-                            Canvas.SetLeft(Shape,  startPoint.X);
+                            Canvas.SetLeft(Shape, startPoint.X);
                         }
+
                         if (DataLabel != null)
                         {
                             Canvas.SetTop(DataLabel, startPoint.Y - DataLabel.ActualHeight * .5);
@@ -134,6 +144,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
                     Canvas.SetLeft(DataLabel, xl);
                     Canvas.SetTop(DataLabel, yl);
                 }
+
                 return;
             }
 
@@ -156,7 +167,7 @@ namespace FactoryWindowGUI.ChartUtil.Points
                 else
                 {
                     Shape.BeginAnimation(Canvas.LeftProperty,
-                   new DoubleAnimation(current.ChartLocation.X - Shape.Width * .5, chart.View.AnimationsSpeed));
+                        new DoubleAnimation(current.ChartLocation.X - Shape.Width * .5, chart.View.AnimationsSpeed));
                     Shape.BeginAnimation(Canvas.TopProperty,
                         new DoubleAnimation(current.ChartLocation.Y - Shape.Height * .5, chart.View.AnimationsSpeed));
                 }
@@ -184,14 +195,14 @@ namespace FactoryWindowGUI.ChartUtil.Points
 
         public override void OnHover(ChartPoint point)
         {
-            var lineSeries = (LineSeries)point.SeriesView;
+            var lineSeries = (LineSeries) point.SeriesView;
             if (Shape != null) Shape.Fill = Shape.Stroke;
             lineSeries.Path.StrokeThickness = lineSeries.StrokeThickness + 1;
         }
 
         public override void OnHoverLeave(ChartPoint point)
         {
-            var lineSeries = (LineSeries)point.SeriesView;
+            var lineSeries = (LineSeries) point.SeriesView;
             if (Shape != null)
                 Shape.Fill = point.Fill == null
                     ? lineSeries.PointForeground

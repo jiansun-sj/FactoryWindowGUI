@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：StepLineSeries.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -36,13 +44,43 @@ using LiveCharts.SeriesAlgorithms;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// The Step line series.
+    ///     The Step line series.
     /// </summary>
     public class StepLineSeries : Series, IFondeable, IAreaPoint
     {
-        #region Constructors
+        #region Public methods
+
         /// <summary>
-        /// Initializes a new instance of BubbleSeries class
+        ///     Gets the point diameter.
+        /// </summary>
+        /// <returns></returns>
+        public double GetPointDiameter()
+        {
+            return PointGeometrySize / 2;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void InitializeDefuaults()
+        {
+            SetCurrentValue(PointGeometrySizeProperty, 8d);
+            SetCurrentValue(PointForegroundProperty, Brushes.White);
+            SetCurrentValue(StrokeThicknessProperty, 2d);
+
+            Func<ChartPoint, string> defaultLabel = x => Model.CurrentYAxis.GetFormatter()(x.Y);
+            SetCurrentValue(LabelPointProperty, defaultLabel);
+
+            DefaultFillOpacity = 0.15;
+        }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of BubbleSeries class
         /// </summary>
         public StepLineSeries()
         {
@@ -51,7 +89,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Initializes a new instance of BubbleSeries class using a given mapper
+        ///     Initializes a new instance of BubbleSeries class using a given mapper
         /// </summary>
         /// <param name="configuration"></param>
         public StepLineSeries(object configuration)
@@ -70,46 +108,48 @@ namespace FactoryWindowGUI.ChartUtil
         #region Properties
 
         /// <summary>
-        /// The point geometry size property
+        ///     The point geometry size property
         /// </summary>
         public static readonly DependencyProperty PointGeometrySizeProperty = DependencyProperty.Register(
-           "PointGeometrySize", typeof(double), typeof(StepLineSeries),
-           new PropertyMetadata(default(double), CallChartUpdater()));
+            "PointGeometrySize", typeof(double), typeof(StepLineSeries),
+            new PropertyMetadata(default(double), CallChartUpdater()));
+
         /// <summary>
-        /// Gets or sets the point geometry size, increasing this property will make the series points bigger
+        ///     Gets or sets the point geometry size, increasing this property will make the series points bigger
         /// </summary>
         public double PointGeometrySize
         {
-            get { return (double)GetValue(PointGeometrySizeProperty); }
+            get { return (double) GetValue(PointGeometrySizeProperty); }
             set { SetValue(PointGeometrySizeProperty, value); }
         }
 
         /// <summary>
-        /// The point foreround property
+        ///     The point foreround property
         /// </summary>
         public static readonly DependencyProperty PointForegroundProperty = DependencyProperty.Register(
             "PointForeground", typeof(Brush), typeof(StepLineSeries),
             new PropertyMetadata(default(Brush)));
+
         /// <summary>
-        /// Gets or sets the point shape foreground.
+        ///     Gets or sets the point shape foreground.
         /// </summary>
         public Brush PointForeground
         {
-            get { return (Brush)GetValue(PointForegroundProperty); }
+            get { return (Brush) GetValue(PointForegroundProperty); }
             set { SetValue(PointForegroundProperty, value); }
         }
 
         /// <summary>
-        /// The alternative stroke property
+        ///     The alternative stroke property
         /// </summary>
         public static readonly DependencyProperty AlternativeStrokeProperty = DependencyProperty.Register(
-            "AlternativeStroke", typeof (Brush), typeof (StepLineSeries), new PropertyMetadata(default(Brush)));
+            "AlternativeStroke", typeof(Brush), typeof(StepLineSeries), new PropertyMetadata(default(Brush)));
 
         /// <summary>
-        /// Gets or sets the alternative stroke.
+        ///     Gets or sets the alternative stroke.
         /// </summary>
         /// <value>
-        /// The alternative stroke.
+        ///     The alternative stroke.
         /// </value>
         public Brush AlternativeStroke
         {
@@ -118,15 +158,17 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The inverted mode property
+        ///     The inverted mode property
         /// </summary>
         public static readonly DependencyProperty InvertedModeProperty = DependencyProperty.Register(
-            "InvertedMode", typeof(bool), typeof(StepLineSeries), new PropertyMetadata(default(bool), CallChartUpdater()));
+            "InvertedMode", typeof(bool), typeof(StepLineSeries),
+            new PropertyMetadata(default(bool), CallChartUpdater()));
+
         /// <summary>
-        /// Gets or sets a value indicating whether the series should be drawn using the inverted mode.
+        ///     Gets or sets a value indicating whether the series should be drawn using the inverted mode.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [inverted mode]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [inverted mode]; otherwise, <c>false</c>.
         /// </value>
         public bool InvertedMode
         {
@@ -139,7 +181,7 @@ namespace FactoryWindowGUI.ChartUtil
         #region Overridden Methods
 
         /// <summary>
-        /// Gets the view of a given point
+        ///     Gets the view of a given point
         /// </summary>
         /// <param name="point"></param>
         /// <param name="label"></param>
@@ -191,13 +233,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (PointGeometry != null && Math.Abs(PointGeometrySize) > 0.1 && pbv.Shape == null)
             {
                 if (PointGeometry != null)
-                {
                     pbv.Shape = new Path
                     {
                         Stretch = Stretch.Fill,
                         StrokeThickness = StrokeThickness
                     };
-                }
                 Model.Chart.View.AddToDrawMargin(pbv.Shape);
             }
 
@@ -236,13 +276,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (pbv.HoverShape != null) pbv.HoverShape.Visibility = Visibility;
 
             if (DataLabels)
-            {
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -254,7 +292,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Initializes the series colors if they are not set
+        ///     Initializes the series colors if they are not set
         /// </summary>
         public override void InitializeColors()
         {
@@ -263,39 +301,13 @@ namespace FactoryWindowGUI.ChartUtil
             if (Stroke != null && AlternativeStroke != null) return;
 
             var nextColor = wpfChart.GetNextDefaultColor();
-            
+
             if (Stroke == null)
                 SetValue(StrokeProperty, new SolidColorBrush(nextColor));
             if (AlternativeStroke == null)
                 SetValue(AlternativeStrokeProperty, new SolidColorBrush(nextColor));
         }
 
-        #endregion
-
-        #region Public methods
-        /// <summary>
-        /// Gets the point diameter.
-        /// </summary>
-        /// <returns></returns>
-        public double GetPointDiameter()
-        {
-            return PointGeometrySize/2;
-        }
-        #endregion
-
-        #region Private Methods
-
-        private void InitializeDefuaults()
-        {
-            SetCurrentValue(PointGeometrySizeProperty, 8d);
-            SetCurrentValue(PointForegroundProperty, Brushes.White);
-            SetCurrentValue(StrokeThicknessProperty, 2d);
-
-            Func<ChartPoint, string> defaultLabel = x => Model.CurrentYAxis.GetFormatter()(x.Y);
-            SetCurrentValue(LabelPointProperty, defaultLabel);
-
-            DefaultFillOpacity = 0.15;
-        }
         #endregion
     }
 }

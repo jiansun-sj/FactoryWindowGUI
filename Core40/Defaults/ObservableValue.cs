@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：ObservableValue.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -20,28 +28,26 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-using System;
 using System.ComponentModel;
 
 namespace LiveCharts.Defaults
 {
     /// <summary>
-    /// An already configured chart point, this class notifies the chart to update every time the value property changes
+    ///     An already configured chart point, this class notifies the chart to update every time the value property changes
     /// </summary>
     public class ObservableValue : INotifyPropertyChanged
     {
         private double _value;
 
         /// <summary>
-        /// Initializes a new instance of ObservableValue class
+        ///     Initializes a new instance of ObservableValue class
         /// </summary>
         public ObservableValue()
         {
-            
         }
 
         /// <summary>
-        /// Initializes a new instance of ObservableValue class with a given value
+        ///     Initializes a new instance of ObservableValue class with a given value
         /// </summary>
         /// <param name="value"></param>
         public ObservableValue(double value)
@@ -50,11 +56,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// Value in he chart
+        ///     Value in he chart
         /// </summary>
         public double Value
         {
-            get { return _value; }
+            get => _value;
             set
             {
                 _value = value;
@@ -65,12 +71,12 @@ namespace LiveCharts.Defaults
         #region INotifyPropertyChangedImplementation
 
         /// <summary>
-        /// Occurs when a property value changes.
+        ///     Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Called when [property changed].
+        ///     Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         protected virtual void OnPropertyChanged(string propertyName = null)

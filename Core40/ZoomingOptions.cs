@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：ZoomingOptions.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,24 +31,27 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// Chart zooming options
+    ///     Chart zooming options
     /// </summary>
     public enum ZoomingOptions
     {
         /// <summary>
-        /// Disables zooming
+        ///     Disables zooming
         /// </summary>
         None,
+
         /// <summary>
-        /// Zoom only at X axis
+        ///     Zoom only at X axis
         /// </summary>
         X,
+
         /// <summary>
-        /// Zoom only at Y axis
+        ///     Zoom only at Y axis
         /// </summary>
         Y,
+
         /// <summary>
-        /// Zooms in both, X and Y axes
+        ///     Zooms in both, X and Y axes
         /// </summary>
         Xy
     }

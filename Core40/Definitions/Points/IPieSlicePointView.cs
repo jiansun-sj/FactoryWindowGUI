@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：IPieSlicePointView.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,37 +31,39 @@
 namespace LiveCharts.Definitions.Points
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Points.IChartPointView" />
     public interface IPieSlicePointView : IChartPointView
     {
         /// <summary>
-        /// Gets or sets the rotation.
+        ///     Gets or sets the rotation.
         /// </summary>
         /// <value>
-        /// The rotation.
+        ///     The rotation.
         /// </value>
         double Rotation { get; set; }
+
         /// <summary>
-        /// Gets or sets the wedge.
+        ///     Gets or sets the wedge.
         /// </summary>
         /// <value>
-        /// The wedge.
+        ///     The wedge.
         /// </value>
         double Wedge { get; set; }
+
         /// <summary>
-        /// Gets or sets the inner radius.
+        ///     Gets or sets the inner radius.
         /// </summary>
         /// <value>
-        /// The inner radius.
+        ///     The inner radius.
         /// </value>
         double InnerRadius { get; set; }
+
         /// <summary>
-        /// Gets or sets the radius.
+        ///     Gets or sets the radius.
         /// </summary>
         /// <value>
-        /// The radius.
+        ///     The radius.
         /// </value>
         double Radius { get; set; }
     }

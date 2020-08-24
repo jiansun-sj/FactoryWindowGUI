@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ScatterPointView.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -66,15 +74,15 @@ namespace FactoryWindowGUI.ChartUtil.Points
                 Shape.Width = Diameter;
                 Shape.Height = Diameter;
 
-                Canvas.SetTop(Shape, current.ChartLocation.Y - Shape.Height*.5);
-                Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width*.5);
+                Canvas.SetTop(Shape, current.ChartLocation.Y - Shape.Height * .5);
+                Canvas.SetLeft(Shape, current.ChartLocation.X - Shape.Width * .5);
 
                 if (DataLabel != null)
                 {
                     DataLabel.UpdateLayout();
 
-                    var cx = CorrectXLabel(current.ChartLocation.X - DataLabel.ActualWidth*.5, chart);
-                    var cy = CorrectYLabel(current.ChartLocation.Y - DataLabel.ActualHeight*.5, chart);
+                    var cx = CorrectXLabel(current.ChartLocation.X - DataLabel.ActualWidth * .5, chart);
+                    var cy = CorrectYLabel(current.ChartLocation.Y - DataLabel.ActualHeight * .5, chart);
 
                     Canvas.SetTop(DataLabel, cy);
                     Canvas.SetLeft(DataLabel, cx);
@@ -89,8 +97,8 @@ namespace FactoryWindowGUI.ChartUtil.Points
             {
                 DataLabel.UpdateLayout();
 
-                var cx = CorrectXLabel(current.ChartLocation.X - DataLabel.ActualWidth*.5, chart);
-                var cy = CorrectYLabel(current.ChartLocation.Y - DataLabel.ActualHeight*.5, chart);
+                var cx = CorrectXLabel(current.ChartLocation.X - DataLabel.ActualWidth * .5, chart);
+                var cy = CorrectYLabel(current.ChartLocation.Y - DataLabel.ActualHeight * .5, chart);
 
                 DataLabel.BeginAnimation(Canvas.LeftProperty, new DoubleAnimation(cx, animSpeed));
                 DataLabel.BeginAnimation(Canvas.TopProperty, new DoubleAnimation(cy, animSpeed));
@@ -102,9 +110,9 @@ namespace FactoryWindowGUI.ChartUtil.Points
                 new DoubleAnimation(Diameter, animSpeed));
 
             Shape.BeginAnimation(Canvas.TopProperty,
-                new DoubleAnimation(current.ChartLocation.Y - Diameter*.5, animSpeed));
+                new DoubleAnimation(current.ChartLocation.Y - Diameter * .5, animSpeed));
             Shape.BeginAnimation(Canvas.LeftProperty,
-                new DoubleAnimation(current.ChartLocation.X - Diameter*.5, animSpeed));
+                new DoubleAnimation(current.ChartLocation.X - Diameter * .5, animSpeed));
         }
 
         public override void RemoveFromView(ChartCore chart)
@@ -112,6 +120,23 @@ namespace FactoryWindowGUI.ChartUtil.Points
             chart.View.RemoveFromDrawMargin(HoverShape);
             chart.View.RemoveFromDrawMargin(Shape);
             chart.View.RemoveFromDrawMargin(DataLabel);
+        }
+
+        public override void OnHover(ChartPoint point)
+        {
+            var copy = Shape.Fill.Clone();
+            copy.Opacity -= .15;
+            Shape.Fill = copy;
+        }
+
+        public override void OnHoverLeave(ChartPoint point)
+        {
+            if (Shape == null) return;
+
+            if (point.Fill != null)
+                Shape.Fill = (Brush) point.Fill;
+            else
+                Shape.Fill = ((Series) point.SeriesView).Fill;
         }
 
         protected double CorrectXLabel(double desiredPosition, ChartCore chart)
@@ -132,27 +157,6 @@ namespace FactoryWindowGUI.ChartUtil.Points
             if (desiredPosition < 0) desiredPosition = 0;
 
             return desiredPosition;
-        }
-
-        public override void OnHover(ChartPoint point)
-        {
-            var copy = Shape.Fill.Clone();
-            copy.Opacity -= .15;
-            Shape.Fill = copy;
-        }
-
-        public override void OnHoverLeave(ChartPoint point)
-        {
-            if (Shape == null) return;
-
-            if (point.Fill != null)
-            {
-                Shape.Fill = (Brush) point.Fill;
-            }
-            else
-            {
-                Shape.Fill = ((Series) point.SeriesView).Fill;
-            }
         }
     }
 }

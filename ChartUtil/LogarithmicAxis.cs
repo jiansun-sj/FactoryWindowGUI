@@ -1,4 +1,12 @@
-﻿//copyright(c) 2016 Alberto Rodriguez
+﻿// ==================================================
+// 文件名：LogarithmicAxis.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Permission is hereby granted, free of charge, to any person obtaining a copy
 //of this software and associated documentation files (the "Software"), to deal
@@ -27,20 +35,26 @@ using LiveCharts.Definitions.Charts;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// An Logarithmic Axis of a chart
+    ///     An Logarithmic Axis of a chart
     /// </summary>
     /// <seealso cref="Axis" />
     public class LogarithmicAxis : Axis, ILogarithmicAxisView
     {
         /// <summary>
-        /// Ases the core element.
+        ///     The base property
+        /// </summary>
+        public static readonly DependencyProperty BaseProperty = DependencyProperty.Register(
+            "Base", typeof(double), typeof(LogarithmicAxis), new PropertyMetadata(10d, UpdateChart()));
+
+        /// <summary>
+        ///     Ases the core element.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <param name="source">The source.</param>
         /// <returns></returns>
         public override AxisCore AsCoreElement(ChartCore chart, AxisOrientation source)
         {
-            if(Model == null) Model = new LogarithmicAxisCore(this);
+            if (Model == null) Model = new LogarithmicAxisCore(this);
 
             Model.ShowLabels = ShowLabels;
             Model.Chart = chart;
@@ -59,15 +73,10 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The base property
-        /// </summary>
-        public static readonly DependencyProperty BaseProperty = DependencyProperty.Register(
-            "Base", typeof(double), typeof(LogarithmicAxis), new PropertyMetadata(10d, UpdateChart()));
-        /// <summary>
-        /// Gets or sets the base.
+        ///     Gets or sets the base.
         /// </summary>
         /// <value>
-        /// The base.
+        ///     The base.
         /// </value>
         public double Base
         {

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：SeriesCollection.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -28,14 +36,51 @@ using LiveCharts.Helpers;
 namespace LiveCharts
 {
     /// <summary>
-    /// Stores a collection of series to plot, this collection notifies the changes every time you add/remove any series.
+    ///     Stores a collection of series to plot, this collection notifies the changes every time you add/remove any series.
     /// </summary>
     public class SeriesCollection : NoisyCollection<ISeriesView>
     {
+        /// <summary>
+        ///     Gets or sets the current series index, this index is used to pull out the automatic color of any series
+        /// </summary>
+        public int CurrentSeriesIndex { get; set; }
+
+        /// <summary>
+        ///     Gets the chart that owns the collection
+        /// </summary>
+        public ChartCore Chart { get; set; }
+
+        /// <summary>
+        ///     Gets or sets then mapper in the collection, this mapper will be used in any series inside the collection, if null
+        ///     then LiveCharts will try to get the value from the global configuration.
+        /// </summary>
+        public object Configuration { get; set; }
+
+        private void OnNoisyCollectionChanged(IEnumerable<ISeriesView> oldItems, IEnumerable<ISeriesView> newItems)
+        {
+            if (newItems != null)
+                foreach (var view in newItems)
+                {
+                    view.Model.SeriesCollection = this;
+                    view.Model.Chart = Chart;
+                }
+
+            if (oldItems != null)
+                foreach (var view in oldItems)
+                    view.Erase(true);
+
+            if (Chart != null) Chart.Updater.Run();
+        }
+
+        private void OnCollectionReset()
+        {
+            CurrentSeriesIndex = 0;
+        }
+
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the SeriesCollection class
+        ///     Initializes a new instance of the SeriesCollection class
         /// </summary>
         public SeriesCollection()
         {
@@ -44,7 +89,7 @@ namespace LiveCharts
         }
 
         /// <summary>
-        /// Initializes a new instance of the SeriesCollection class, with a given mapper
+        ///     Initializes a new instance of the SeriesCollection class, with a given mapper
         /// </summary>
         public SeriesCollection(object configuration)
         {
@@ -55,46 +100,5 @@ namespace LiveCharts
         }
 
         #endregion
-
-        /// <summary>
-        /// Gets or sets the current series index, this index is used to pull out the automatic color of any series
-        ///  </summary>
-        public int CurrentSeriesIndex { get; set; }
-
-        /// <summary>
-        /// Gets the chart that owns the collection
-        /// </summary>
-        public ChartCore Chart { get; set; }
-        /// <summary>
-        /// Gets or sets then mapper in the collection, this mapper will be used in any series inside the collection, if null then LiveCharts will try to get the value from the global configuration.
-        /// </summary>
-        public object Configuration { get; set; }
-
-        private void OnNoisyCollectionChanged(IEnumerable<ISeriesView> oldItems, IEnumerable<ISeriesView> newItems)
-        {
-            if (newItems != null)
-            {
-                foreach (var view in newItems)
-                {
-                    view.Model.SeriesCollection = this;
-                    view.Model.Chart = Chart;
-                }
-            }
-
-            if (oldItems != null)
-            {
-                foreach (var view in oldItems)
-                {
-                    view.Erase(true);
-                }
-            }
-           
-            if (Chart != null) Chart.Updater.Run();
-        }
-
-        private void OnCollectionReset()
-        {
-            CurrentSeriesIndex = 0;
-        }
     }
 }

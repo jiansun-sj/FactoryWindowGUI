@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ScatterPoint.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -20,30 +28,28 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-using System;
 using System.ComponentModel;
 
 namespace LiveCharts.Defaults
 {
     /// <summary>
-    /// An already configured weighted chart point, this class notifies the chart to update every time a property changes
+    ///     An already configured weighted chart point, this class notifies the chart to update every time a property changes
     /// </summary>
     public class ScatterPoint : INotifyPropertyChanged
     {
+        private double _weight;
         private double _x;
         private double _y;
-        private double _weight;
 
         /// <summary>
-        /// Creates a new instance of BubblePoint class
+        ///     Creates a new instance of BubblePoint class
         /// </summary>
         public ScatterPoint()
         {
-            
         }
 
         /// <summary>
-        /// Create a new instance of BubblePoint class, giving x and y coordinates
+        ///     Create a new instance of BubblePoint class, giving x and y coordinates
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -54,7 +60,7 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// Creates a new instance of BubblePoint class, giving x, y and weight
+        ///     Creates a new instance of BubblePoint class, giving x, y and weight
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -67,11 +73,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// X coordinate in the chart
+        ///     X coordinate in the chart
         /// </summary>
         public double X
         {
-            get { return _x; }
+            get => _x;
             set
             {
                 _x = value;
@@ -80,11 +86,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// Y coordinate in the chart
+        ///     Y coordinate in the chart
         /// </summary>
         public double Y
         {
-            get { return _y; }
+            get => _y;
             set
             {
                 _y = value;
@@ -93,11 +99,11 @@ namespace LiveCharts.Defaults
         }
 
         /// <summary>
-        /// Point's weight
+        ///     Point's weight
         /// </summary>
         public double Weight
         {
-            get { return _weight; }
+            get => _weight;
             set
             {
                 _weight = value;
@@ -108,12 +114,12 @@ namespace LiveCharts.Defaults
         #region INotifyPropertyChangedImplementation
 
         /// <summary>
-        /// Occurs when a property value changes.
+        ///     Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Called when [property changed].
+        ///     Called when [property changed].
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         protected virtual void OnPropertyChanged(string propertyName = null)

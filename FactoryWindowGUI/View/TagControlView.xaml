@@ -8,58 +8,65 @@
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              mc:Ignorable="d" Loaded="TagControlViewLoaded"
-             d:DesignHeight="950" d:DesignWidth="1900"
+             d:DesignHeight="800" d:DesignWidth="1100"
              DataContext="{Binding TagControlVm,RelativeSource={RelativeSource Self}}">
 
     <metro:MetroTabControl>
         <metro:MetroTabItem Header="标签操作">
 
-            <Grid Background="#f3f3f3">
+            <Grid Background="#f3f3f3" MaxHeight="720">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="120*" MaxHeight="300" MinHeight="120" />
+                    <RowDefinition Height="120*"  MinHeight="120"/>
                     <RowDefinition />
                     <RowDefinition Height="18*" />
                     <RowDefinition Height="1021*" />
                 </Grid.RowDefinitions>
                 <dxlc:GroupBox Header="查询条件" TitleBackground="#677991" TitleForeground="White" Margin="24,22,24,0"
                                Grid.ColumnSpan="2">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="30">
-                        <metro:MetroTextBlock Text="机器:" Height="24" FontSize="13" HorizontalAlignment="Left"
-                                              Margin="40,0,0,0" FontWeight="Black" />
-                        <ComboBox Width="184" HorizontalAlignment="Left" Margin="10,0,0,0" Height="30"
-                                  FontWeight="Normal" IsSynchronizedWithCurrentItem="False"
-                                  ItemsSource="{Binding MachineList, Mode=TwoWay}" SelectedValuePath="ID"
-                                  DisplayMemberPath="MachineName" SelectedItem="{Binding SelectedMachineName}"
-                                  FontSize="14" />
+                    <DockPanel VerticalAlignment="Center" Height="30">
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
 
-                        <metro:MetroTextBlock Text="标签:" Height="24" FontSize="13" Margin="20,0,0,0" FontWeight="Black" />
-                        <ComboBox Width="184" HorizontalAlignment="Left" Margin="10,0,0,0" Height="30"
-                                  FontWeight="Normal"
-                                  ItemsSource="{Binding TagList, Mode=TwoWay}" SelectedValuePath="ID"
-                                  DisplayMemberPath="TagName" SelectedItem="{Binding SelectedTagName}" FontSize="14" />
+                            <metro:MetroTextBlock Text="机器:" Height="24" FontSize="13" HorizontalAlignment="Left"
+                                                  Margin="10,0,0,0" FontWeight="Black" />
+                            <ComboBox Width="100" HorizontalAlignment="Left" Margin="10,0,0,0" Height="30"
+                                      FontWeight="Normal" IsSynchronizedWithCurrentItem="False"
+                                      ItemsSource="{Binding MachineList, Mode=TwoWay}" SelectedValuePath="ID"
+                                      DisplayMemberPath="MachineName" SelectedItem="{Binding SelectedMachineName}"
+                                      FontSize="14" />
 
+                            <metro:MetroTextBlock Text="标签:" Height="24" FontSize="13" Margin="20,0,0,0"
+                                                  FontWeight="Black" />
+                            <ComboBox Width="100" HorizontalAlignment="Left" Margin="10,0,0,0" Height="30"
+                                      FontWeight="Normal"
+                                      ItemsSource="{Binding TagList, Mode=TwoWay}" SelectedValuePath="ID"
+                                      DisplayMemberPath="TagName" SelectedItem="{Binding SelectedTagName}"
+                                      FontSize="14" />
+                            <metro:MetroButton MetroButtonState="None" Content="查询" Height="20" Width="80"
+                                               FontSize="13"
+                                               Margin="20,0,0,0" MinHeight="35" VerticalAlignment="Center"
+                                               FontWeight="Black"
+                                               Command="{Binding QueryTagCommand}"
+                                               CommandParameter="{Binding ElementName=TagQueryResultList}" />
+                            <dx:SimpleButton Background="Transparent" BorderBrush="Transparent"
+                                             Glyph="{dx:DXImage 'SvgImages/Icon Builder/Actions_Refresh.svg'}"
+                                             Margin="20,0,0,0" Content="刷新设备" 
+                                             Command="{Binding RefreshMachineListCommand}" ToolTip="刷新机器和标签列表" />
+                        </StackPanel>
 
-                        <metro:MetroButton MetroButtonState="None" Content="查询" Height="20" Width="90" FontSize="13"
-                                           Margin="20,0,0,0" MinHeight="35" VerticalAlignment="Center"
-                                           FontWeight="Black"
-                                           Command="{Binding QueryTagCommand}"
-                                           CommandParameter="{Binding ElementName=TagQueryResultList}" />
-                        <dx:SimpleButton Background="Transparent" BorderBrush="Transparent"
-                                         Glyph="{dx:DXImage 'SvgImages/Icon Builder/Actions_Refresh.svg'}"
-                                         Margin="20,0,0,0" Content="刷新设备"
-                                         Command="{Binding RefreshMachineListCommand}" ToolTip="刷新机器和标签列表" />
-
-                        <metro:MetroButton MetroButtonState="Green" Content="提交" FontSize="13" Margin="650,0,50,0"
-                                           MinHeight="35" VerticalAlignment="Center" FontWeight="Black"
-                                           Command="{Binding SubmitTagChangeCommand}" CommandParameter="{Binding}"/>
-                        <metro:MetroButton MetroButtonState="Red" Content="清空" FontSize="13" Background="#FF506887"
-                                           Margin="0,0,30,0" MinHeight="35" VerticalAlignment="Center"
-                                           FontWeight="Black"
-                                           Command="{Binding ClearButtonCommand}" CommandParameter="{Binding}"
-                                           HorizontalAlignment="Center" />
-                        <metro:MetroSwitch Content="自动刷新" CornerRadius="100" FontSize="13" Margin="0,0,50,0" FontWeight="Black"
-                                           IsChecked="{Binding AutoRefresh}" />
-                    </StackPanel>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <metro:MetroButton MetroButtonState="Green" Content="提交" FontSize="13" Margin="10 0"
+                                               MinHeight="35" VerticalAlignment="Center" FontWeight="Black"
+                                               Command="{Binding SubmitTagChangeCommand}" CommandParameter="{Binding}" />
+                            <metro:MetroButton MetroButtonState="Red" Content="清空" FontSize="13" Background="#FF506887"
+                                               Margin="10 0" MinHeight="35" VerticalAlignment="Center"
+                                               FontWeight="Black"
+                                               Command="{Binding ClearButtonCommand}" CommandParameter="{Binding}"
+                                               HorizontalAlignment="Center" />
+                            <metro:MetroSwitch Content="自动刷新" CornerRadius="100" FontSize="13" Margin="10 0"
+                                               FontWeight="Black"
+                                               IsChecked="{Binding AutoRefresh}" />
+                        </StackPanel>
+                    </DockPanel>
                 </dxlc:GroupBox>
 
                 <dxg:GridControl Name="TagQueryResultList" EnableSmartColumnsGeneration="True"
@@ -110,9 +117,7 @@
                 </dxg:GridControl>
             </Grid>
 
-
         </metro:MetroTabItem>
-
 
         <metro:MetroTabItem Header="数据源监控">
 
@@ -130,14 +135,13 @@
                                            Margin="20,0,0,0" MinHeight="35" VerticalAlignment="Center"
                                            FontWeight="Black"
                                            Command="{Binding RefreshDataSourceCommand}" />
-                        <metro:MetroSwitch Content="自动更新" CornerRadius="100" FontSize="13" 
+                        <metro:MetroSwitch Content="自动更新" CornerRadius="100" FontSize="13"
                                            Margin="30,0,50,0" FontWeight="Black"
                                            IsChecked="{Binding AutoRefreshDataSource}" />
                     </StackPanel>
                 </dxlc:GroupBox>
 
                 <!-- 表-->
-
 
                 <dxg:GridControl Name="DataSourceList" Grid.Row="1" ItemsSource="{Binding MachineDataSourceList}"
                                  EnableSmartColumnsGeneration="True" Margin="24,0,24,0.2" MinHeight="200"
@@ -168,7 +172,7 @@
                     <dxg:GridColumn FieldName="DataSourceType" Header="类型" Binding="{Binding DataSourceType}"
                                     AllowEditing="false" Width="3*"
                                     Image="../Resources/Type.png" />
-                    
+
                     <dxg:GridColumn FieldName="LinkState" Header="连接状态" Binding="{Binding LinkState}"
                                     AllowEditing="false" Width="3*"
                                     Image="../Resources/icon2_zhangtai.png" />

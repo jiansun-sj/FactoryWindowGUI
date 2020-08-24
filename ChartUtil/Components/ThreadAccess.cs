@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ThreadAccess.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -20,12 +28,10 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-using System;
 using System.Windows;
 
 namespace FactoryWindowGUI.ChartUtil.Components
 {
-
     // This is a workaround to prevent a possible threading issue
     // LiveChart was designed to be easy to use, the current design 
     // avoids the usage of DataTemplates, instead we use the same object (UIElement)
@@ -41,8 +47,8 @@ namespace FactoryWindowGUI.ChartUtil.Components
             if (dependencyObject.Dispatcher.CheckAccess())
                 return (T) dependencyObject.GetValue(dependencyProperty);
 
-            return (T) dependencyObject.Dispatcher.Invoke(
-                new Func<T>(() => (T) dependencyObject.GetValue(dependencyProperty)));
+            return dependencyObject.Dispatcher.Invoke(
+                () => (T) dependencyObject.GetValue(dependencyProperty));
         }
     }
 }

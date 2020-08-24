@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：LabelEvaluation.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -25,12 +33,11 @@ using System;
 namespace LiveCharts.Dtos
 {
     /// <summary>
-    /// 
     /// </summary>
     public struct LabelEvaluation
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LabelEvaluation"/> struct.
+        ///     Initializes a new instance of the <see cref="LabelEvaluation" /> struct.
         /// </summary>
         /// <param name="angle">The angle.</param>
         /// <param name="w">The w.</param>
@@ -80,8 +87,7 @@ namespace LiveCharts.Dtos
             //OK now lets evaluate the rotation angle...
 
             // the rotation angle starts from an horizontal line, yes like this text
-            // - 0�, | 90�, - 180�, | 270�
-            // notice normally rotating a label from 90 to 270� will show the label
+            // - 0? | 90? - 180? | 270?            // notice normally rotating a label from 90 to 270?will show the label
             // in a wrong orientation
             // we need to fix that angle
 
@@ -105,7 +111,7 @@ namespace LiveCharts.Dtos
             //those are the only quadrants that generates readable labels
             //the other 2 quadrants display inverted labels
 
-            var quadrant = ((int)(LabelAngle / 90)) % 4 + 1;
+            var quadrant = (int) (LabelAngle / 90) % 4 + 1;
 
             if (source == AxisOrientation.Y)
             {
@@ -115,15 +121,15 @@ namespace LiveCharts.Dtos
                     if (axis.Position == AxisPosition.LeftBottom)
                     {
                         // 1, L
-                        Top = HFromW + (HFromH / 2);      //space taken from separator to top
-                        Bottom = TakenHeight - Top;          //space taken from separator to bottom
-                        XOffset = -WFromW - padding;    //distance from separator to label origin in X
-                        YOffset = -Top;                 //distance from separator to label origin in Y
+                        Top = HFromW + HFromH / 2; //space taken from separator to top
+                        Bottom = TakenHeight - Top; //space taken from separator to bottom
+                        XOffset = -WFromW - padding; //distance from separator to label origin in X
+                        YOffset = -Top; //distance from separator to label origin in Y
                     }
                     else
                     {
                         // 1, R
-                        Bottom = HFromW + (HFromH / 2);
+                        Bottom = HFromW + HFromH / 2;
                         Top = TakenHeight - Bottom;
                         XOffset = padding + WFromH;
                         YOffset = -Top;
@@ -134,15 +140,15 @@ namespace LiveCharts.Dtos
                     if (axis.Position == AxisPosition.LeftBottom)
                     {
                         // 4, L
-                        Bottom = HFromW + (HFromH / 2);
+                        Bottom = HFromW + HFromH / 2;
                         Top = TakenHeight - Bottom;
                         XOffset = -TakenWidth - padding;
-                        YOffset = HFromW - (HFromH / 2);
+                        YOffset = HFromW - HFromH / 2;
                     }
                     else
                     {
                         // 4, R
-                        Top = HFromW + (HFromH / 2);
+                        Top = HFromW + HFromH / 2;
                         Bottom = TakenHeight - Top;
                         XOffset = padding;
                         YOffset = -Bottom;
@@ -153,7 +159,7 @@ namespace LiveCharts.Dtos
             {
                 // X Axis
 
-                //axis x has one exception, if labels rotation equals 0� then the label is centered
+                //axis x has one exception, if labels rotation equals 0?then the label is centered
                 if (Math.Abs(axis.View.LabelsRotation) < .01)
                 {
                     Left = TakenWidth / 2;
@@ -170,15 +176,15 @@ namespace LiveCharts.Dtos
                         if (axis.Position == AxisPosition.LeftBottom)
                         {
                             //1, B
-                            Right = WFromW + (WFromH / 2);  //space taken from separator to right
-                            Left = TakenWidth - Right;           //space taken from separator to left
-                            XOffset = Left;                 //distance from separator to label origin in X
-                            YOffset = padding;              //distance from separator to label origin in Y
+                            Right = WFromW + WFromH / 2; //space taken from separator to right
+                            Left = TakenWidth - Right; //space taken from separator to left
+                            XOffset = Left; //distance from separator to label origin in X
+                            YOffset = padding; //distance from separator to label origin in Y
                         }
                         else
                         {
                             //1, T
-                            Left = WFromW + (WFromH / 2);
+                            Left = WFromW + WFromH / 2;
                             Right = TakenWidth - Left;
                             XOffset = -WFromW;
                             YOffset = -padding - TakenHeight;
@@ -189,7 +195,7 @@ namespace LiveCharts.Dtos
                         if (axis.Position == AxisPosition.LeftBottom)
                         {
                             //4, B
-                            Left = WFromW + (WFromH / 2);
+                            Left = WFromW + WFromH / 2;
                             Right = TakenWidth - Left;
                             XOffset = -Left;
                             YOffset = padding + HFromW;
@@ -197,7 +203,7 @@ namespace LiveCharts.Dtos
                         else
                         {
                             //4, T
-                            Right = WFromW + (WFromH / 2);
+                            Right = WFromW + WFromH / 2;
                             Left = TakenWidth - Right;
                             XOffset = -Left;
                             YOffset = -HFromH;
@@ -205,119 +211,130 @@ namespace LiveCharts.Dtos
                     }
                 }
             }
-
         }
 
         /// <summary>
-        /// Gets or sets the label angle.
+        ///     Gets or sets the label angle.
         /// </summary>
         /// <value>
-        /// The label angle.
+        ///     The label angle.
         /// </value>
         public double LabelAngle { get; set; }
+
         /// <summary>
-        /// Gets or sets the w from w.
+        ///     Gets or sets the w from w.
         /// </summary>
         /// <value>
-        /// The w from w.
+        ///     The w from w.
         /// </value>
         public double WFromW { get; set; }
+
         /// <summary>
-        /// Gets or sets the w from h.
+        ///     Gets or sets the w from h.
         /// </summary>
         /// <value>
-        /// The w from h.
+        ///     The w from h.
         /// </value>
         public double WFromH { get; set; }
+
         /// <summary>
-        /// Gets or sets the h from w.
+        ///     Gets or sets the h from w.
         /// </summary>
         /// <value>
-        /// The h from w.
+        ///     The h from w.
         /// </value>
         public double HFromW { get; set; }
+
         /// <summary>
-        /// Gets or sets the h from h.
+        ///     Gets or sets the h from h.
         /// </summary>
         /// <value>
-        /// The h from h.
+        ///     The h from h.
         /// </value>
         public double HFromH { get; set; }
+
         /// <summary>
-        /// Gets or sets the top.
+        ///     Gets or sets the top.
         /// </summary>
         /// <value>
-        /// The top.
+        ///     The top.
         /// </value>
         public double Top { get; set; }
+
         /// <summary>
-        /// Gets or sets the bottom.
+        ///     Gets or sets the bottom.
         /// </summary>
         /// <value>
-        /// The bottom.
+        ///     The bottom.
         /// </value>
         public double Bottom { get; set; }
+
         /// <summary>
-        /// Gets or sets the left.
+        ///     Gets or sets the left.
         /// </summary>
         /// <value>
-        /// The left.
+        ///     The left.
         /// </value>
         public double Left { get; set; }
+
         /// <summary>
-        /// Gets or sets the right.
+        ///     Gets or sets the right.
         /// </summary>
         /// <value>
-        /// The right.
+        ///     The right.
         /// </value>
         public double Right { get; set; }
+
         /// <summary>
-        /// Gets or sets the x offset.
+        ///     Gets or sets the x offset.
         /// </summary>
         /// <value>
-        /// The x offset.
+        ///     The x offset.
         /// </value>
         public double XOffset { get; set; }
+
         /// <summary>
-        /// Gets or sets the y offset.
+        ///     Gets or sets the y offset.
         /// </summary>
         /// <value>
-        /// The y offset.
+        ///     The y offset.
         /// </value>
         public double YOffset { get; set; }
 
         /// <summary>
-        /// Gets the width of the taken.
+        ///     Gets the width of the taken.
         /// </summary>
         /// <value>
-        /// The width of the taken.
+        ///     The width of the taken.
         /// </value>
-        public double TakenWidth { get { return WFromW + WFromH; } }
-        /// <summary>
-        /// Gets the height of the taken.
-        /// </summary>
-        /// <value>
-        /// The height of the taken.
-        /// </value>
-        public double TakenHeight { get { return HFromW + HFromH; } }
+        public double TakenWidth => WFromW + WFromH;
 
         /// <summary>
-        /// Gets the actual width.
+        ///     Gets the height of the taken.
         /// </summary>
         /// <value>
-        /// The actual width.
+        ///     The height of the taken.
         /// </value>
-        public double ActualWidth { get; private set; }
-        /// <summary>
-        /// Gets the actual height.
-        /// </summary>
-        /// <value>
-        /// The actual height.
-        /// </value>
-        public double ActualHeight { get; private set; }
+        public double TakenHeight => HFromW + HFromH;
 
         /// <summary>
-        /// Gets the offset by source.
+        ///     Gets the actual width.
+        /// </summary>
+        /// <value>
+        ///     The actual width.
+        /// </value>
+        public double ActualWidth { get; }
+
+        /// <summary>
+        ///     Gets the actual height.
+        /// </summary>
+        /// <value>
+        ///     The actual height.
+        /// </value>
+        public double ActualHeight { get; }
+
+        /// <summary>
+        ///     Gets the offset by source.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <returns></returns>

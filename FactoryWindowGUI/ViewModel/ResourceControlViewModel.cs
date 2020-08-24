@@ -1,10 +1,9 @@
 ﻿// ==================================================
+// FactoryWindowGUI
 // 文件名：ResourceControlViewModel.cs
-// 创建时间：2020/03/04 16:26
-// 上海芸浦信息技术有限公司
-// copyright@yumpoo
+// 创建时间：2020/03/04 11:25
 // ==================================================
-// 最后修改于：2020/05/11 16:26
+// 最后修改于：2020/08/21 11:25
 // 修改人：jians
 // ==================================================
 
@@ -16,12 +15,12 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using FactoryWindowGUI.Annotations;
-using FactoryWindowGUI.ICommandImpl;
 using FactoryWindowGUI.Model;
 using FactoryWindowGUI.Util;
 using log4net;
 using Newtonsoft.Json;
 using ProcessControlService.Contracts;
+using RosemaryThemes.Wpf.BaseClass;
 
 namespace FactoryWindowGUI.ViewModel
 {
@@ -41,8 +40,6 @@ namespace FactoryWindowGUI.ViewModel
             new ObservableCollection<ResourceServiceGuiModel>();
 
         private ObservableCollection<ServiceParameterModel> _serviceParameterList;
-
-        public ResourceUtil ResourceUtil = new ResourceUtil();
 
         public ResourceNameModel SelectedResourceName
         {
@@ -87,8 +84,12 @@ namespace FactoryWindowGUI.ViewModel
 
                     //查找服务
                     foreach (var item in _serviceList)
-                        if (item.Name == currentService)
+                        if (item.Name == currentService &&
+                            item.Id == _selectedServiceName
+                                .Id /*需要Id和名称双重定位，防止重名的ResourceService，每次检索到的都是名称相同的ResourceService模型  sunjian 2020/8/3 长春*/
+                        )
                             guiModel = item;
+
                     //找到
                     if (guiModel != null)
                     {
@@ -165,12 +166,12 @@ namespace FactoryWindowGUI.ViewModel
             }
         }
 
-        //public ICommand ResourceQueryCommand => new RelayCommandImplementation(QueryResource, QueryResourceCanExecute);
+        //public ICommand ResourceQueryCommand => new RelayCommand(QueryResource, QueryResourceCanExecute);
 
-        public ICommand RefreshResourceListCommand => new RelayCommandImplementation(RefreshResourceList);
+        public ICommand RefreshResourceListCommand => new RelayCommand(RefreshResourceList);
 
         public ICommand CallProcessServiceCommand =>
-            new RelayCommandImplementation(CallProcessService, CallProcessServiceCanExecute);
+            new RelayCommand(CallProcessService, CallProcessServiceCanExecute);
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -186,12 +187,12 @@ namespace FactoryWindowGUI.ViewModel
 
         private void GetResourceList()
         {
-            if (!ResourceUtil.Connected)
+            /*if (ResourceUtil.Connected!=true)
             {
                 MessageBox.Show("连接到服务端失败，请检查与服务端的通信。");
                 ResourceList.Clear();
                 return;
-            }
+            }*/
 
             var resourceList = ResourceUtil.GetResourceList();
 
@@ -230,7 +231,7 @@ namespace FactoryWindowGUI.ViewModel
             }
         }
 
-        private void CallProcessService(object obj)
+        private async void CallProcessService(object obj)
         {
             try
             {
@@ -250,7 +251,7 @@ namespace FactoryWindowGUI.ViewModel
 
                 ResourceServiceResult = string.Empty;
 
-                var result = ResourceUtil.CallResourceService(selectedResourceName, selectedServiceName,
+                var result = await ResourceUtil.CallResourceServiceAsync(selectedResourceName, selectedServiceName,
                     JsonConvert.SerializeObject(parameters));
 
                 ResourceServiceResult = result;

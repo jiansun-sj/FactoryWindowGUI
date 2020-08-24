@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ICartesianChart.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,16 +31,15 @@
 namespace LiveCharts.Definitions.Charts
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.Definitions.Charts.IChartView" />
     public interface ICartesianChart : IChartView
     {
         /// <summary>
-        /// Gets or sets the visual elements.
+        ///     Gets or sets the visual elements.
         /// </summary>
         /// <value>
-        /// The visual elements.
+        ///     The visual elements.
         /// </value>
         VisualElementsCollection VisualElements { get; set; }
     }

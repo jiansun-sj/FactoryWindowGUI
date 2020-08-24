@@ -1,23 +1,32 @@
-﻿using System.Windows.Media;
+﻿// ==================================================
+// 文件名：FinancialColoringRule.cs
+// 创建时间：2020/05/25 13:39
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:39
+// 修改人：jians
+// ==================================================
+
+using System.Windows.Media;
 using LiveCharts;
 
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// Defines a condition that decides the fill and stroke to use in a CandleStick series
+    ///     Defines a condition that decides the fill and stroke to use in a CandleStick series
     /// </summary>
     public class FinancialColoringRule
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FinancialColoringRule"/> class.
+        ///     Initializes a new instance of the <see cref="FinancialColoringRule" /> class.
         /// </summary>
         public FinancialColoringRule()
         {
-            
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FinancialColoringRule"/> class.
+        ///     Initializes a new instance of the <see cref="FinancialColoringRule" /> class.
         /// </summary>
         /// <param name="condition">The condition.</param>
         /// <param name="stroke">The stroke.</param>
@@ -30,26 +39,27 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Gets or sets the condition, if the condition returns true, the point will use the defined Stroke/Fill properties in the FinancialColoringRule object
+        ///     Gets or sets the condition, if the condition returns true, the point will use the defined Stroke/Fill properties in
+        ///     the FinancialColoringRule object
         /// </summary>
         /// <value>
-        /// The condition.
+        ///     The condition.
         /// </value>
         public FinancialDelegate Condition { get; set; }
 
         /// <summary>
-        /// Gets or sets the stroke to use when the condition returns true.
+        ///     Gets or sets the stroke to use when the condition returns true.
         /// </summary>
         /// <value>
-        /// The stroke.
+        ///     The stroke.
         /// </value>
         public Brush Stroke { get; set; }
 
         /// <summary>
-        /// Gets or sets the fill to use when the condition returns true.
+        ///     Gets or sets the fill to use when the condition returns true.
         /// </summary>
         /// <value>
-        /// The fill.
+        ///     The fill.
         /// </value>
         public Brush Fill { get; set; }
     }

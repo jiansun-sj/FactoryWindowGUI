@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：CoreRectangle.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -24,27 +32,24 @@ using System;
 
 namespace LiveCharts.Dtos
 {
-
     /// <summary>
-    /// 
     /// </summary>
     public class CoreRectangle
     {
+        private double _height;
         private double _left;
         private double _top;
         private double _width;
-        private double _height;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreRectangle"/> class.
+        ///     Initializes a new instance of the <see cref="CoreRectangle" /> class.
         /// </summary>
         public CoreRectangle()
         {
-
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoreRectangle"/> class.
+        ///     Initializes a new instance of the <see cref="CoreRectangle" /> class.
         /// </summary>
         /// <param name="left">The left.</param>
         /// <param name="top">The top.</param>
@@ -59,31 +64,14 @@ namespace LiveCharts.Dtos
         }
 
         /// <summary>
-        /// Occurs when [set top].
-        /// </summary>
-        public event Action<double> SetTop;
-        /// <summary>
-        /// Occurs when [set left].
-        /// </summary>
-        public event Action<double> SetLeft;
-        /// <summary>
-        /// Occurs when [set width].
-        /// </summary>
-        public event Action<double> SetWidth;
-        /// <summary>
-        /// Occurs when [set height].
-        /// </summary>
-        public event Action<double> SetHeight;
-
-        /// <summary>
-        /// Gets or sets the left.
+        ///     Gets or sets the left.
         /// </summary>
         /// <value>
-        /// The left.
+        ///     The left.
         /// </value>
         public double Left
         {
-            get { return _left; }
+            get => _left;
             set
             {
                 _left = value;
@@ -92,14 +80,14 @@ namespace LiveCharts.Dtos
         }
 
         /// <summary>
-        /// Gets or sets the top.
+        ///     Gets or sets the top.
         /// </summary>
         /// <value>
-        /// The top.
+        ///     The top.
         /// </value>
         public double Top
         {
-            get { return _top; }
+            get => _top;
             set
             {
                 _top = value;
@@ -108,14 +96,14 @@ namespace LiveCharts.Dtos
         }
 
         /// <summary>
-        /// Gets or sets the width.
+        ///     Gets or sets the width.
         /// </summary>
         /// <value>
-        /// The width.
+        ///     The width.
         /// </value>
         public double Width
         {
-            get { return _width; }
+            get => _width;
             set
             {
                 _width = value < 0 ? 0 : value;
@@ -124,19 +112,39 @@ namespace LiveCharts.Dtos
         }
 
         /// <summary>
-        /// Gets or sets the height.
+        ///     Gets or sets the height.
         /// </summary>
         /// <value>
-        /// The height.
+        ///     The height.
         /// </value>
         public double Height
         {
-            get { return _height; }
+            get => _height;
             set
             {
                 _height = value < 0 ? 0 : value;
                 if (SetHeight != null) SetHeight.Invoke(value);
             }
         }
+
+        /// <summary>
+        ///     Occurs when [set top].
+        /// </summary>
+        public event Action<double> SetTop;
+
+        /// <summary>
+        ///     Occurs when [set left].
+        /// </summary>
+        public event Action<double> SetLeft;
+
+        /// <summary>
+        ///     Occurs when [set width].
+        /// </summary>
+        public event Action<double> SetWidth;
+
+        /// <summary>
+        ///     Occurs when [set height].
+        /// </summary>
+        public event Action<double> SetHeight;
     }
 }

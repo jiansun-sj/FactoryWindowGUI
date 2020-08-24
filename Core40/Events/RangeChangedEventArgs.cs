@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：RangeChangedEventArgs.cs
+// 创建时间：2020/05/25 13:36
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:36
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,24 +31,26 @@
 namespace LiveCharts.Events
 {
     /// <summary>
-    /// 
     /// </summary>
     public class RangeChangedEventArgs
     {
         /// <summary>
-        /// Gets the min limit difference compared with previous state
+        ///     Gets the min limit difference compared with previous state
         /// </summary>
         public double LeftLimitChange { get; set; }
+
         /// <summary>
-        /// Gets the max limit difference compared with previous state
+        ///     Gets the max limit difference compared with previous state
         /// </summary>
         public double RightLimitChange { get; set; }
+
         /// <summary>
-        /// Gets the current axis range
+        ///     Gets the current axis range
         /// </summary>
         public double Range { get; set; }
+
         /// <summary>
-        /// Gets the axis that fired the change
+        ///     Gets the axis that fired the change
         /// </summary>
         public object Axis { get; set; }
     }

@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：AxisPosition.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,16 +31,17 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// Axis position
+    ///     Axis position
     /// </summary>
     public enum AxisPosition
     {
         /// <summary>
-        /// Left for Y axis, Bottom for X axis
+        ///     Left for Y axis, Bottom for X axis
         /// </summary>
         LeftBottom,
+
         /// <summary>
-        /// Right for Y axis, Top for X axis
+        ///     Right for Y axis, Top for X axis
         /// </summary>
         RightTop
     }

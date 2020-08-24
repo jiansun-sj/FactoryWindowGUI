@@ -1,10 +1,10 @@
 ﻿// ==================================================
 // 文件名：WorkFlowChartXmlConfigUtil.cs
-// 创建时间：2020/01/04 16:25
+// 创建时间：2020/01/04 13:39
 // 上海芸浦信息技术有限公司
 // copyright@yumpoo
 // ==================================================
-// 最后修改于：2020/05/11 16:25
+// 最后修改于：2020/07/29 13:39
 // 修改人：jians
 // ==================================================
 
@@ -28,7 +28,8 @@ namespace FactoryWindowGUI.Util
         private int _turn1Count = 1;
         private int _turn3Count = 1;
 
-        public void AddNewStepNode(short stepIndex,string index, string position, string background, string shape, string content,
+        public void AddNewStepNode(short stepIndex, string index, string position, string background, string shape,
+            string content,
             string itemKind)
         {
             try
@@ -119,21 +120,16 @@ namespace FactoryWindowGUI.Util
             {
                 _xmlDoc.Load("WorkFlowChartConfig.xml");
                 var mainRoot = _xmlDoc.SelectSingleNode("/XtraSerializer/Items/Item1/Children");
-                
+
                 if (mainRoot != null)
-                {
                     foreach (XmlElement childNode in mainRoot.ChildNodes)
                     {
-                        if (!childNode.HasAttribute("StepIndex"))
-                        {
-                            continue;
-                        }
-                        
+                        if (!childNode.HasAttribute("StepIndex")) continue;
+
                         var stepIndex = short.Parse(childNode.GetAttribute("StepIndex"));
 
                         childNode.SetAttribute("Background", stepIndex == currentStepId ? "#FF44EB44" : "#FF5B9BD5");
                     }
-                }
 
                 _xmlDoc.Save("WorkFlowChartConfig.xml");
             }

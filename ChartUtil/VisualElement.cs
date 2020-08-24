@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：VisualElement.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -32,34 +40,44 @@ using LiveCharts.Dtos;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// Defines a visual element, a visual element is a UI element that is placed and scaled in the chart.
+    ///     Defines a visual element, a visual element is a UI element that is placed and scaled in the chart.
     /// </summary>
     public class VisualElement : FrameworkElement, ICartesianVisualElement
     {
+        /// <summary>
+        ///     The x property
+        /// </summary>
+        public static readonly DependencyProperty XProperty = DependencyProperty.Register(
+            "X", typeof(double), typeof(VisualElement),
+            new PropertyMetadata(default(double), PropertyChangedCallback));
+
+        /// <summary>
+        ///     The y property
+        /// </summary>
+        public static readonly DependencyProperty YProperty = DependencyProperty.Register(
+            "Y", typeof(double), typeof(VisualElement),
+            new PropertyMetadata(default(double), PropertyChangedCallback));
+
         private ChartCore _owner;
 
         // ReSharper disable once InconsistentNaming
         /// <summary>
-        /// Gets or sets the user interface element.
+        ///     Gets or sets the user interface element.
         /// </summary>
         public FrameworkElement UIElement { get; set; }
+
         /// <summary>
-        /// Gets or sets the index of the axis in X that owns the element, the axis position must exist.
+        ///     Gets or sets the index of the axis in X that owns the element, the axis position must exist.
         /// </summary>
         public int AxisX { get; set; }
+
         /// <summary>
-        /// Gets or sets the index of the axis in Y that owns the element, the axis position must exist.
+        ///     Gets or sets the index of the axis in Y that owns the element, the axis position must exist.
         /// </summary>
         public int AxisY { get; set; }
 
         /// <summary>
-        /// The x property
-        /// </summary>
-        public static readonly DependencyProperty XProperty = DependencyProperty.Register(
-            "X", typeof (double), typeof (VisualElement), 
-            new PropertyMetadata(default(double), PropertyChangedCallback));
-        /// <summary>
-        /// Gets or sets the X value of the UiElement
+        ///     Gets or sets the X value of the UiElement
         /// </summary>
         public double X
         {
@@ -68,13 +86,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// The y property
-        /// </summary>
-        public static readonly DependencyProperty YProperty = DependencyProperty.Register(
-            "Y", typeof (double), typeof (VisualElement), 
-            new PropertyMetadata(default(double), PropertyChangedCallback));
-        /// <summary>
-        /// Gets or sets the Y value of the UiElement
+        ///     Gets or sets the Y value of the UiElement
         /// </summary>
         public double Y
         {
@@ -83,7 +95,7 @@ namespace FactoryWindowGUI.ChartUtil
         }
 
         /// <summary>
-        /// Adds the or move.
+        ///     Adds the or move.
         /// </summary>
         /// <param name="chart">The chart.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
@@ -106,10 +118,10 @@ namespace FactoryWindowGUI.ChartUtil
 
             var uw = new CorePoint(
                 wpfChart.AxisX[AxisX].Model.EvaluatesUnitWidth
-                    ? ChartFunctions.GetUnitWidth(AxisOrientation.X, chart, AxisX)/2
+                    ? ChartFunctions.GetUnitWidth(AxisOrientation.X, chart, AxisX) / 2
                     : 0,
                 wpfChart.AxisY[AxisY].Model.EvaluatesUnitWidth
-                    ? ChartFunctions.GetUnitWidth(AxisOrientation.Y, chart, AxisY)/2
+                    ? ChartFunctions.GetUnitWidth(AxisOrientation.Y, chart, AxisY) / 2
                     : 0);
 
             coordinate += uw;
@@ -162,15 +174,18 @@ namespace FactoryWindowGUI.ChartUtil
                     Canvas.SetLeft(UIElement, coordinate.X);
                     Canvas.SetTop(UIElement, coordinate.Y);
                 }
-                UIElement.BeginAnimation(Canvas.LeftProperty, new DoubleAnimation(coordinate.X, wpfChart.AnimationsSpeed));
-                UIElement.BeginAnimation(Canvas.TopProperty, new DoubleAnimation(coordinate.Y, wpfChart.AnimationsSpeed));
+
+                UIElement.BeginAnimation(Canvas.LeftProperty,
+                    new DoubleAnimation(coordinate.X, wpfChart.AnimationsSpeed));
+                UIElement.BeginAnimation(Canvas.TopProperty,
+                    new DoubleAnimation(coordinate.Y, wpfChart.AnimationsSpeed));
             }
 
             _owner = chart;
         }
 
         /// <summary>
-        /// Removes the specified chart.
+        ///     Removes the specified chart.
         /// </summary>
         /// <param name="chart">The chart.</param>
         public void Remove(ChartCore chart)
@@ -178,7 +193,8 @@ namespace FactoryWindowGUI.ChartUtil
             chart.View.RemoveFromDrawMargin(UIElement);
         }
 
-        private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void PropertyChangedCallback(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var element = (VisualElement) dependencyObject;
             if (element._owner != null) element.AddOrMove(element._owner);

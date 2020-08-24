@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：PanningOptions.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,28 +31,32 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// Chart Panning Options
+    ///     Chart Panning Options
     /// </summary>
     public enum PanningOptions
     {
         /// <summary>
-        /// By default chart Panning is Unset, this means it will be based the Chart Zooming selection
+        ///     By default chart Panning is Unset, this means it will be based the Chart Zooming selection
         /// </summary>
         Unset,
+
         /// <summary>
-        /// Not panning allowed
+        ///     Not panning allowed
         /// </summary>
         None,
+
         /// <summary>
-        /// Panning only in the X axis
+        ///     Panning only in the X axis
         /// </summary>
         X,
+
         /// <summary>
-        /// Panning only in the Y axis
+        ///     Panning only in the Y axis
         /// </summary>
         Y,
+
         /// <summary>
-        /// Panning in both X and Y axes
+        ///     Panning in both X and Y axes
         /// </summary>
         Xy
     }

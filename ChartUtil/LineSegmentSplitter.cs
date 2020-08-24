@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：LineSegmentSplitter.cs
+// 创建时间：2020/05/25 13:39
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:39
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -28,9 +36,9 @@ namespace FactoryWindowGUI.ChartUtil
     {
         public LineSegmentSplitter()
         {
-            Bottom = new LineSegment { IsStroked = false };
-            Left = new LineSegment { IsStroked = false };
-            Right = new LineSegment { IsStroked = false };
+            Bottom = new LineSegment {IsStroked = false};
+            Left = new LineSegment {IsStroked = false};
+            Right = new LineSegment {IsStroked = false};
         }
 
         public LineSegment Bottom { get; private set; }

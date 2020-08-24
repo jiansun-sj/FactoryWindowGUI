@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：SeparationState.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -23,20 +31,22 @@
 namespace LiveCharts
 {
     /// <summary>
-    /// Separator current state
+    ///     Separator current state
     /// </summary>
     public enum SeparationState
     {
         /// <summary>
-        /// Remove the separator from the chart
+        ///     Remove the separator from the chart
         /// </summary>
         Remove,
+
         /// <summary>
-        /// Kepp the separator in the chart
+        ///     Kepp the separator in the chart
         /// </summary>
         Keep,
+
         /// <summary>
-        /// no animated add
+        ///     no animated add
         /// </summary>
         InitialAdd
     }

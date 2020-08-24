@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryWindowGUI", "FactoryWindowGUI\FactoryWindowGUI.csproj", "{20827429-E998-4EA3-BB34-DB49CBD0FCC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryWindowGUI.Test", "FactoryWindowGUI.Test\FactoryWindowGUI.Test.csproj", "{3E56CCD7-D396-492E-BD74-AA5510BBECCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FactoryWindowGUI.Test", "FactoryWindowGUI.Test\FactoryWindowGUI.Test.csproj", "{3E56CCD7-D396-492E-BD74-AA5510BBECCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveCharts", "Core40\LiveCharts.csproj", "{F261C3D7-6194-4625-9516-044081B06028}"
 EndProject
@@ -37,6 +37,20 @@ Global
 		{3E56CCD7-D396-492E-BD74-AA5510BBECCC}.Release|x86.Build.0 = Release|Any CPU
 		{F261C3D7-6194-4625-9516-044081B06028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F261C3D7-6194-4625-9516-044081B06028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F261C3D7-6194-4625-9516-044081B06028}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F261C3D7-6194-4625-9516-044081B06028}.Debug|x86.Build.0 = Debug|Any CPU
+		{F261C3D7-6194-4625-9516-044081B06028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F261C3D7-6194-4625-9516-044081B06028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F261C3D7-6194-4625-9516-044081B06028}.Release|x86.ActiveCfg = Release|Any CPU
+		{F261C3D7-6194-4625-9516-044081B06028}.Release|x86.Build.0 = Release|Any CPU
+		{4D253423-AE05-47F6-A59D-9162EC0BB1F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D253423-AE05-47F6-A59D-9162EC0BB1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D253423-AE05-47F6-A59D-9162EC0BB1F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4D253423-AE05-47F6-A59D-9162EC0BB1F2}.Debug|x86.Build.0 = Debug|Any CPU
+		{4D253423-AE05-47F6-A59D-9162EC0BB1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D253423-AE05-47F6-A59D-9162EC0BB1F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D253423-AE05-47F6-A59D-9162EC0BB1F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{4D253423-AE05-47F6-A59D-9162EC0BB1F2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

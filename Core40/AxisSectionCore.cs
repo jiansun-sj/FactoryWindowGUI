@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：AxisSectionCore.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -26,12 +34,11 @@ using LiveCharts.Definitions.Charts;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     public class AxisSectionCore
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AxisSectionCore"/> class.
+        ///     Initializes a new instance of the <see cref="AxisSectionCore" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="chart">The chart.</param>
@@ -40,32 +47,36 @@ namespace LiveCharts
             View = view;
             Chart = chart;
         }
+
         /// <summary>
-        /// Gets or sets the view.
+        ///     Gets or sets the view.
         /// </summary>
         /// <value>
-        /// The view.
+        ///     The view.
         /// </value>
         public IAxisSectionView View { get; set; }
+
         /// <summary>
-        /// Gets or sets the source.
+        ///     Gets or sets the source.
         /// </summary>
         /// <value>
-        /// The source.
+        ///     The source.
         /// </value>
         public AxisOrientation Source { get; set; }
+
         /// <summary>
-        /// Gets or sets the index of the axis.
+        ///     Gets or sets the index of the axis.
         /// </summary>
         /// <value>
-        /// The index of the axis.
+        ///     The index of the axis.
         /// </value>
         public int AxisIndex { get; set; }
+
         /// <summary>
-        /// Gets or sets the chart.
+        ///     Gets or sets the chart.
         /// </summary>
         /// <value>
-        /// The chart.
+        ///     The chart.
         /// </value>
         public ChartCore Chart { get; set; }
     }

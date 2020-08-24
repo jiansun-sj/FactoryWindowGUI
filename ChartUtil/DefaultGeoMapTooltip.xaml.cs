@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：DefaultGeoMapTooltip.xaml.cs
+// 创建时间：2020/05/25 13:39
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:39
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -31,7 +39,26 @@ namespace LiveCharts.Wpf
     public partial class DefaultGeoMapTooltip : UserControl
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultGeoMapTooltip"/> class.
+        ///     The corner radius property
+        /// </summary>
+        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
+            "CornerRadius", typeof(double), typeof(DefaultGeoMapTooltip), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        ///     The label formatter property
+        /// </summary>
+        public static readonly DependencyProperty LabelFormatterProperty = DependencyProperty.Register(
+            "LabelFormatter", typeof(Func<double, string>), typeof(DefaultGeoMapTooltip),
+            new PropertyMetadata(default(Func<double, string>)));
+
+        /// <summary>
+        ///     The geo data property
+        /// </summary>
+        public static readonly DependencyProperty GeoDataProperty = DependencyProperty.Register(
+            "GeoData", typeof(GeoData), typeof(DefaultGeoMapTooltip), new PropertyMetadata(default(GeoData)));
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DefaultGeoMapTooltip" /> class.
         /// </summary>
         public DefaultGeoMapTooltip()
         {
@@ -43,16 +70,10 @@ namespace LiveCharts.Wpf
         }
 
         /// <summary>
-        /// The corner radius property
-        /// </summary>
-        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
-            "CornerRadius", typeof (double), typeof (DefaultGeoMapTooltip), new PropertyMetadata(default(double)));
-
-        /// <summary>
-        /// Gets or sets the corner radius.
+        ///     Gets or sets the corner radius.
         /// </summary>
         /// <value>
-        /// The corner radius.
+        ///     The corner radius.
         /// </value>
         public double CornerRadius
         {
@@ -61,16 +82,10 @@ namespace LiveCharts.Wpf
         }
 
         /// <summary>
-        /// The label formatter property
-        /// </summary>
-        public static readonly DependencyProperty LabelFormatterProperty = DependencyProperty.Register(
-            "LabelFormatter", typeof (Func<double, string>), typeof (DefaultGeoMapTooltip), new PropertyMetadata(default(Func<double, string>)));
-
-        /// <summary>
-        /// Gets or sets the label formatter.
+        ///     Gets or sets the label formatter.
         /// </summary>
         /// <value>
-        /// The label formatter.
+        ///     The label formatter.
         /// </value>
         public Func<double, string> LabelFormatter
         {
@@ -79,61 +94,65 @@ namespace LiveCharts.Wpf
         }
 
         /// <summary>
-        /// The geo data property
-        /// </summary>
-        public static readonly DependencyProperty GeoDataProperty = DependencyProperty.Register(
-            "GeoData", typeof (GeoData), typeof (DefaultGeoMapTooltip), new PropertyMetadata(default(GeoData)));
-
-        /// <summary>
-        /// Gets or sets the geo data.
+        ///     Gets or sets the geo data.
         /// </summary>
         /// <value>
-        /// The geo data.
+        ///     The geo data.
         /// </value>
         public GeoData GeoData
         {
             get { return (GeoData) GetValue(GeoDataProperty); }
             set { SetValue(GeoDataProperty, value); }
         }
-
     }
 
     /// <summary>
-    /// 
     /// </summary>
     public class GeoData
     {
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         public string Name { get; set; }
+
         /// <summary>
-        /// Gets or sets the value.
+        ///     Gets or sets the value.
         /// </summary>
         /// <value>
-        /// The value.
+        ///     The value.
         /// </value>
         public double Value { get; set; }
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="System.Windows.Data.IMultiValueConverter" />
     public class GeoDataLabelConverter : IMultiValueConverter
     {
         /// <summary>
-        /// Converts source values to a value for the binding target. The data binding engine calls this method when it propagates the values from source bindings to the binding target.
+        ///     Converts source values to a value for the binding target. The data binding engine calls this method when it
+        ///     propagates the values from source bindings to the binding target.
         /// </summary>
-        /// <param name="values">The array of values that the source bindings in the <see cref="T:System.Windows.Data.MultiBinding" /> produces. The value <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value to provide for conversion.</param>
+        /// <param name="values">
+        ///     The array of values that the source bindings in the
+        ///     <see cref="T:System.Windows.Data.MultiBinding" /> produces. The value
+        ///     <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value to
+        ///     provide for conversion.
+        /// </param>
         /// <param name="targetType">The type of the binding target property.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
         /// <returns>
-        /// A converted value.If the method returns null, the valid null value is used.A return value of <see cref="T:System.Windows.DependencyProperty" />.<see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the converter did not produce a value, and that the binding will use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> if it is available, or else will use the default value.A return value of <see cref="T:System.Windows.Data.Binding" />.<see cref="F:System.Windows.Data.Binding.DoNothing" /> indicates that the binding does not transfer the value or use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> or the default value.
+        ///     A converted value.If the method returns null, the valid null value is used.A return value of
+        ///     <see cref="T:System.Windows.DependencyProperty" />.<see cref="F:System.Windows.DependencyProperty.UnsetValue" />
+        ///     indicates that the converter did not produce a value, and that the binding will use the
+        ///     <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> if it is available, or else will use the default
+        ///     value.A return value of <see cref="T:System.Windows.Data.Binding" />.
+        ///     <see cref="F:System.Windows.Data.Binding.DoNothing" /> indicates that the binding does not transfer the value or
+        ///     use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> or the default value.
         /// </returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -143,14 +162,17 @@ namespace LiveCharts.Wpf
         }
 
         /// <summary>
-        /// Converts a binding target value to the source binding values.
+        ///     Converts a binding target value to the source binding values.
         /// </summary>
         /// <param name="value">The value that the binding target produces.</param>
-        /// <param name="targetTypes">The array of types to convert to. The array length indicates the number and types of values that are suggested for the method to return.</param>
+        /// <param name="targetTypes">
+        ///     The array of types to convert to. The array length indicates the number and types of values
+        ///     that are suggested for the method to return.
+        /// </param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
         /// <returns>
-        /// An array of values that have been converted from the target value back to the source values.
+        ///     An array of values that have been converted from the target value back to the source values.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：ColumnSeries.cs
+// 创建时间：2020/05/25 13:38
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:38
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -36,101 +44,14 @@ using LiveCharts.SeriesAlgorithms;
 namespace FactoryWindowGUI.ChartUtil
 {
     /// <summary>
-    /// Use the column series to plot horizontal bars in a cartesian chart
+    ///     Use the column series to plot horizontal bars in a cartesian chart
     /// </summary>
     public class ColumnSeries : Series, IColumnSeriesView
     {
-        #region Constructors
-        /// <summary>
-        /// Initializes a new instance of ColumnSeries class
-        /// </summary>
-        public ColumnSeries()
-        {
-            Model = new ColumnAlgorithm(this);
-            InitializeDefuaults();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of ColumnSeries class, using a given mapper
-        /// </summary>
-        public ColumnSeries(object configuration)
-        {
-            Model = new ColumnAlgorithm(this);
-            Configuration = configuration;
-            InitializeDefuaults();
-        }
-
-        #endregion
-
-        #region Private Properties
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// The maximum column width property
-        /// </summary>
-        public static readonly DependencyProperty MaxColumnWidthProperty = DependencyProperty.Register(
-            "MaxColumnWidth", typeof (double), typeof (ColumnSeries), new PropertyMetadata(35d));
-        /// <summary>
-        /// Gets or sets the MaxColumnWidht in pixels, the column width will be capped at this value.
-        /// </summary>
-        public double MaxColumnWidth
-        {
-            get { return (double) GetValue(MaxColumnWidthProperty); }
-            set { SetValue(MaxColumnWidthProperty, value); }
-        }
-
-        /// <summary>
-        /// The column padding property
-        /// </summary>
-        public static readonly DependencyProperty ColumnPaddingProperty = DependencyProperty.Register(
-            "ColumnPadding", typeof (double), typeof (ColumnSeries), new PropertyMetadata(2d));
-        /// <summary>
-        /// Gets or sets the padding between the columns in the series.
-        /// </summary>
-        public double ColumnPadding
-        {
-            get { return (double) GetValue(ColumnPaddingProperty); }
-            set { SetValue(ColumnPaddingProperty, value); }
-        }
-
-        /// <summary>
-        /// The labels position property
-        /// </summary>
-        public static readonly DependencyProperty LabelsPositionProperty = DependencyProperty.Register(
-            "LabelsPosition", typeof (BarLabelPosition), typeof (ColumnSeries), 
-            new PropertyMetadata(default(BarLabelPosition), CallChartUpdater()));
-        /// <summary>
-        /// Gets or sets where the label is placed
-        /// </summary>
-        public BarLabelPosition LabelsPosition
-        {
-            get { return (BarLabelPosition) GetValue(LabelsPositionProperty); }
-            set { SetValue(LabelsPositionProperty, value); }
-        }
-
-        /// <summary>
-        /// The shares position property
-        /// </summary>
-        public static readonly DependencyProperty SharesPositionProperty = DependencyProperty.Register(
-            "SharesPosition", typeof(bool), typeof(ColumnSeries), new PropertyMetadata(true));
-        /// <summary>
-        /// Gets or sets a value indicating whether this column shares space with all the column series in the same position
-        /// </summary>
-        public bool SharesPosition
-        {
-            get { return (bool) GetValue(SharesPositionProperty); }
-            set { SetValue(SharesPositionProperty, value); }
-        }
-
-        #endregion
-
         #region Overridden Methods
 
         /// <summary>
-        /// Gets the view of a given point
+        ///     Gets the view of a given point
         /// </summary>
         /// <param name="point"></param>
         /// <param name="label"></param>
@@ -179,7 +100,7 @@ namespace FactoryWindowGUI.ChartUtil
 
                 Panel.SetZIndex(pbv.HoverShape, int.MaxValue);
 
-                var wpfChart = (Chart)Model.Chart.View;
+                var wpfChart = (Chart) Model.Chart.View;
                 wpfChart.AttachHoverableEventTo(pbv.HoverShape);
 
                 Model.Chart.View.AddToDrawMargin(pbv.HoverShape);
@@ -188,13 +109,11 @@ namespace FactoryWindowGUI.ChartUtil
             if (pbv.HoverShape != null) pbv.HoverShape.Visibility = Visibility;
 
             if (DataLabels)
-            {
                 pbv.DataLabel = UpdateLabelContent(new DataLabelViewModel
                 {
                     FormattedText = label,
                     Point = point
                 }, pbv.DataLabel);
-            }
 
             if (!DataLabels && pbv.DataLabel != null)
             {
@@ -202,8 +121,8 @@ namespace FactoryWindowGUI.ChartUtil
                 pbv.DataLabel = null;
             }
 
-            if (point.Stroke != null) pbv.Rectangle.Stroke = (Brush)point.Stroke;
-            if (point.Fill != null) pbv.Rectangle.Fill = (Brush)point.Fill;
+            if (point.Stroke != null) pbv.Rectangle.Stroke = (Brush) point.Stroke;
+            if (point.Fill != null) pbv.Rectangle.Fill = (Brush) point.Fill;
 
             pbv.LabelPosition = LabelsPosition;
 
@@ -225,6 +144,98 @@ namespace FactoryWindowGUI.ChartUtil
             SetCurrentValue(LabelPointProperty, defaultLabel);
 
             DefaultFillOpacity = 1;
+        }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of ColumnSeries class
+        /// </summary>
+        public ColumnSeries()
+        {
+            Model = new ColumnAlgorithm(this);
+            InitializeDefuaults();
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of ColumnSeries class, using a given mapper
+        /// </summary>
+        public ColumnSeries(object configuration)
+        {
+            Model = new ColumnAlgorithm(this);
+            Configuration = configuration;
+            InitializeDefuaults();
+        }
+
+        #endregion
+
+        #region Private Properties
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     The maximum column width property
+        /// </summary>
+        public static readonly DependencyProperty MaxColumnWidthProperty = DependencyProperty.Register(
+            "MaxColumnWidth", typeof(double), typeof(ColumnSeries), new PropertyMetadata(35d));
+
+        /// <summary>
+        ///     Gets or sets the MaxColumnWidht in pixels, the column width will be capped at this value.
+        /// </summary>
+        public double MaxColumnWidth
+        {
+            get { return (double) GetValue(MaxColumnWidthProperty); }
+            set { SetValue(MaxColumnWidthProperty, value); }
+        }
+
+        /// <summary>
+        ///     The column padding property
+        /// </summary>
+        public static readonly DependencyProperty ColumnPaddingProperty = DependencyProperty.Register(
+            "ColumnPadding", typeof(double), typeof(ColumnSeries), new PropertyMetadata(2d));
+
+        /// <summary>
+        ///     Gets or sets the padding between the columns in the series.
+        /// </summary>
+        public double ColumnPadding
+        {
+            get { return (double) GetValue(ColumnPaddingProperty); }
+            set { SetValue(ColumnPaddingProperty, value); }
+        }
+
+        /// <summary>
+        ///     The labels position property
+        /// </summary>
+        public static readonly DependencyProperty LabelsPositionProperty = DependencyProperty.Register(
+            "LabelsPosition", typeof(BarLabelPosition), typeof(ColumnSeries),
+            new PropertyMetadata(default(BarLabelPosition), CallChartUpdater()));
+
+        /// <summary>
+        ///     Gets or sets where the label is placed
+        /// </summary>
+        public BarLabelPosition LabelsPosition
+        {
+            get { return (BarLabelPosition) GetValue(LabelsPositionProperty); }
+            set { SetValue(LabelsPositionProperty, value); }
+        }
+
+        /// <summary>
+        ///     The shares position property
+        /// </summary>
+        public static readonly DependencyProperty SharesPositionProperty = DependencyProperty.Register(
+            "SharesPosition", typeof(bool), typeof(ColumnSeries), new PropertyMetadata(true));
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether this column shares space with all the column series in the same position
+        /// </summary>
+        public bool SharesPosition
+        {
+            get { return (bool) GetValue(SharesPositionProperty); }
+            set { SetValue(SharesPositionProperty, value); }
         }
 
         #endregion

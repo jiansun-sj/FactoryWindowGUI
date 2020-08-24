@@ -1,28 +1,25 @@
 ﻿// ==================================================
+// FactoryWindowGUI
 // 文件名：MainWindowViewModel.cs
-// 创建时间：2020/04/12 16:25
-// 上海芸浦信息技术有限公司
-// copyright@yumpoo
+// 创建时间：2020/04/12 11:30
 // ==================================================
-// 最后修改于：2020/05/11 16:25
+// 最后修改于：2020/08/21 11:30
 // 修改人：jians
 // ==================================================
 
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using FactoryWindowGUI.Annotations;
 using FactoryWindowGUI.Model;
 using FactoryWindowGUI.Util;
 using log4net;
 using ProcessControlService.WCFClients;
+using RosemaryThemes.Wpf.BaseClass;
 
 namespace FactoryWindowGUI.ViewModel
 {
     /// <summary>
     ///     create by Charlotte
     /// </summary>
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : BaseViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MainWindowViewModel));
 
@@ -50,7 +47,7 @@ namespace FactoryWindowGUI.ViewModel
             set
             {
                 _redundancyStatus = value;
-                OnPropertyChanged(nameof(RedundancyStatus));
+                NotifyPropertyChanged(nameof(RedundancyStatus));
             }
         }
 
@@ -69,7 +66,7 @@ namespace FactoryWindowGUI.ViewModel
             {
                 if (_connectionStatus == value) return;
                 _connectionStatus = value;
-                OnPropertyChanged(nameof(ConnectionStatus));
+                NotifyPropertyChanged(nameof(ConnectionStatus));
             }
         }
 
@@ -88,7 +85,7 @@ namespace FactoryWindowGUI.ViewModel
             set
             {
                 _connectionList = value;
-                OnPropertyChanged(nameof(ConnectionList));
+                NotifyPropertyChanged(nameof(ConnectionList));
             }
         }
 
@@ -115,18 +112,10 @@ namespace FactoryWindowGUI.ViewModel
                 AdminUtil.ConnectToServer();
                 /*ResourceUtil.ConnectToServer();*/
 
-                OnPropertyChanged(nameof(ConnectionStatus));
-                OnPropertyChanged(nameof(ConnectionStatus));
-                OnPropertyChanged(nameof(SelectedConnectionName));
+                NotifyPropertyChanged(nameof(ConnectionStatus));
+                NotifyPropertyChanged(nameof(ConnectionStatus));
+                NotifyPropertyChanged(nameof(SelectedConnectionName));
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

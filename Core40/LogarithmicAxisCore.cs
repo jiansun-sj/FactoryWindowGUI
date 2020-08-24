@@ -1,4 +1,12 @@
-//The MIT License(MIT)
+// ==================================================
+// 文件名：LogarithmicAxisCore.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -28,13 +36,12 @@ using LiveCharts.Dtos;
 namespace LiveCharts
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.AxisCore" />
     public class LogarithmicAxisCore : AxisCore
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LogarithmicAxisCore"/> class.
+        ///     Initializes a new instance of the <see cref="LogarithmicAxisCore" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public LogarithmicAxisCore(IAxisView view) : base(view)
@@ -61,12 +68,12 @@ namespace LiveCharts
 
             for (var i = bl; i <= TopLimit - (EvaluatesUnitWidth ? 1 : 0); i += S)
             {
-                var minTolerance = tolerance/10;
+                var minTolerance = tolerance / 10;
                 if (Math.Abs(i - bl) > tolerance)
                 {
                     var step = Math.Pow(@base, i - 1);
-                    for (var j = Math.Pow(@base, i - 1) + step; 
-                        j < Math.Pow(@base, i); 
+                    for (var j = Math.Pow(@base, i - 1) + step;
+                        j < Math.Pow(@base, i);
                         j += step)
                     {
                         SeparatorElementCore minorAsc;
@@ -75,7 +82,7 @@ namespace LiveCharts
                         var minorKey = Math.Round(scaledJ / minTolerance) * minTolerance;
                         if (!Cache.TryGetValue(minorKey, out minorAsc))
                         {
-                            minorAsc = new SeparatorElementCore { IsNew = true };
+                            minorAsc = new SeparatorElementCore {IsNew = true};
                             Cache[minorKey] = minorAsc;
                         }
                         else
@@ -106,7 +113,7 @@ namespace LiveCharts
                 var key = Math.Round(i / tolerance) * tolerance;
                 if (!Cache.TryGetValue(key, out asc))
                 {
-                    asc = new SeparatorElementCore { IsNew = true };
+                    asc = new SeparatorElementCore {IsNew = true};
                     Cache[key] = asc;
                 }
                 else
@@ -151,6 +158,7 @@ namespace LiveCharts
 
                 asc.State = SeparationState.Keep;
             }
+
             return currentMargin;
         }
     }

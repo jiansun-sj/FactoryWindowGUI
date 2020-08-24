@@ -1,4 +1,12 @@
-﻿//The MIT License(MIT)
+﻿// ==================================================
+// 文件名：HeatAlgorithm.cs
+// 创建时间：2020/05/25 13:37
+// 上海芸浦信息技术有限公司
+// copyright@yumpoo
+// ==================================================
+// 最后修改于：2020/07/29 13:37
+// 修改人：jians
+// ==================================================
 
 //Copyright(c) 2016 Alberto Rodriguez & LiveCharts Contributors
 
@@ -31,14 +39,13 @@ using LiveCharts.Helpers;
 namespace LiveCharts.SeriesAlgorithms
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="LiveCharts.SeriesAlgorithm" />
     /// <seealso cref="LiveCharts.Definitions.Series.ICartesianSeries" />
     public class HeatAlgorithm : SeriesAlgorithm, ICartesianSeries
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HeatAlgorithm"/> class.
+        ///     Initializes a new instance of the <see cref="HeatAlgorithm" /> class.
         /// </summary>
         /// <param name="view">The view.</param>
         public HeatAlgorithm(ISeriesView view) : base(view)
@@ -47,12 +54,52 @@ namespace LiveCharts.SeriesAlgorithms
         }
 
         /// <summary>
-        /// Updates this instance.
+        ///     Gets the minimum x.
+        /// </summary>
+        /// <param name="axis">The axis.</param>
+        /// <returns></returns>
+        public double GetMinX(AxisCore axis)
+        {
+            return AxisLimits.StretchMin(axis);
+        }
+
+        /// <summary>
+        ///     Gets the maximum x.
+        /// </summary>
+        /// <param name="axis">The axis.</param>
+        /// <returns></returns>
+        public double GetMaxX(AxisCore axis)
+        {
+            return AxisLimits.StretchMax(axis) + 1;
+        }
+
+        /// <summary>
+        ///     Gets the minimum y.
+        /// </summary>
+        /// <param name="axis">The axis.</param>
+        /// <returns></returns>
+        public double GetMinY(AxisCore axis)
+        {
+            return AxisLimits.StretchMin(axis);
+        }
+
+        /// <summary>
+        ///     Gets the maximum y.
+        /// </summary>
+        /// <param name="axis">The axis.</param>
+        /// <returns></returns>
+        public double GetMaxY(AxisCore axis)
+        {
+            return AxisLimits.StretchMax(axis) + 1;
+        }
+
+        /// <summary>
+        ///     Updates this instance.
         /// </summary>
         /// <exception cref="LiveCharts.Helpers.LiveChartsException">There is no a valid gradient to create a heat series.</exception>
         public override void Update()
         {
-            var heatSeries = (IHeatSeriesView)View;
+            var heatSeries = (IHeatSeriesView) View;
 
             var uw = new CorePoint(
                 0 * ChartFunctions.GetUnitWidth(AxisOrientation.X, Chart, View.ScalesXAt) / 2,
@@ -77,7 +124,7 @@ namespace LiveCharts.SeriesAlgorithms
             var correctedGradients = heatSeries.Stops.Select(x => new CoreGradientStop
             {
                 Color = x.Color,
-                Offset = x.Offset < 0 ? 0 : (x.Offset > 1 ? 1 : x.Offset)
+                Offset = x.Offset < 0 ? 0 : x.Offset > 1 ? 1 : x.Offset
             }).ToList();
             var min = correctedGradients[0];
             min.Offset = 0;
@@ -96,10 +143,10 @@ namespace LiveCharts.SeriesAlgorithms
                 chartPoint.View = View.GetPointView(chartPoint,
                     View.DataLabels ? View.GetLabelPointFormatter()(chartPoint) : null);
 
-                var heatView = (IHeatPointView)chartPoint.View;
+                var heatView = (IHeatPointView) chartPoint.View;
 
                 heatView.ColorComponents = ColorInterpolation(correctedGradients,
-                    (chartPoint.Weight - Chart.WLimit.Min)/(Chart.WLimit.Max - Chart.WLimit.Min));
+                    (chartPoint.Weight - Chart.WLimit.Min) / (Chart.WLimit.Max - Chart.WLimit.Min));
 
                 heatView.Width = w;
                 heatView.Height = h;
@@ -108,57 +155,16 @@ namespace LiveCharts.SeriesAlgorithms
             }
         }
 
-        /// <summary>
-        /// Gets the minimum x.
-        /// </summary>
-        /// <param name="axis">The axis.</param>
-        /// <returns></returns>
-        public double GetMinX(AxisCore axis)
-        {
-            return AxisLimits.StretchMin(axis);
-        }
-
-        /// <summary>
-        /// Gets the maximum x.
-        /// </summary>
-        /// <param name="axis">The axis.</param>
-        /// <returns></returns>
-        public double GetMaxX(AxisCore axis)
-        {
-            return AxisLimits.StretchMax(axis) + 1;
-        }
-
-        /// <summary>
-        /// Gets the minimum y.
-        /// </summary>
-        /// <param name="axis">The axis.</param>
-        /// <returns></returns>
-        public double GetMinY(AxisCore axis)
-        {
-            return AxisLimits.StretchMin(axis);
-        }
-
-        /// <summary>
-        /// Gets the maximum y.
-        /// </summary>
-        /// <param name="axis">The axis.</param>
-        /// <returns></returns>
-        public double GetMaxY(AxisCore axis)
-        {
-            return AxisLimits.StretchMax(axis) + 1;
-        }
-
         private static CoreColor ColorInterpolation(IList<CoreGradientStop> gradients, double weight)
         {
             CoreColor from = new CoreColor(0, 0, 0, 0), to = new CoreColor(0, 0, 0, 0);
             double fromOffset = 0, toOffset = 0;
 
             for (var i = 0; i < gradients.Count; i++)
-            {
                 // ReSharper disable once InvertIf
                 if (double.IsNaN(weight) || gradients[i].Offset <= weight && gradients[i + 1].Offset >= weight)
                 {
-                    from = gradients[i].Color;
+                    @from = gradients[i].Color;
                     to = gradients[i + 1].Color;
 
                     fromOffset = gradients[i].Offset;
@@ -166,7 +172,6 @@ namespace LiveCharts.SeriesAlgorithms
 
                     break;
                 }
-            }
 
             return new CoreColor(
                 InterpolateColorComponent(from.A, to.A, fromOffset, toOffset, weight),
@@ -182,14 +187,12 @@ namespace LiveCharts.SeriesAlgorithms
             {
                 return fromComponent;
             }
-            else
-            {
-                var deltaX = toOffset - fromOffset;
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                var m = (toComponent - fromComponent) / (deltaX == 0 ? double.MinValue : deltaX);
 
-                return (byte)(m * (value - fromOffset) + fromComponent);
-            }
+            var deltaX = toOffset - fromOffset;
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            var m = (toComponent - fromComponent) / (deltaX == 0 ? double.MinValue : deltaX);
+
+            return (byte) (m * (value - fromOffset) + fromComponent);
         }
     }
 }
